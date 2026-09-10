@@ -251,6 +251,130 @@ it's horizontal, its value is measurable in dollars, and it needs no strategic
 buy-in. That makes it a direct competitor for the "which asset first" slot in
 QUESTIONS Q13.
 
+### Going deeper: where the novelty actually sits
+
+Reading `REPLAY_DESIGN.md` closely moves the answer. **The snapshot is not the
+differentiator — the experimental design is.** Anyone can capture state. Getting
+a *valid* answer out of a heterogeneous model panel, where the trajectory diverges
+the moment you intervene, is a research problem, and the design doc has already
+solved several parts of it that most teams will get wrong:
+
+| Design choice | Why it's non-obvious | What it prevents |
+|---|---|---|
+| **Baseline is a fresh replay of the original condition, not the recorded outcome** | The instinct is to compare against what actually happened | System-prompt regeneration drift confounding every result. Both arms get the identical regenerated prompt, so the drift cancels |
+| **Normalise prefix thinking across the panel** | Requires knowing that thinking blocks are origin-locked and drop cross-model (Fable), which you only learn by hitting it | Silently handicapping one model and calling it a quality difference |
+| **Effort labels aren't cross-tier comparable — sweep effort as an axis** | "Same effort setting" looks like the fair comparison | Comparing Haiku-with-no-effort-param against Fable-with-thinking-always-on and drawing a conclusion |
+| **Blinded, order-randomised judge, never a contestant; ties → third-party arbiter** | Tempting to grade with the best available model | A model preferring its own output — the most common silent bias in LLM-graded evals |
+| **N per cell, action-match rate with confidence intervals** | Slower and more expensive than one run | The industry default of n=1: "we tried the new model and it seemed better" |
+| **Grade on the cost / quality / time frontier** | Single-metric grading is easier to sell | Optimising quality into a bill nobody will pay |
+| **Mutation guard fails loudly** | Rebuild-on-mismatch looks like a reasonable fallback | Grading a reconstructed tree that differs from the one the turn actually had — measuring a fiction |
+
+**That table is the product.** A competitor can copy per-turn snapshotting in a
+quarter. Arriving independently at "compare replay-to-replay, not
+replay-to-record" requires either this depth of thought or a year of confusing
+results. In measurement businesses, **being right is the moat, because the buyer
+cannot verify the answer themselves** — which is precisely why they're buying it.
+
+### The market trigger: forced migrations
+
+The commercial opening is not "teams want better evals." It's that **model
+vendors retire models on their own schedule, and enterprises are forced to
+migrate on it.** GitHub Copilot's September 2026 model retirements already have
+third-party migration and regression-test guides written about them.
+
+That makes the demand:
+
+- **Calendar-driven**, not discretionary — someone else sets the deadline.
+- **Recurring forever**, because model churn is permanent.
+- **Urgent and high-stakes**, because the alternative is switching blind.
+- **Budgeted**, because it's framed as risk mitigation rather than tooling.
+
+And the market has already articulated the need in the product's own vocabulary:
+current best-practice guidance for these migrations is *"supported model plus
+**evidence from our own workload**"* — which is a one-line description of what
+replay produces and what nothing on the market produces for stateful agents.
+
+The related tailwind: **model-agnostic coding harnesses** (OpenCode and similar,
+spanning 75+ providers) turn model choice into a recurring operational decision
+rather than a one-time architecture choice. Every such decision needs evidence.
+Those harnesses are also the obvious distribution partners — they sell
+switchability and have no way to prove it was the right switch.
+
+### Correcting my own framing from the previous section
+
+I said trace platforms don't do replay. That was too generous to us. The category
+**does** exist:
+
+- [Roark](https://roark.ai/blog/testing-voice-agents-silent-model-migrations)
+  captures real production calls and replays them against candidate logic —
+  "run your last two weeks of real traffic against the candidate before
+  promotion." For **voice** agents.
+- The `pin → replay → score → diff → promote` migration workflow is established
+  practice in [LLM regression testing](https://futureagi.com/glossary/llm-regression-testing/),
+  with production traces convertible into permanent regression tests.
+- There is even [academic work on item-level regressions in commercial LLM API
+  migrations](https://arxiv.org/html/2608.17719).
+
+So "replay production traffic against a candidate model" is **not** novel. What
+remains unserved is narrower and still real:
+
+> **For a stateless LLM app, replaying the trace *is* the replay. For a stateful
+> coding agent, the trace is meaningless without the filesystem — and nobody
+> reconstructs the filesystem.**
+
+Plus two structural differences the existing tools don't address: intervention
+**mid-session at turn K** rather than re-running a whole request, and the
+divergence problem that creates — which is what the methodology above exists to
+handle.
+
+### Buyer, pricing, distribution
+
+| | |
+|---|---|
+| **Buyer** | Platform / AI-infra teams at companies running coding agents at material inference spend; secondarily procurement, which needs a defensible artifact for standardising on a vendor |
+| **Trigger** | A vendor retirement notice, a budget review, or a new frontier release |
+| **Pricing** | ROI-linked rather than seat-based: routing optimisation is a measurable percentage of a known bill. A per-migration-decision project price also suits enterprise procurement, and prices the urgency rather than the software |
+| **Distribution** | Model-agnostic harness vendors are the highest-leverage channel — they sell switchability and cannot prove it. Second: the model vendors themselves, who benefit when migration risk falls |
+
+### Risks, stated against the above
+
+1. **The window is 12–18 months, not open-ended.** Workspace reconstruction is
+   not conceptually hard once someone decides coding agents are the dominant
+   workload. Braintrust, LangSmith or Galileo adding it is a roadmap item, not a
+   research project. **Time matters more for this asset than for anything else in
+   the portfolio.**
+2. **The methodology is publishable, therefore copyable.** See the
+   recommendation below — this is less of a problem than it looks.
+3. **Our corpus is not the customer's corpus.** 936 sessions prove the thing
+   works and calibrate the grading; they are not a moat against a buyer's
+   alternative, which is their own data. Position it as credibility, not asset.
+4. **Crowded, well-funded category.** The constraint is attention, not
+   capability — and attention is bought with marketing, which is exactly the
+   human-shaped work 01 warns against. This is the strongest argument for the
+   partner-distribution route over direct sales.
+
+### Recommendation
+
+`PROPOSED` — **publish the methodology, sell the implementation.**
+
+Counterintuitive, and I think right. In measurement businesses the product is
+*trust*, and trust accrues to whoever defines how the measurement should be done.
+Publishing the experimental design — replay-to-replay baselining, thinking
+normalisation across heterogeneous panels, frontier grading, the mutation guard —
+costs little, because the hard parts are the implementation, the integration
+surface and the calibration. What it buys is category authority in a market where
+buyers cannot check the answer themselves and therefore buy the most credible
+methodology on offer.
+
+It also converts risk 2 into a moat: if the industry adopts your design as the
+correct way to run a model-migration experiment, competitors implementing it are
+validating you rather than displacing you.
+
+**And it fits the group's constraints unusually well** — publishing is
+agent-assistable, needs no sales headcount, and compounds. Compare that with
+buying attention in a crowded category, which needs exactly the humans the
+minimal-core thesis is trying to avoid.
+
 ---
 
 ## Seams
