@@ -577,6 +577,79 @@ hours, elapsed weeks, agent spend — is the first datapoint on the cost curve t
 the entire line-3 thesis rests on. Capture it at launch. Without app #1's number,
 app #2's number means nothing.
 
+### 2i. Community is the cross-app surface — so it isn't a VesselHaven feature
+
+Nathan: the marine functionality doesn't overlap much with other apps, but **the
+upcoming community feature does.**
+
+That is the most useful structural fact in this document, because it identifies
+where the person shows up *as a person* rather than as a boat owner. Berth
+booking teaches you about a vessel. Community teaches you about a human — what
+they care about, whose opinion they trust, what they respond to, how they like to
+be addressed. That is precisely the class of signal that transfers across
+domains, and precisely what the `library` preference store exists to hold.
+
+Two consequences follow, and both are decisions rather than observations:
+
+1. **Community is a platform primitive that happens to launch inside VesselHaven
+   first.** It should be built to be *extracted* — shared identity, shared
+   profile, shared social graph, sitting beside `library` — not as a VH module
+   that gets copy-pasted into app #2. The cost of getting this wrong is paid
+   twice: once rebuilding it, and once discovering the profiles don't join.
+2. **One community, or one community per app?** This is a genuine fork and it
+   decides whether the portfolio compounds:
+   - *One community, many apps* — the same people, entering through different
+     apps. The cohort is real, the profile joins, network effects accrue once.
+   - *Many apps, each with a community* — N disjoint communities, N cold starts,
+     N thin datasets. This is the failure mode from §2h wearing a different hat.
+
+   The first is much harder to bootstrap and is the only version where the
+   strategy works. Worth deciding explicitly before the VH community ships,
+   because it is an identity-model decision and those calcify fast.
+
+Community is also plausibly the **wedge** in §2g's sense: it is the one thing a
+generalist agent cannot supply, because it isn't a capability — it's other people.
+ChatGPT cannot give a yacht owner the other yacht owners.
+
+### 2j. The cost curve is not a metric — it is the strategy
+
+**VesselHaven will cost roughly $250k to release.** That is the first real number
+in this document and it changes the shape of the plan.
+
+At $250k per app, "many small apps sharing a preference layer" is **capital-bound
+before it is anything else.** Ten apps is $2.5m of build alone, before support,
+hosting or marketing. So the cost curve isn't a nice-to-have that demonstrates
+the factory works — it is the gating constraint on whether the portfolio strategy
+is available at all. If app #2 is not dramatically cheaper, the strategy collapses
+back to one or two apps, which is a different and weaker company than the one
+described here.
+
+**The decomposition matters more than the total.** Of the $250k:
+
+- How much was **non-recurring** — building factory capability, shared services,
+  patterns and muscle memory that app #2 inherits free?
+- How much was **VesselHaven-specific** — domain modelling, marine integrations,
+  design work that transfers to nothing?
+
+If the split is 80/20 toward non-recurring, there is a steep curve and the thesis
+is live. If it's 20/80, there is no curve, only a per-app price. **This
+decomposition is the single highest-value measurement available to the group
+right now**, and it is much cheaper to do at launch than to reconstruct later.
+
+**State app #2's target explicitly, in advance.** A curve claimed after the fact
+is a story; a target set before the fact is a test. If the thesis is real,
+something like ≤$100k for app #2 and ≤$50k for app #3 should be nameable now,
+along with *which specific capabilities* make the difference.
+
+**The payback bar this sets.** $250k with no take rate (§2c) needs recovering
+through subscription or licensing. At, say, $20/month that is roughly a thousand
+sustained subscribers per app for a year merely to break even on build — before
+any contribution to the group. That number should be sanity-checked against the
+realistic size of each target cohort *before* app #2 is chosen, because it may
+rule out small verticals entirely and push toward apps with larger addressable
+cohorts. It is also the strongest argument yet for resolving Q7 (monetisation)
+early rather than late.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first

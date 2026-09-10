@@ -25,7 +25,24 @@ What would decide it: name the **cohort**, not the market. Who is the person the
 next three apps all serve? If that person can't be named in a sentence, the
 cross-app preference layer is a hope rather than a plan.
 
-## Q1 — What is the wedge for app #1's first hundred users?
+## Q0b — One community, or one per app?
+
+Community is the cross-app surface (§2i), which makes this an identity-model
+decision, not a feature decision — and identity models calcify. *One community,
+many apps* is the only version in which the portfolio compounds; *many apps, each
+with a community* is §2h's failure mode. Decide before VH's community ships.
+
+## Q1 — What is the wedge, and what did app #1 actually cost?
+
+Per §2g, a wedge is not a moat and is allowed to depreciate. Why does the first
+cohort choose this over asking Gemini? Community is a strong candidate: it is the
+one thing a generalist agent cannot supply, because it is other people.
+
+**Now with a number attached.** VesselHaven is ~$250k to release. The decomposition
+— how much non-recurring factory capability vs. how much VH-specific — is the
+highest-value measurement available right now (§2j), and it is far cheaper at
+launch than reconstructed later. State app #2's cost target *before* building it,
+or the curve is a story rather than a test.
 
 Per §2g, a wedge is not a moat and is allowed to depreciate. Why does the first
 cohort choose a VesselHaven — or app #2 — over asking Gemini? "Fit" is a real
