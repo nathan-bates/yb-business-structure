@@ -172,7 +172,7 @@ better fit for a group whose stated goal is minimising the human core.
 
 | Asset | Licensable as | Readiness |
 |---|---|---|
-| **Session replay + perturbation harness** | Answering "would a different model/prompt/tool have done better?" over a team's own historical agent sessions | **Works; Phase 1 building.** Horizontal, priceable on measurable savings, needs no strategic buy-in — plausibly the readiest candidate (02 §Session replay) |
+| **Turn-level counterfactual engine** (session replay + perturbation) | The measurement layer under model routing: what *would* have happened at turn K under a different model, prompt or tool — on the customer's own workload. Routers choose forward and never see the road not taken | **Works; Phase 1 building.** Horizontal, priced on measured savings, no strategic buy-in, and routers/harnesses become channels rather than competitors (02 §Session replay) |
 | Claude Code Cloud (`llm-slack-channel-bridge`) | Agent runtime + control plane for teams running agent fleets | Load-bearing internally; needs packaging |
 | ProductLens / Archon | Work layer for agent-executed delivery | Parked; would need un-parking |
 | Sextant | Verification / acceptance oracle | Theoretical — do not sell what isn't real |

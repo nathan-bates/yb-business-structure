@@ -275,6 +275,97 @@ replay-to-record" requires either this depth of thought or a year of confusing
 results. In measurement businesses, **being right is the moat, because the buyer
 cannot verify the answer themselves** — which is precisely why they're buying it.
 
+### The value prop is turn-K intervention, not filesystem reconstruction
+
+Correcting the ranking in the previous subsection. **Filesystem reconstruction is
+the enabler — a necessary condition, not the product. Intervention at turn K is
+the product.** The distinction is not pedantic; it changes the economics, the
+validity, and what can be sold.
+
+**The economics.** A session of T turns evaluated by full-session replay costs
+`T × arms × N`. Evaluated by intervening at turn K it costs `1 × arms × N`. For
+coding sessions of 50–200 turns that is **one to two orders of magnitude** —
+which is the difference between a grid you can run on every model launch and one
+you cost out and abandon.
+
+Three consequences follow, and the third is the business.
+
+**1. Granularity is what makes rigour affordable.** The methodology praised above
+— N samples per cell, action-match rates, confidence intervals — is only
+purchasable if a cell is cheap. Full-session replay forces n=1 by economics
+alone, and n=1 is exactly the industry default the design doc is trying to beat.
+So turn-K intervention and statistical validity are the same insight, not two
+features: **granularity buys sample size, and sample size buys the answer.**
+
+**2. Attribution.** Re-running a whole session under a different model gives you
+an end-to-end outcome difference you cannot attribute — the delta could have
+originated at turn 3 or turn 47, and everything after diverges. Intervening at a
+single turn isolates the effect *at that decision point*. Full-session replay
+measures a correlation between configuration and outcome; **turn-K replay
+measures the causal effect of a configuration at a specific decision.** Different
+claim, not a cheaper version of the same one.
+
+**3. You cannot derive a routing policy from full-session replay.** Only from
+per-turn counterfactuals. "Which model is better overall" is a one-time
+procurement answer. "Which *kinds of turns* does the cheap model handle
+indistinguishably" is a **routing policy** — recurring, measurable, and worth a
+percentage of a known inference bill. That is a materially better product than
+migration advice, and it is unreachable without this granularity.
+
+**And it enables a measurement nobody currently offers: the drift curve.**
+Intervene at varying K and measure how far downstream the effect persists — does
+a cheap model at turn 12 cost you at turn 40? For stateful agent sessions this is
+*the* routing question, and it is unanswerable today. Every shipping router is
+stateless per request and structurally cannot see it.
+
+### Which reframes the competitive position
+
+Model routing is a mature, well-capitalised category — [Martian reportedly near a
+$1.3B valuation, RouteLLM showing 85% cost savings at 95% of frontier quality in
+controlled evals, with real deployments reporting
+30–85%](https://entelligence.ai/blogs/9-best-llm-routers-and-model-routing-tools-in-2026),
+alongside OpenRouter, LiteLLM, Not Diamond, and in-house routers at Cursor and
+Factory. **Entelligence's router already decides per turn for coding agents.** So
+per-turn routing is emphatically not novel, and building a router would be
+walking into a funded fight.
+
+But every one of those products shares a structural blind spot:
+
+> **Routers are predictive and forward-only. They choose, and the road not taken
+> is never driven. No router can tell you what would have happened if it had
+> chosen differently — on your workload, in your repository, at that turn.**
+
+Replay produces exactly that missing quantity. Which suggests the position is not
+*a router* but **the measurement layer routers cannot build**:
+
+- **Audit.** "Your router sent 800 turns to the frontier model last month. We
+  replayed them: 730 were indistinguishable on a cheaper tier, 70 regressed.
+  Here is the overspend." A category that currently cannot measure itself.
+- **Calibration.** Fit a routing policy to *your* history rather than to generic
+  benchmarks — which is precisely the "sophisticated learned model" the standalone
+  routers are sold on and cannot personalise.
+- **Safety.** The drift curve tells you whether the savings hold up over a
+  session, or merely defer a cost to turn 40.
+
+**This also solves distribution**, which was the hardest open problem in the
+previous subsection. Routers and model-agnostic harnesses stop being competitors
+and become channels: they all sell cost savings they cannot prove on a customer's
+own workload, and none of them can prove it without a counterfactual engine. Being
+the measurement layer for a well-funded category is a better position than being
+its ninth entrant.
+
+**On tool-call granularity** — a real extension of the same argument, and it gets
+cheaper and more precise still. The honest caveat: the turn boundary is where
+capture already fires nearly free, and *within* a turn the mutation-guard problem
+gets harder — partial tool effects, half-applied edits, and state that no lockfile
+or build command explains. The correctness burden rises faster than the cost
+falls. Worth doing, worth doing second.
+
+**Pricing consequence.** Migration advice is a project sale, priced on urgency.
+A routing policy with measured quality impact is a recurring, quantified saving —
+subscription or share-of-savings, renewing on every model launch. The second is a
+better business and it follows directly from the granularity.
+
 ### The market trigger: forced migrations
 
 The commercial opening is not "teams want better evals." It's that **model
@@ -319,13 +410,11 @@ So "replay production traffic against a candidate model" is **not** novel. What
 remains unserved is narrower and still real:
 
 > **For a stateless LLM app, replaying the trace *is* the replay. For a stateful
-> coding agent, the trace is meaningless without the filesystem — and nobody
-> reconstructs the filesystem.**
+> coding agent, the trace is meaningless without the filesystem.**
 
-Plus two structural differences the existing tools don't address: intervention
-**mid-session at turn K** rather than re-running a whole request, and the
-divergence problem that creates — which is what the methodology above exists to
-handle.
+That is the *enabler*. The differentiated capability is intervention **mid-session
+at turn K** rather than re-running whole requests, and the divergence problem that
+creates — see the subsection above, which supersedes the emphasis here.
 
 ### Buyer, pricing, distribution
 
