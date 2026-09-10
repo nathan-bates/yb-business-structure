@@ -31,9 +31,12 @@ treats them together.
 | Co-founder 3 | `OPEN` | |
 | Employee (prospective) | **Platform / line 2 delivery** | Line 1 product decisions |
 
-`PROPOSED` — **the employee sits in Platform**, so consulting delivery stops
+`PROPOSED` — **the employee sits in Platform**, so line-2 delivery stops
 consuming founder attention. That's the whole reason to hire at this stage: not
-capacity, but *insulation* of the scarce resource.
+capacity, but *insulation* of the scarce resource. If line 2 is licensing-led
+(01 §Line 2 should be licensing-led), the role is **packaging and licensee
+support** rather than embedded delivery — a materially different hire, and one
+whose output is reusable rather than consumed.
 
 `OPEN` — co-founder ownership. The portfolio has three lines and one factory;
 four ownership slots exist and two are unassigned in this document. Ownership
@@ -130,10 +133,14 @@ better known going in than concluded afterwards.
 - **Line 1 gets a protected block.** It's the only line whose product doesn't
   exist yet, and the only one that can't be delegated to agents — because there's
   nothing yet to delegate.
-- **Consulting carries a stated cap** — engagements per year or % of founder
-  time. It is a relationship business in *other people's* domains: it generates
-  no compounding data while consuming the attention that would. Uncapped, it wins
-  by default. `OPEN` — what is the number?
+- **Line 2 is licensing-first.** Licensing scales without adding people; embedded
+  consulting does not. Where services are unavoidable, prefer fixed-price
+  projects over time-and-materials.
+- **Two different controls, for two different models.** *Embedded consulting*
+  carries a stated cap — engagements per year or % of founder time — because it
+  is linear in humans and generates no compounding data. *Licensing* carries a
+  **commitment cap** instead: what you promise licensees constrains what the
+  architecture can still change. `OPEN` — both numbers.
 
 **Shift triggers, stated in advance so reallocation is a decision rather than a
 drift:**
@@ -141,7 +148,8 @@ drift:**
 | Trigger | Response |
 |---|---|
 | App #2 exceeds ~$150k or ~7 months | Stop. Revisit the portfolio strategy before app #3 |
-| A consulting engagement breaches the cap | Decline or subcontract; do not absorb |
+| An embedded consulting engagement breaches the cap | Decline, subcontract, or convert to a licence; do not absorb |
+| A licence commitment would freeze a moving interface | Refuse the commitment or license a stabilised subset |
 | Sextant misses its evaluation bar | Park it; don't extend |
 | Two apps ship with no shared users | Revisit the cross-app thesis (01 §failure mode) |
 
@@ -173,7 +181,7 @@ Legal shape is in 01. What matters organisationally:
 | Entity | Holds | Run by |
 |---|---|---|
 | **Group** | IP, investor equity, the human core, the incubating ecosystem play | Founders |
-| **Platform** | Core tech; consulting revenue; licenses IP down | Employee + agents; one founder accountable |
+| **Platform** | Core tech; **licence revenue** plus bounded services; licenses IP down | Employee + agents; one founder accountable |
 | **Apps** | Vertical apps as individually disposable subsidiaries | Agent-delivered; one founder accountable |
 
 - Platform is **revenue-generating**, not a cost centre, which makes the
@@ -204,10 +212,11 @@ Three founders and an investor already in. Worth being explicit about two things
 
 ## What would break this
 
-1. **The employee lands in Apps instead of Platform** — consulting keeps
+1. **The employee lands in Apps instead of Platform** — line-2 delivery keeps
    consuming founder attention and nothing insulates line 1.
-2. **No consulting cap** — the cash line becomes the company. The most common
-   failure mode for groups in this shape.
+2. **Line 2 drifts into embedded consulting** because it closes faster than
+   licensing does. The cash line becomes the company — the most common failure
+   mode for groups in this shape, and the one that arrives disguised as good news.
 3. **Agents without standing authority** — every agent action becomes a founder
    decision, and the org gets *slower* with more agents, not faster.
 4. **Commercial model unchanged** — the cost curve doesn't bend and the portfolio

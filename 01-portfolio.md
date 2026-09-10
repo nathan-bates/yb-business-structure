@@ -27,29 +27,51 @@ viable at a headcount that couldn't normally sustain one.
 
 | | **1. Ecosystem** | **2. Core tech** | **3. Apps** |
 |---|---|---|---|
-| **What** | Four-agent topology with a generative per-person UI: `project-k`, `aux`, `arbiter`, `library`, `market` | The agent stack sold/leased as consulting | VesselHaven, App #2, #3… |
+| **What** | Four-agent topology with a generative per-person UI: `project-k`, `aux`, `arbiter`, `library`, `market` | The agent stack **licensed**, with services only where licensing needs them | VesselHaven, App #2, #3… |
 | **Horizon** | 3–5 yr | Now | 1–2 yr |
 | **Risk** | High | Low | Medium |
-| **Scales with** | Accumulated preference data | **Humans — linear** | Factory maturity — sub-linear |
+| **Scales with** | Accumulated preference data | Licensees — **sub-linear if licensed, linear if staffed** | Factory maturity — sub-linear |
 | **Role** | The outcome | Runway | Distribution, and proof of the cost curve |
 
-Line 2 is the one to watch. It's the only line linear in headcount, the only one
-with customers asking for more today, and therefore the one that wins by default
-unless deliberately capped.
+Line 2 is the one to watch — but *how* it is sold decides whether it's a problem.
+Sold as embedded consulting it is linear in headcount and wins attention by
+default; **licensed**, it has a far better hour:income ratio and scales without
+adding people. See §Line 2 should be licensing-led.
 
-### What the ecosystem play actually is
+### What the ecosystem play might be
 
-Not an aggregation platform that schedules things — that's a demonstration. It's
-**a program of cooperating agents with a generative UI layer**: an **Arbiter**
-that decides what to do for a person and owns what gets asked; a **User Agent**
-(`library`) that curates that person's knowledge behind a scope gate; **Kay**
-that decides *form, never content*, composing an interface from atomic
-primitives; and a **Service Agent** (`market`) that reaches the outside world.
-`aux` is the protocol seam between them, plus a reference renderer and design
-system.
+`OPEN` — **this is not settled, and earlier drafts of this document stated it
+with more confidence than the evidence supports.** `project-k` holds its product
+architecture *intentionally undecided*; its ADRs carry `status: proposed`; ADR
+0016 reversed the framing of the entire repository once already. What follows is
+the current working hypothesis, not a description of a decided thing.
 
-The purpose is the **collaboration flywheel**: better signals → better learning →
-more trust → more autonomy → more delegation → more signals.
+**The working hypothesis** is a program of cooperating agents with a generative
+UI layer: an **Arbiter** that decides what to do for a person and owns what gets
+asked; a **User Agent** (`library`) that curates that person's knowledge behind a
+scope gate; **Kay**, deciding *form, never content*, composing an interface from
+atomic primitives; and a **Service Agent** (`market`) reaching the outside world.
+`aux` is the protocol seam, plus a reference renderer and design system.
+
+The **collaboration flywheel** is the stated purpose — better signals → better
+learning → more trust → more autonomy → more delegation → more signals — and it
+is the most durable part of the hypothesis, because it survives most of the
+possible product shapes.
+
+**Shapes this could still take**, none excluded by the work done so far:
+
+| Shape | What it would mean |
+|---|---|
+| **Consumer aggregator** | The scheduling/shopping product as the actual product. Retired in this document as a market position, but not architecturally impossible |
+| **Four-agent platform** *(current hypothesis)* | The full topology, with apps as first citizens |
+| **Embedded interface layer** | The preference + UI layer licensed into other people's applications; no consumer surface of our own |
+| **Preference layer only** | `library` and the trust record as the product; form left to whoever renders it |
+
+These have materially different stacks, org shapes and revenue models, so the
+choice eventually forces itself. What is *not* required is choosing now — the
+apps and the community accumulate the same person-data under all four, which is
+why 01's strategy section leans on the cohort question rather than on the
+architecture.
 
 ---
 
@@ -129,6 +151,65 @@ is annoying by comparison.
 **A wedge is allowed to depreciate.** You use one to buy a relationship, and the
 relationship compounds afterwards. What's fatal is investing in a depreciating
 asset and expecting it to be the moat.
+
+---
+
+## Line 2 should be licensing-led
+
+An earlier draft described line 2 as "the agent stack sold or leased as a
+consulting offering", and then spent several sections worrying that it would eat
+the company. Both the framing and the worry were shaped by assuming *consulting*.
+**Licensing is a different business with a different shape**, and it is the
+better fit for a group whose stated goal is minimising the human core.
+
+| Model | hour : income | Scales by | Cost to serve |
+|---|---|---|---|
+| **Licensing** | **Best** | Adding licensees | Docs, versioning, support tiers — written once, amortised across all |
+| Fixed-price projects | Middling | Adding projects, at falling cost per project | Delivery per engagement, but capped |
+| Embedded consulting / T&M | **Worst** | Adding people | Embedded staff, account management — linear, forever |
+
+**What is licensable today, in rough order of readiness:**
+
+| Asset | Licensable as | Readiness |
+|---|---|---|
+| Claude Code Cloud (`llm-slack-channel-bridge`) | Agent runtime + control plane for teams running agent fleets | Load-bearing internally; needs packaging |
+| ProductLens / Archon | Work layer for agent-executed delivery | Parked; would need un-parking |
+| Sextant | Verification / acceptance oracle | Theoretical — do not sell what isn't real |
+| **`library` + Kay — the per-person interface layer** | Embedded into someone else's application | Earliest-stage, highest ceiling |
+
+**The last row matters more than the others, because it collapses two lines into
+one.** Licensing the preference-and-interface layer *into other people's apps* is
+precisely the B2B2C channel this document proposes as line 1's distribution
+strategy. Under that reading, licensing is not a side business that competes with
+the ecosystem play for attention — **it is the ecosystem play's go-to-market**,
+and the revenue arrives years before a consumer surface would.
+
+That is the strongest argument in this document for line 2 as currently
+constituted, and it inverts the earlier treatment of it as a necessary evil.
+
+**What licensing still costs, stated honestly** — this is not free money:
+
+- **Packaging.** Internal-facing tools are not licensable products. Something has
+  to become installable, configurable and documented by someone other than its
+  author.
+- **Versioning and compatibility.** Once a licensee depends on an interface, you
+  can no longer break it weekly. This is a real constraint on a research-stage
+  architecture, and it argues for licensing the *stable* assets first and keeping
+  `project-k`/`aux` free to move.
+- **Support, tiered.** Bounded and shared across licensees, unlike consulting —
+  but not zero.
+- **A sales motion.** Licence revenue per customer is lower than consulting
+  revenue per customer, so it needs more customers, which needs a repeatable way
+  to find them. That is the one part that does eventually want a human.
+
+**Therefore, revised controls.** The cap in the earlier draft was aimed at
+consulting hours. Licensing needs a different control: **roadmap discipline** —
+what you promise licensees constrains what you can change. Cap the *commitments*,
+not the revenue.
+
+`OPEN` — which asset is licensed first, to whom, and on what pricing basis
+(per-seat, per-app, per-end-user, revenue share)? The answer determines whether
+line 2 funds the ecosystem play or becomes it.
 
 ---
 
@@ -307,8 +388,8 @@ project boundary. If app #2 starts on T&M, the terms carry for another cycle.
             +---------------+---------------+
             |                               |
    Youbiquity Platform            Youbiquity Apps  ("App Portfolio")
-   (core tech + consulting;                 |
-    revenue-generating)               +-----+-----+
+   (core tech; licensing +               |
+    services revenue)               +-----+-----+
                                       |           |
                                  VesselHaven   App #2, #3...
 ```
@@ -354,9 +435,12 @@ the IP licensing mechanics are not, and transfer pricing will shape them.
    routing around its controls. The Ninth Circuit's reversal of Amazon's
    injunction against Perplexity helps; the case is unresolved. Make it a
    deliberate posture with legal input.
-8. **Consulting eats the company.** It's a relationship business in *other
-   people's* domains — it generates no compounding data for you while consuming
-   the attention that would.
+8. **Line 2 is sold as consulting rather than licensed.** Embedded delivery in
+   *other people's* domains generates no compounding data while consuming the
+   attention that would. The risk is the sales model, not the line itself.
+9. **Licensing commitments freeze a research-stage architecture.** The mirror
+   risk: licensees who depend on `aux` or `project-k` interfaces before those
+   interfaces should stop moving. License the stable assets first.
 
 ---
 
@@ -383,7 +467,7 @@ Kept so they don't get re-argued. All were live at some point in the analysis.
 |---|---|
 | The factory is the flagship | It's a building block; the ecosystem play is the centre of gravity |
 | `aux` is the co-browse "hands" | `aux` is the agent-to-UI protocol; co-browse is a separate Service Agent capability |
-| Sell Sextant as a product | Productisation adds human-shaped work that fights the minimal core; consulting/lease is the fit |
+| Sell Sextant as a self-serve product | Self-serve productisation adds human-shaped work that fights the minimal core. *Partially superseded:* **licensing** to a small number of negotiated customers is a different proposition and is now the preferred line-2 model — but not for Sextant until it is real |
 | `market` builds a driver library | Arms race against 10–100× headcount |
 | Sextant as the AUX adoption bridge | Needs source access; and the wrapper decision removed the need |
 | "Act in the person's own accounts" as a niche | Industry standard — OpenAI deprecated Instant Checkout Mar 2026; UCP Identity Linking Apr 2026 |

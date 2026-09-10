@@ -96,8 +96,18 @@ Three lines, one factory, four ownership slots — two unassigned. Ownership sho
 be by line so each line has exactly one person whose attention it can claim.
 Unassigned lines default to unowned, and it will be line 1.
 
-### Q13 — What is the consulting cap?
-Engagements per year, or % of founder time. Uncapped, it wins by default.
+### Q13 — Line 2: what gets licensed first, and what are the two caps?
+Licensing has a far better hour:income ratio than embedded consulting and scales
+without adding people — and licensing the preference/interface layer into other
+people's apps *is* line 1's B2B2C channel, which makes line 2 a go-to-market
+rather than a distraction (01 §Line 2 should be licensing-led).
+
+Three parts: **which asset first** (Claude Code Cloud is readiest; the
+`library` + Kay layer has the highest ceiling; not Sextant until it's real), **on
+what pricing basis** (per-seat, per-app, per-end-user, revenue share), and **the
+two caps** — a time cap on any embedded consulting, and a *commitment* cap on
+licensing, since what you promise licensees constrains what the architecture can
+still change.
 
 ---
 
@@ -105,7 +115,7 @@ Engagements per year, or % of founder time. Uncapped, it wins by default.
 
 | Question | Answer |
 |---|---|
-| Sell the factory as a product? | No — consulting/lease, not productisation |
+| Sell the factory as a self-serve product? | No — but **license** it to negotiated customers; that is a different proposition and is the preferred line-2 model |
 | Does `market` build drivers? | No — it wraps providers |
 | VesselHaven: subsidiary or grandchild? | Grandchild — keeps verticals individually disposable |
 | Where does the ecosystem play sit? | Incubates in the Group; no entity yet |
