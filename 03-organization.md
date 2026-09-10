@@ -228,6 +228,109 @@ functions, not as roles to fill:
 
 ---
 
+## Sourcing: 1P vs consultants, onshore vs offshore
+
+Two axes usually conflated — **employment relationship** (first-party employee vs
+contractor vs agency) and **cost geography** (onshore vs offshore at ~3–4×) — plus
+a third this document has already established: **agent-executed vs
+human-executed.** The third one changes the answer to the first two.
+
+`ASSUMPTION` — illustrative rates, adjust to your actuals: onshore senior
+~$150–200k fully loaded (~$100–150/hr contract); offshore ~$40–60k (~$25–40/hr).
+VesselHaven's ~$250k over 11 months is consistent with roughly 3–4 offshore FTE;
+the same work onshore would have been $750k–$1m.
+
+### The observation that decides most of it
+
+**Offshore is an arbitrage on hours. The company's entire strategy is to reduce
+hours.** Optimising the unit price of the thing you are trying to eliminate is
+the sourcing version of betting against the model curve.
+
+Run the numbers at your own 3–4× assumption:
+
+| | Cost/yr | Bends the cost curve? |
+|---|---|---|
+| 4 offshore engineers, hourly | ~$200k | **No** — and under T&M they're structurally opposed to it (01) |
+| 1 onshore senior + agent spend | ~$180k + ~$30k | **Yes** — the senior's job is to drive the automation |
+
+Roughly the same money. So the real question is: **does one senior driving agents
+outproduce three-to-four juniors?**
+
+That is not a staffing question — **it is the portfolio thesis restated.** If the
+factory works, senior-and-few wins. If it doesn't, cheap-and-many wins, but then
+there is no cost curve, no portfolio, and the strategy in 01 fails anyway. The
+sourcing decision and the company thesis stand or fall together, which means they
+should not be decided by different logic.
+
+### When you pay for output, geography stops mattering
+
+The onshore/offshore question only has force **in an hourly world.** Under
+fixed-price, you buy a deliverable and the vendor's cost structure is their
+problem. That's a further argument for the contracting shift in 01 — it makes the
+3–4× question moot for everything bought as output.
+
+`ASSUMPTION` — a fixed-price offshore bid is *not* ¼ of onshore, more like ½,
+because the vendor prices in the risk they're now absorbing. That premium is the
+cost of transferring delivery risk, and it is usually worth paying.
+
+### The rule: staff what compounds, buy what doesn't
+
+This falls straight out of 02's shared-vs-per-app table:
+
+> **First-party for the shared column. Bought as deliverables for the per-app
+> column.**
+
+Because shared work *accumulates* — the factory, the platform, the ops plane, the
+preference layer — and in a company whose thesis is that app N makes app N+1
+cheaper, **letting that learning walk out at the end of every engagement is
+directly value-destroying.** Per-app work doesn't accumulate, so rent it.
+
+| Work | Source | Why |
+|---|---|---|
+| Architecture, product, negotiation, commitments | **1P, senior** | Judgement-dense, low-volume, irreducible. The founders today |
+| Factory, platform, ops plane, preference layer | **1P** | Compounds; the learning must stay |
+| App delivery, end to end | **Fixed-price vendor** — geography irrelevant | Bought as output; risk transfers |
+| High-volume, low-judgement: content ops, QA sweeps, moderation triage, tier-1 support | **Agents first** | Offshore only for what agents can't do *yet* — and time-box it against the model curve |
+| Specialist bursts: security audit, legal, compliance, design | **Onshore consultants, project-priced** | You're buying a credential and a signature, not hours |
+| Domain expertise for a new vertical | **Fractional/advisor, in-market** | Cheapest high-leverage input available |
+
+### The tension your two targets create
+
+Offshore taxes the metric 03 identifies as the binding constraint. **Decision
+latency drives elapsed time**, and a team with two hours of overlap adds latency
+to every decision in the chain.
+
+- The **cost** target (≤$125k for app #2) favours offshore.
+- The **time** target (≤5.5 months) favours overlapping hours and fewer handoffs.
+
+At 3–4× cheaper but plausibly 30–50% slower in elapsed time, **the two targets
+pull in opposite sourcing directions**, and the time target may be unreachable
+offshore regardless of tooling. `OPEN` — which are you optimising? If both, the
+honest middle is nearshore with real overlap, or fixed-price delivery where
+elapsed time is contractually the vendor's problem rather than yours.
+
+### Recommended combination
+
+`PROPOSED`:
+
+1. **1P, onshore, very few, senior.** Founders now; the first hire when the
+   trigger conditions below fire. They own everything that compounds and they
+   supervise agents.
+2. **Agents as the default executor** for volume work across every function, not
+   just engineering.
+3. **Fixed-price vendors for per-app delivery**, chosen on price and track record
+   rather than geography.
+4. **Onshore specialists, project-priced**, for credentialed bursts.
+5. **Offshore hourly: minimise, and treat any of it as a time-boxed position**
+   against the model curve — it is the category most likely to be obsoleted by
+   the next capability release, and the one whose incentives fight the factory.
+
+**The trap to avoid:** offshore hourly is the cheapest-looking option on a
+spreadsheet and the only one that structurally resists the thing the company is
+trying to build. It optimises the line item and defeats the strategy.
+
+---
+
 ## Decision rights and latency
 
 Attention binds twice — as allocation, and as latency. On an 11-month build, much
