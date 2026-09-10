@@ -289,12 +289,73 @@ authenticated session rather than asking permission: add-to-cart in the person's
 own Amazon session, one aggregated cart over the merchants' real carts, at
 Amazon and Total Wine.
 
-> **This is the defensible statement of the niche:** not "cleaner aggregation
-> than Google" — four people do not win a UX-quality contest against Google — but
-> **aggregation across merchants that protocol-based aggregation structurally
-> cannot reach.** Amazon is the flagship proof. That is a permission-free
-> position, and it is durable exactly because the incumbents' approach is
-> permission-based by construction.
+**And permission-free reach is not a moat either.** Cloud-browser agents already
+do it: a GrokBot given its own inbox (AgentMail) and a Stripe Link virtual card
+buys from Amazon on a remote Chrome instance, no merchant cooperation involved.
+Any computer-use agent can take this path.
+
+The law currently permits it — for everyone:
+
+- Amazon sued Perplexity over Comet in November 2025; a district court granted an
+  injunction in **March 2026**; the **Ninth Circuit reversed**, finding the
+  claimed harms, the balance of equities and the public interest all favoured
+  Perplexity. The case is not finally resolved.
+- The judicial framing that matters: Comet accesses Amazon accounts **"with the
+  Amazon user's permission, but without authorization by Amazon."**
+
+Two consequences. First, "reach merchants protocols can't" is available to every
+well-funded competitor, so it cannot be the moat — my previous draft was wrong
+again. Second, the legal theory that survived appeal is specifically about acting
+**in the user's own account, with the user's permission** — which is the
+co-browse posture, and a stronger position than an agent transacting from its own
+inbox and virtual card (no order history, no loyalty, no returns path, and a
+weaker ToS argument).
+
+### 2d. The uncomfortable conclusion
+
+Three candidate niches have now failed the same test: acting in the person's own
+accounts (industry standard), clean aggregation (Google Universal Cart),
+permission-free reach (any computer-use agent, now legally cleared). Generative UI
+has A2UI and MCP Apps; personalization ships as an Apache-2.0 blueprint.
+
+**The evidence does not support the existence of a defensible *technical* niche
+in the consumer agent layer.** Continuing to search for one is likely to keep
+producing candidates that a week of research retires.
+
+What that leaves is not nothing — it's just a different kind of advantage:
+
+1. **Segment, not technology.** The giants are building one agent for everyone,
+   monetised through ads and platform position. A four-person company wins where
+   they are structurally uninterested: a specific population whose workflows are
+   too small, too regulated, or too specialised to prioritise. Youbiquity already
+   has an instance of exactly that — VesselHaven's marine domain, where supplier
+   coordination is fragmented, high-value, and invisible to Google.
+2. **Channel: B2B2C rather than a consumer front-end.** Sell the per-person
+   interface layer *into* products people already use — the app portfolio first,
+   partners after. The giants are competing for the consumer front door; almost
+   nobody is selling app owners the ability to give each of their users a
+   different interface. This also fits the minimal-core constraint, because
+   B2B2C does not require consumer distribution spend.
+3. **Data the giants cannot reach.** Preference and domain knowledge inside
+   verticals they do not touch — vessel history, supplier relationships,
+   professional workflow context.
+
+**Recommendation:** stop positioning the ecosystem play as a consumer aggregator
+competing with Gemini and ChatGPT, and position it as **the per-person interface
+layer for vertical applications**, with the aggregated-cart spike retained as the
+proof that the four-agent topology works end to end — a demo, not the product.
+
+That reading also collapses a tension that has run through this whole document:
+under it, lines 1 and 3 stop competing for attention and become the same motion.
+The apps are how the interface layer reaches users, and the interface layer is
+what makes app N+1 worth building.
+
+> **NEEDS YOU** — This is a significant repositioning and it is *not* a decision
+> I should make. It follows from the research, but it trades a large, contested
+> market for a smaller, defensible one, and reasonable people would rather fight
+> for the former. If you disagree, the counter-argument to make is that
+> distribution can be bought or that the giants' one-size interface is worse than
+> it looks — both are arguable, neither is evidenced here.
 
 *Source discrepancy, flagged rather than resolved:* a 2026 protocol guide states
 that neither ACP nor UCP specifies cross-merchant carts, and lists multi-item
@@ -318,17 +379,19 @@ model of a specific person, and none has a feedback flywheel converting each
 interaction into a better-fitting interface next time. That is a narrower claim
 than "generative UI" and it is the one worth defending.
 
-**Revised niche, in one sentence:** reach the merchants protocols can't, and
-present the result through an interface shaped by an accumulating per-person
-preference model — with the aggregated cart as the first demonstration of both
-at once.
+**Revised position, in one sentence:** the advantage is not a technical niche in
+the consumer agent layer — it is a per-person interface layer sold into verticals
+the giants will not prioritise, proven by the aggregated-cart spike.
 
 **Sources.** [OpenAI deprecating Instant Checkout / merchant-side model + UCP
 Identity Linking](https://opascope.com/insights/ai-shopping-assistant-guide-2026-agentic-commerce-protocols/) ·
 [Google Universal Cart](https://www.digitalcommerce360.com/2026/05/20/google-universal-cart-for-agentic-commerce/) ·
 [Grok Bot shopping / Stripe Link virtual cards](https://www.axios.com/2026/06/03/exclusive-spacexai-and-gopuff-help-you-shop-for-more-stuff) ·
 [Claude Commerce Agents](https://www.marktechpost.com/2026/09/03/anthropic-released-claude-commerce-agents-an-apache-2-0-blueprint-for-shopping-and-merchant-agents-across-retail-travel-telecom-and-entertainment/amp/) ·
-[Generative UI frameworks, A2UI, MCP Apps](https://www.copilotkit.ai/blog/the-developer-s-guide-to-generative-ui-in-2026)
+[Generative UI frameworks, A2UI, MCP Apps](https://www.copilotkit.ai/blog/the-developer-s-guide-to-generative-ui-in-2026) ·
+[Amazon v. Perplexity injunction](https://www.cnbc.com/2026/03/10/amazon-wins-court-order-to-block-perplexitys-ai-shopping-agent.html) ·
+[Ninth Circuit reversal](https://www.engadget.com/2230471/perplexity-has-successfully-overturned-amazon-injunction-on-its-ai-shopping-bot/) ·
+[CFAA analysis of agent access](https://nohacks.co/blog/amazon-perplexity-cfaa-agent-visitor-rights)
 
 ### 3. The apps are the demand side, and one is not enough.
 
