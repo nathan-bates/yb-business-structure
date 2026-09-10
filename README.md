@@ -9,7 +9,7 @@ plainly so they can be argued with.
 
 | Doc | Covers | Status |
 |---|---|---|
-| [01-portfolio.md](01-portfolio.md) | Asset inventory, classification, entity shape, keep/kill/park | Draft — awaiting input on open questions |
+| [01-portfolio.md](01-portfolio.md) | Asset inventory, classification, entity shape, keep/kill/park | Draft v3 — grounded in project-k + aux |
 | 02-stack.md | Target architecture mapped to the portfolio; shared vs. per-product | Not started |
 | 03-organization.md | Operating model: human core, agent roles, P&L and reporting lines | Not started |
 
