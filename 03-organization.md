@@ -1,226 +1,304 @@
 # 03 — Organization
 
-*Version 1 — 2026-09-10. Follows [01-portfolio.md](01-portfolio.md) and
-[02-stack.md](02-stack.md). Proposals here are `PROPOSED` unless marked
-otherwise; this is the doc most likely to need redirection.*
+*Version 2 — 2026-09-10. v1 was an engineering org: it treated agents as
+developers and never asked what it takes to actually run a line of business.
+This version starts from the portfolio — what does Ecosystem, Core Tech and Apps
+each require to operate, and what happens to the org as each one grows.*
 
 ---
 
-## The design constraint
+## The question this answers
 
-Three to four people running three revenue lines. Capital is not the binding
-constraint — **founder attention is**, and it binds twice:
+Not "who reports to whom" — with three people that's noise. The real questions:
 
-1. **As allocation.** Line 2 has customers asking for more; line 1 has nobody
-   asking for anything. Without a rule, attention flows to the loudest line.
-2. **As latency.** On an 11-month build with a small core, much of the critical
-   path isn't build throughput — it's waiting for a human to decide. Agents can
-   double throughput and barely move elapsed time if the queue is decisions.
-
-So the cost curve and the org design are **one problem**, not two. This document
-treats them together.
+1. **What functions must exist** to run each line, engineering being a minority
+   of them?
+2. **What drives the load** on each function as the business grows?
+3. **Which of those functions absorb growth without absorbing people** — and
+   which don't, because those are the ones that decide whether the minimal core
+   survives contact with success?
 
 ---
 
 ## The human core
 
-| Person | Owns | Does not own |
+| | Role | Owns |
 |---|---|---|
-| Nathan | Line 1 (ecosystem); group strategy; commercial terms | Delivery execution |
-| Co-founder 2 | `OPEN` | |
-| Co-founder 3 | `OPEN` | |
-| Employee (prospective) | **Platform / line 2 delivery** | Line 1 product decisions |
+| **Nathan** | CTO *(aspirational)* | Architecture, the factory, technical direction across all three lines |
+| **Agi** | COO | Operations, delivery, commercial execution, the scaling machinery |
+| **Chris** | CPO *(aspirational)* | Product: cohort definition, app selection, the decision/elicitation layer, community |
 
-`PROPOSED` — **the employee sits in Platform**, so line-2 delivery stops
-consuming founder attention. That's the whole reason to hire at this stage: not
-capacity, but *insulation* of the scarce resource. If line 2 is licensing-led
-(01 §Line 2 should be licensing-led), the role is **packaging and licensee
-support** rather than embedded delivery — a materially different hire, and one
-whose output is reusable rather than consumed.
+**"Aspirational" is the most important word in that table.** Two of three roles
+are titles the group intends rather than describes — which means Nathan and Chris
+are currently absorbing work that belongs to functions which don't exist yet. The
+org design's job is to name that work and route it somewhere else, in order.
 
-`OPEN` — co-founder ownership. The portfolio has three lines and one factory;
-four ownership slots exist and two are unassigned in this document. Ownership
-should be by line, not by function, so that each line has exactly one person
-whose attention it can claim.
+`PROPOSED` — **what has to be true for each role to become actual:**
 
-**The governing metric: humans per revenue line.** ~3–4 : 1 today. The structure
-is working if it falls as lines are added, failing if a new app needs a new team —
-regardless of how the app performs.
+| Role | Blocked by | Cleared when |
+|---|---|---|
+| CTO | Doing delivery management and vendor supervision | Fixed-price contracting removes hour-by-hour oversight (01 §How engineering gets bought) |
+| CPO | No cohort defined, so product decisions are per-app rather than portfolio-level | QUESTIONS Q3 answered — product becomes a portfolio question |
+| COO | Operations plane doesn't exist yet, so ops is per-app improvisation | 02 §Operations built shared, before app #3 |
+
+**Line ownership** — one accountable owner per line, because with three people a
+matrix means nothing is owned:
+
+| Line | Accountable | Contributing |
+|---|---|---|
+| **Ecosystem** | Nathan — it's an architecture-shaped bet and the option-holder should hold it | Chris on product shape |
+| **Core Tech** | Agi — licensing is a commercial motion before it is a technical one | Nathan on what's licensable |
+| **Apps** | Chris — app selection is the cohort question in operational form | Agi on delivery, Nathan on factory |
+
+`OPEN` — react to this. The reasoning is that each line's *binding constraint*
+should match its owner's remit: Ecosystem is blocked on architecture decisions,
+Core Tech on commercial motion, Apps on product/cohort judgement.
 
 ---
 
-## Agent roles
+## What it takes to run each line
 
-The org chart has agents in it. Stated concretely enough to be wrong.
+Engineering is a minority of every column below. That is the point.
 
-| Role | Does | Standing authority | Escalates when |
+### Ecosystem — low volume, decision-dense
+
+| Function | Nature |
+|---|---|
+| Architecture and product-shape decisions | Irreducibly founder work; cannot be delegated |
+| Competitive and technical research | Continuous, not episodic — the six retired niches in 01 all died to research |
+| Decision record — ADRs, contradictions, stale decisions | Mechanical; agent-suitable |
+| Standards stewardship, if AUX opens | Issue triage, RFC summaries, compatibility review |
+| Preference-data governance | Privacy, consent, portability — becomes mandatory the moment the profile is shared |
+| Partnerships | Execution providers, design partners — relationship work |
+| Legal posture | IP, ToS, the co-browse question (QUESTIONS Q8) |
+
+**Load scales with:** decisions and surface area, **not** users. This line does
+not grow headcount as it succeeds — it grows *commitments*, which is a different
+and slower burden.
+
+### Core Tech — scales with licensees, not with hours
+
+The licensing model (01 §Line 2) only pays off if the functions below are built
+to absorb licensees without absorbing people.
+
+| Function | Nature |
+|---|---|
+| Packaging and release engineering | Turning internal tools into installable products — the gate on licensing at all |
+| Documentation | The single largest recurring licensing cost, and highly agent-suitable |
+| Tiered licensee support | Tier 1 agent-answerable from docs and code; tier 2 human |
+| Versioning, compatibility, deprecation policy | Constrains the architecture — see commitment cap |
+| Pipeline and qualification | Prospect research, briefs — agent-suitable |
+| Negotiation and closing | **Least agent-delegable function in the business** |
+| Contract administration | Licences, renewals, redlines against a playbook |
+| Billing, invoicing, collections | Mechanical |
+| Security review responses | Underrated: enterprise licensees send questionnaires, and they are relentless. Maintain an evidence base once, answer from it forever |
+| Roadmap commitment management | What you promised whom, and what that forecloses |
+
+**Load scales with:** number and *enterprise-ness* of licensees. A single large
+licensee can generate more support, security-review and compliance load than ten
+small ones — worth knowing before choosing the first.
+
+### Apps — scales with apps × users
+
+| Function | Nature |
+|---|---|
+| App selection and product definition | Founder work — it's the cohort question applied |
+| Domain expertise acquisition | Per app; partly buyable, partly agent-researchable |
+| Build and review | Agent-executed with human review (path B, still unproven) |
+| Verification and QA | Agent-suitable; see the Sextant evaluation |
+| Content and seed data | Per-app, agent-generable — a lever-2 target |
+| Go-to-market: positioning, pricing, launch | Per app, but shared if the apps share a cohort |
+| Acquisition and growth analytics | Agent-suitable reporting; human judgement on response |
+| Support | Shared pool across apps — lever 3 |
+| Community moderation | Shared under one community — the strongest lever-3 line |
+| Trust and safety | Policy set by humans, enforcement largely agent |
+| Payments, refunds, chargebacks | Mechanical, rising with users |
+| Incident response | Agents first, humans on escalation |
+| App-store and platform compliance | Per surface, not per app |
+
+**Load scales with:** apps × users per app. This is the line that can break the
+minimal core, because its load is a product of two growing numbers.
+
+### Group — cross-cutting
+
+Finance (bookkeeping, contractor payments, cash, investor reporting, tax across
+entities), legal and entity administration (intra-group IP licensing, transfer
+pricing, DPAs), vendor management (SOWs, milestone verification — materially
+easier under fixed-price), security and data protection, investor relations,
+and the decision record itself.
+
+**Load scales with:** entities, contracts, and jurisdictions — step functions,
+not curves. Each new entity or country is a discrete jump.
+
+---
+
+## Agent roles across the business
+
+v1's agent roster was developers with different hats. The functions above suggest
+a much wider set. Each has a **default action it may take without asking** —
+that's what makes it an org role rather than a tool — and a condition-based
+escalation.
+
+| Domain | Agent | Standing authority | Escalates when |
 |---|---|---|---|
-| **Build** | Implements against specs/ADRs; opens PRs | Merge to feature branches; open draft PRs | Spec ambiguity; cross-seam change |
-| **Review** | Adversarial review of build output | Block merge | Disagreement with build agent unresolved in two rounds |
-| **Ops / incident** | First responder: triage, diagnose, mitigate | Restart, roll back, scale | Customer-visible impact > threshold; data risk |
-| **Research** | Market/competitive/technical investigation with sources | Publish findings to the docs | Findings contradict a recorded decision |
-| **Support** | First-line response across apps | Answer from known material | Anything requiring a commitment or refund |
-| **Factory** | Maintains harness, tooling, pipelines | Change internal tooling | Changes affecting delivery contracts |
+| **Ecosystem** | Research | Publish sourced findings into the docs | A finding contradicts a recorded decision |
+| | Decision-record | Maintain ADRs; flag contradictions and stale decisions | Two live decisions conflict |
+| | Standards triage | Label, summarise and route external issues/PRs | A change would break a licensee commitment |
+| **Core Tech** | Documentation | Keep docs in sync with every release | Behaviour changed without a decision record |
+| | Licensee support (tier 1) | Answer from docs, code and prior tickets | Anything implying a commitment, refund, or roadmap promise |
+| | Release/compatibility | Changelogs, deprecation notices, migration guides | A breaking change lacks a migration path |
+| | Security-questionnaire | Answer from the maintained evidence base | A question the evidence base can't support |
+| | Pipeline research | Prospect briefs and qualification | — |
+| | Contract first-pass | Redline against the playbook | Any deviation from the playbook |
+| **Apps** | Build | Implement to spec; open PRs | Spec ambiguity; cross-seam change |
+| | Review | Adversarial review; block merge | Unresolved after two rounds |
+| | Content/seed | Generate and stage domain content | Factual claims needing domain sign-off |
+| | Support (tier 1) | Answer across all apps from known material | Commitments, refunds, distress |
+| | Community moderation | Enforce published policy; remove, warn, escalate | Novel case; policy gap; appeal |
+| | Trust and safety | Act on defined categories | Anything not in the policy |
+| | Growth analytics | Produce cohort, funnel and experiment readouts | A metric moves past a defined threshold |
+| | Ops/incident | Triage, diagnose, mitigate, roll back | Customer-visible impact or data risk |
+| **Group** | Finance ops | Categorise, invoice, chase, report cash | Anything unbudgeted or contested |
+| | Compliance | Handle data-subject requests; collect audit evidence | A request that can't be satisfied as-is |
+| | Vendor management | Track SOWs; verify milestones against fixed-price deliverables | Milestone disputed or missed |
+| | Investor reporting | Assemble the metrics pack | Narrative judgement |
 
-**Two rules that make this work:**
+**The two rules that make this an organization rather than a tool shelf:**
 
-1. **Standing authority is the point.** An agent that must ask before acting
-   converts into a decision in a founder's queue, which is the thing being
-   optimised away. Every role above has a named default action.
-2. **Escalation is by condition, not by discomfort.** The right column is the
-   contract. If agents escalate outside it, the boundary is wrong and should be
-   changed deliberately rather than eroded case by case.
-
----
-
-## Decision latency — the time floor
-
-`OPEN` — of VesselHaven's 11 months, roughly what fraction was *waiting on a
-human decision* versus *work in progress*? That split determines whether the app
-#2 time target is an engineering problem or an org problem, and the remedies are
-completely different.
-
-`PROPOSED` remedies, on the assumption the waiting share is material:
-
-- **Pre-committed defaults.** For recurring decision classes, decide once and
-  record the default. The agent proceeds unless the case is genuinely novel.
-- **Decision SLAs.** A decision request unanswered in N working days executes the
-  recorded default. This is uncomfortable and it is the mechanism that actually
-  works; without it, the queue is unbounded.
-- **Batched review windows** rather than continuous interruption — throughput and
-  quality both improve, and it protects the line-1 attention block.
-- **Fewer decision points by design.** The largest source of latency is usually
-  optionality that was never needed. A spec that names one approach beats one
-  that offers three.
+1. **Standing authority is the whole point.** An agent that must ask before acting
+   becomes an item in a founder's queue — which is the constraint being optimised
+   away. Every role above has a named default action.
+2. **Escalation is by condition, not by discomfort.** The right-hand column is a
+   contract. Escalation outside it means the boundary is wrong and should be
+   changed deliberately, not eroded case by case.
 
 ---
 
-## How engineering gets bought
+## How the org scales
 
-The most consequential organisational decision in the group, because it gates the
-cost curve (01 §How engineering gets bought).
+The central question. For each growth driver: what load rises, and does it
+consume people?
 
-> Under time-and-materials, productivity gains accrue to the vendor as leisure,
-> not to Youbiquity as cost reduction — and a vendor whose billed hours fall with
-> tool adoption is rationally opposed to the factory.
+| Growth driver | Load rises in | Absorbs how | Human cost |
+|---|---|---|---|
+| **More apps** | Build, QA, content, GTM, support, moderation, compliance, incident | Levers 1–3 (02): shared services, agent execution, one ops pool | **Sub-linear** if the ops plane exists; linear if it doesn't |
+| **More users per app** | Support, moderation, trust & safety, infra spend | Strongest agent leverage in the business; genuine economies of scale | **Sub-linear** |
+| **More licensees** | Docs, support, security reviews, contracts, billing, commitments | Agent-first, with humans on negotiation and escalation | **Sub-linear, except negotiation** |
+| **More consulting deals** | Delivery, account management, embedded staff | Nothing absorbs it | **Linear — this is why it needs a cap** |
+| **Bigger ecosystem surface** | Standards stewardship, compatibility, partnerships | Agent triage; founder decisions | **Step-wise** |
+| **More entities/jurisdictions** | Finance, legal, tax, compliance | Advisors, not employees | **Step-wise** |
 
-`PROPOSED`:
+**Read the right-hand column, because it is the whole org strategy.** Every line
+is sub-linear or step-wise except one. Consulting is the only growth vector that
+converts revenue into headcount at a fixed ratio — which is why 01 pushes line 2
+toward licensing, and why the cap exists. **The org scales precisely to the
+degree the business avoids that row.**
 
-1. **Move factory work out of app delivery.** The core owns and builds tooling;
-   delivery consumes it. Contractors are then asked to *use* something, not to
-   *invest* in something whose benefit lands on an app they'll never touch.
-2. **Fixed price per deliverable for app #2.** The ADRs, specs, C5–C10 contracts
-   and invariants make acceptance substantially more checkable than the vague
-   criteria that normally make fixed-price degenerate.
-3. **Run the diagnostic first.** Ask the incumbent for a fixed-price bid on app
-   #2. A vendor who won't price their own output has answered the question, and
-   the conversation never has to be about hours.
-4. **Decide before app #2 starts.** The cheapest moment to change a commercial
-   model is a project boundary; the window closes by default.
+**The second-order risk:** most of the sub-linear rows are only sub-linear
+*because* something shared exists — the ops plane, the support pool, one
+community, one profile. Those are all things that must be built *before* the
+growth arrives. Built after, they're rewrites under load, and the row silently
+becomes linear.
 
-**If the partner changes**, app #2 measures a new team's learning curve as much as
-the factory's leverage. Expect a noisy reading and treat app #3 as the real test —
-better known going in than concluded afterwards.
+---
+
+## When a human gets added
+
+No headcount plan. Trigger conditions instead, so a hire is a response to
+evidence rather than a feeling of being busy.
+
+**Add a human when all four hold:**
+
+1. The function is load-bearing — something breaks without it.
+2. It is **not agent-delegable**, and that's been tested rather than assumed.
+3. The load is recurring, not a spike.
+4. It is otherwise consuming a founder's protected attention.
+
+**By that test, the functions most likely to demand a human first** — stated as
+functions, not as roles to fill:
+
+- **Commercial negotiation and closing.** The least agent-delegable function in
+  the business, and the gate on line 2 scaling at all.
+- **Operations ownership**, once apps × users makes incident and support load
+  continuous rather than occasional.
+- **Domain product judgement**, if the apps *don't* share a cohort — because then
+  each app needs its own product thinking, which is precisely the failure mode
+  01 warns about. **A hire triggered by this reason is a signal the portfolio
+  thesis is failing, not a sign of growth.**
+
+---
+
+## Decision rights and latency
+
+Attention binds twice — as allocation, and as latency. On an 11-month build, much
+of the critical path is waiting for a human to decide, so agents can double
+throughput and barely move elapsed time.
+
+- **One accountable owner per line decides within it.** Cross-line decisions —
+  capital allocation, commercial model, entity changes — are founder-level. The
+  investor is consulted on capital and structure, informed otherwise.
+- **Pre-committed defaults** for recurring decision classes; agents proceed unless
+  the case is genuinely novel.
+- **Decision SLAs.** A request unanswered in N working days executes the recorded
+  default. Uncomfortable, and the mechanism that actually works — without it the
+  queue is unbounded.
+- **Batched review windows** rather than continuous interruption; it protects the
+  Ecosystem attention block, which is the only one with no external party
+  demanding it.
+- **Fewer decision points by design.** A spec naming one approach beats one
+  offering three.
+
+`OPEN` — of VesselHaven's 11 months, what fraction was waiting versus working?
+It decides whether the app #2 time target is an engineering problem or this one.
 
 ---
 
 ## Attention allocation
 
-`PROPOSED` rules:
+- **Apps and Core Tech are agent-delivered by default.** A founder hour spent
+  there is a bug to be automated.
+- **Ecosystem gets a protected block** — the only line with no customer demanding
+  attention, and therefore the only one that loses by default.
+- **Two caps, for two different models.** Embedded consulting: a time cap.
+  Licensing: a **commitment** cap, because what you promise licensees constrains
+  what the architecture can still change.
 
-- **Lines 2 and 3 are agent-delivered by default.** A founder hour spent there is
-  a bug to be automated, not a cost of doing business.
-- **Line 1 gets a protected block.** It's the only line whose product doesn't
-  exist yet, and the only one that can't be delegated to agents — because there's
-  nothing yet to delegate.
-- **Line 2 is licensing-first.** Licensing scales without adding people; embedded
-  consulting does not. Where services are unavoidable, prefer fixed-price
-  projects over time-and-materials.
-- **Two different controls, for two different models.** *Embedded consulting*
-  carries a stated cap — engagements per year or % of founder time — because it
-  is linear in humans and generates no compounding data. *Licensing* carries a
-  **commitment cap** instead: what you promise licensees constrains what the
-  architecture can still change. `OPEN` — both numbers.
-
-**Shift triggers, stated in advance so reallocation is a decision rather than a
-drift:**
-
-| Trigger | Response |
+| Shift trigger | Response |
 |---|---|
-| App #2 exceeds ~$150k or ~7 months | Stop. Revisit the portfolio strategy before app #3 |
-| An embedded consulting engagement breaches the cap | Decline, subcontract, or convert to a licence; do not absorb |
-| A licence commitment would freeze a moving interface | Refuse the commitment or license a stabilised subset |
-| Sextant misses its evaluation bar | Park it; don't extend |
-| Two apps ship with no shared users | Revisit the cross-app thesis (01 §failure mode) |
+| App #2 exceeds ~$150k or ~7 months | Stop; revisit the portfolio strategy before app #3 |
+| A consulting engagement breaches the cap | Decline, subcontract, or convert to a licence |
+| A licence commitment would freeze a moving interface | Refuse it, or license a stabilised subset |
+| Two apps ship with no shared users | Revisit the cross-app thesis |
+| A function escalates outside its stated conditions repeatedly | The boundary is wrong — redraw it deliberately |
 
 ---
 
 ## Measurement
 
-Few, and each tied to a decision:
-
-| Metric | Why | Cadence |
+| Metric | Answers | Cadence |
 |---|---|---|
-| **Cost and elapsed time per app** | The thesis | Per app |
-| **Agent-originated share of merged work** | Says *which path* bent the curve, and whether it generalises | Monthly |
-| **Shared vs per-app spend split** | Estimates the floor F | Per app |
-| **Humans per revenue line** | The governing structural metric | Quarterly |
-| **Cross-app users** | The failure mode in 01, made visible early | Monthly, from app #2 |
-| **Decision latency** — median age of open decision requests | The time floor | Weekly |
-
-Define the measurement conventions **before app #2 starts**: what counts in the
-money, what counts as released, what counts as the start. Otherwise the numbers
-aren't comparable and the curve is unfalsifiable.
+| Humans per revenue line | Is the structure working at all | Quarterly |
+| Cost and elapsed time per app | The portfolio thesis | Per app |
+| Agent-originated share of merged work | Which path bent the curve, and whether it generalises | Monthly |
+| Support and moderation cost per user, per app | Whether lever 3 is real | Monthly |
+| Cross-app users | The core multiplier | Monthly, from app #2 |
+| Median age of open decision requests | The latency floor | Weekly |
+| Licensees per commercial FTE-equivalent | Whether licensing scales as claimed | Quarterly |
 
 ---
 
-## Entities and operating mapping
+## Failure modes
 
-Legal shape is in 01. What matters organisationally:
-
-| Entity | Holds | Run by |
-|---|---|---|
-| **Group** | IP, investor equity, the human core, the incubating ecosystem play | Founders |
-| **Platform** | Core tech; **licence revenue** plus bounded services; licenses IP down | Employee + agents; one founder accountable |
-| **Apps** | Vertical apps as individually disposable subsidiaries | Agent-delivered; one founder accountable |
-
-- Platform is **revenue-generating**, not a cost centre, which makes the
-  intra-group licensing arrangement load-bearing rather than administrative.
-- The ecosystem play has **no entity yet** — deliberately. It gets one at the
-  first of: capital specific to it, something worth protecting, a partner
-  requiring a counterparty.
-
-`OPEN` — jurisdiction and existing entities; the IP licensing mechanics and
-transfer pricing depend on it.
-
----
-
-## Governance
-
-Three founders and an investor already in. Worth being explicit about two things:
-
-- **Decision rights by line.** Each line has one accountable owner who decides
-  within it. Cross-line decisions — capital allocation, commercial model, entity
-  changes — are founder-level. Investor is consulted on capital and structure,
-  informed on the rest.
-- **Decisions are recorded where the work is.** This repository for group
-  strategy; ADRs in the product repos for architecture. A decision that isn't
-  written down will be re-argued, and re-arguing is the most expensive thing a
-  four-person company does.
-
----
-
-## What would break this
-
-1. **The employee lands in Apps instead of Platform** — line-2 delivery keeps
-   consuming founder attention and nothing insulates line 1.
-2. **Line 2 drifts into embedded consulting** because it closes faster than
-   licensing does. The cash line becomes the company — the most common failure
-   mode for groups in this shape, and the one that arrives disguised as good news.
-3. **Agents without standing authority** — every agent action becomes a founder
-   decision, and the org gets *slower* with more agents, not faster.
-4. **Commercial model unchanged** — the cost curve doesn't bend and the portfolio
-   strategy is unavailable regardless of how good the tooling gets.
-5. **Ownership unassigned** — three lines and two named owners means at least one
-   line is nobody's, and it will be line 1, because it's the one with no
-   customers demanding attention.
+1. **Consulting grows because it closes faster than licensing does.** The only
+   linear row in the scaling table wins by default. Arrives disguised as good news.
+2. **Shared machinery built after the growth instead of before.** The sub-linear
+   rows quietly become linear, and the fix is a rewrite under load.
+3. **Agents without standing authority.** Every agent action becomes a founder
+   decision and the org gets *slower* with more agents.
+4. **Aspirational roles stay aspirational.** Nathan and Chris keep absorbing
+   functions that were never assigned anywhere, and the Ecosystem block — the
+   only unprotected line — is what gets spent.
+5. **A line without an accountable owner.** It will be Ecosystem, because it's the
+   one with no customers asking.
+6. **Commercial model unchanged**, so the cost curve never bends and Apps grows
+   linearly in people regardless of how good the factory is.
