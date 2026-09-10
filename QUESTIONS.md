@@ -108,6 +108,7 @@ be by line so each line has exactly one person whose attention it can claim.
 Unassigned lines default to unowned, and it will be line 1.
 
 ### Q13 — Line 2: what gets licensed first, and what are the two caps?
+*(Commercial plan for the leading candidate is now in [04-replay-gtm.md](04-replay-gtm.md).)*
 Licensing has a far better hour:income ratio than embedded consulting and scales
 without adding people — and licensing the preference/interface layer into other
 people's apps *is* line 1's B2B2C channel, which makes line 2 a go-to-market
