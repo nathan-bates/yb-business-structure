@@ -682,7 +682,7 @@ and "improves a lot" is the difference between a portfolio and a software shop.
 | UI/UX design + build | **Strongly** | Kay/AUX — the single biggest lever, and the one being built |
 | Auth, payments, notifications, infra | **Strongly** | Shared services; one-time |
 | Integrations | Yes | The §2b wrapper decision |
-| QA / verification | Yes | Sextant, on owned apps (tier 1) |
+| QA / verification | *Unproven* | Sextant, on owned apps — theoretical today (§2n) |
 | Domain modelling | **Weakly** | Only compresses if app #2 serves the *same cohort* — another argument for §2h |
 | Content/data seeding, go-to-market, support | **No — and grows with app count** | |
 
@@ -818,11 +818,13 @@ is priced.**
 
 **Youbiquity is unusually well-placed for fixed-price**, and this is not a
 generic recommendation. Fixed-price contracting fails when acceptance criteria are
-vague. This group produces ADRs, specs, contracts (C5/C6/C7/C9/C10), invariants
-and a test-equivalence engine whose entire premise is that **design ≡ code ≡ test
-plan**. That is precisely the artifact set that makes "done" checkable rather than
-arguable — the main reason fixed-price engagements usually degenerate. The
-architecture the group already built is, incidentally, a procurement asset.
+vague. This group produces ADRs, specs, contracts (C5/C6/C7/C9/C10) and
+invariants — an artifact set that makes "done" substantially more checkable than
+the vague acceptance criteria that normally make fixed-price engagements
+degenerate. The architecture the group already built is, incidentally, a
+procurement asset. *(Sextant would strengthen this considerably by making
+acceptance machine-verifiable, but it is not yet in a state to be relied on for
+that — do not price it into a contract until §2n resolves.)*
 
 **The cheapest diagnostic available, and it costs nearly nothing:** ask the
 incumbent for a **fixed-price bid on app #2**. Their answer is the decision.
@@ -847,6 +849,48 @@ knowledge live only in particular people's heads? This group documents unusually
 heavily, so the answer is plausibly "low" — but it is worth confirming rather than
 assuming, because it is the one thing that makes vendor changes expensive.
 
+### 2n. Sextant is theoretical — a bounded evaluation, not an assumption
+
+Correcting the register of several earlier sections: this document has described
+Sextant as a working asset. It is not. It is **theoretical**, and Nathan is giving
+it 2–4 weeks of attention to establish whether it can reach a useful state. Every
+claim above that leans on it — the QA compression in §2k, the tier-1 rigor in
+§2c, the procurement argument in §2m — should be read as *conditional on that
+evaluation*, not as capability in hand.
+
+**What the evaluation should aim at.** Under the model-curve test (§2f), the
+decisive question is not "does it work" but **"does it produce something a
+frontier coding agent with repo access won't produce anyway in twelve months?"**
+
+- *"It writes tests faster"* is on the curve. Depreciating; don't spend the
+  fortnight there.
+- *"It produces a durable graph artifact — reusable across apps, across time, and
+  as the acceptance oracle for fixed-price work"* is an accumulated asset.
+  Appreciating, and worth the attention.
+
+Aim the 2–4 weeks at the second. It is also the version that matters most
+commercially, because machine-checkable acceptance is what makes §2m's fixed-price
+pivot safe.
+
+**Set the bar before starting, and make it falsifiable.** The natural test is
+already sitting there: VesselHaven is about to launch. Does Sextant, run against
+it, find real defects a human QA pass missed, and does it measurably reduce
+regression effort? Those are answerable in a fortnight and either happen or don't.
+
+**Set the stop rule too.** If the bar isn't met, park it rather than extend —
+and specifically, don't let it become a fifth thing that is nearly working. It
+remains a line 2/3 asset either way, so parking costs the ecosystem play nothing.
+
+> **Attention cost, stated once.** 2–4 weeks of founder attention is the scarcest
+> input in the group (§attention allocation), and it is being spent on a line 2/3
+> asset while three line-1 questions are open and time-boxed by external events:
+> the community identity model (Q0b) calcifies when VH ships, and the app #2
+> commercial terms (Q1d) lapse when app #2 starts. Both windows close on their
+> own schedule; Sextant's doesn't. That is an argument about ordering, not about
+> whether the evaluation is worth doing — and it's your call, not mine. Noted
+> here because attention allocation was identified as the binding constraint
+> long before this was the decision in front of it.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first
@@ -860,7 +904,7 @@ demonstrated on one app is a demo; on three, it's a pattern.
 |---|---|---|---|
 | **project-k** | 1 | Four-agent topology; Kay = form-never-content rendering layer. Product architecture *intentionally undecided* | Knowledge + architecture; no app code yet |
 | **aux** | 1 | AUX protocol, reference renderer, design system, harness, Claude adapter | v0 POC; flywheel verified, 4/4 renderer tests, live path not yet exercised |
-| **Sextant** | 1 + 2 | Exploration → graph of apps you don't control. The AUX adoption bridge | Working, unproductised |
+| **Sextant** | 2 + 3 | Exploration → graph of an app, coverage-driven test generation | **Theoretical — under evaluation** (see §2n) |
 | **Claude Code Cloud** | 1 + 2 | Agent runtime, credential brokering, supervision | Load-bearing |
 | **Archon / ProductLens** | 2 | Work layer | Mid-consolidation |
 | **Co-browse / responsive-surface** | 1 | Execution inside a user's own authenticated session — Service Agent driver | Working PoC |
