@@ -1,9 +1,7 @@
 # 02 — Technical stack
 
-*Version 2 — 2026-09-10. Rewritten: v1 was a component catalogue that
-over-indexed on individual pieces. This version is about the system — how the
-parts multiply each other, and what that implies for cost. Follows
-[01-portfolio.md](01-portfolio.md).*
+*Version 3 — 2026-09-10. About the system: how the parts multiply each other and
+what that implies for cost. Follows [01-portfolio.md](01-portfolio.md).*
 
 ---
 
@@ -33,11 +31,13 @@ identified by **what it decides**, not by which repository it lives in.
 | **Form** | *How* something is presented — which pattern, which density, which primitives. Never what is said | Per interaction |
 | **Execution** | How an intent becomes an effect in a system we don't own | Per action |
 | **App** | The domain: business rules, content, domain-specific integrations, the surface a user signs up for | Per app |
-| **Factory** | How apps get built and maintained — build agents, pipelines, verification, work tracking | Meta: serves the group, not the end user |
+| **Factory** | How apps get built and maintained — build agents, pipelines, verification, and the counterfactual engine that measures them | Meta: serves the group, not the end user |
 
-Two of these are unlike the others. **Person** is the only layer whose value
-increases with time and with app count. **Factory** is the only layer with no
-end-user surface at all — it exists solely to change the cost of everything else.
+Two of these are unlike the others. **Person** is the only end-user layer whose
+value increases with time and with app count. **Factory** is the only layer with
+no end-user surface at all — it exists solely to change the cost of everything
+else, and it contains the one non-Person asset that also appreciates: the session
+corpus and the engine that reads it.
 
 ---
 
@@ -97,11 +97,17 @@ There are three levers, not one:
 | **2. Make it faster** | Reduce the unit cost of work that legitimately stays per-app | Generative UI collapses per-app design; agents collapse per-app implementation; content pipelines collapse seeding |
 | **3. Exploit scale** | The same per-app function costs less per app as N rises | One support pool absorbing N queues; one moderation practice; one compliance posture; one GTM motion across a shared cohort |
 
-**Lever 2 is the one v1 ignored and it is probably the largest.** Domain
-modelling, app-specific content, and per-app integration work all stay in the
-right-hand column forever — but how expensive they are is a function of the
-tooling, and that's exactly what the factory is for. "It stays per-app" and "it
-stays expensive" are different claims.
+**Lever 2 is probably the largest.** Domain modelling, app-specific content and
+per-app integration work stay in the right-hand column forever — but how expensive
+they are is a function of the tooling, which is what the factory is for. "It stays
+per-app" and "it stays expensive" are different claims.
+
+**Lever 2 is also the only lever with an instrument.** Levers 1 and 3 are
+structural and can be reasoned about from the table. Lever 2 depends on choices —
+which model, which effort level, how much context — that are currently made by
+intuition and never measured. The counterfactual engine below is what turns them
+into measurements, which is why it belongs in this document as infrastructure and
+not merely as a licensing candidate.
 
 **Lever 3 changes the arithmetic in 01.** That document modelled total cost as
 `$500k + N × F` with F constant. If lever 3 works, **F is a declining function of
@@ -118,6 +124,7 @@ three levers, and know which lever each cost line responds to:**
 |---|---|
 | Auth, payments, notifications, infra | Lever 1 — move left, once |
 | UI/UX design and build | Lever 2 — generative composition |
+| Model and context configuration for agent work | Lever 2 — **measured by the counterfactual engine**, not guessed |
 | Implementation | Lever 2 — agent execution |
 | Domain modelling | Lever 2, weakly — and lever 1 *only if apps share a cohort* |
 | Content and seed data | Lever 2 — pipelines, generation |
@@ -134,335 +141,178 @@ lines that were supposed to be irreducible.
 
 ## The calls
 
-Consequences of the above, stated compactly. The reasoning is the model-curve
-test in 01: build what appreciates when the next model ships, wrap what
-depreciates.
+Consequences of the above. The reasoning is the model-curve test in 01: build what
+appreciates when the next model ships, wrap what depreciates.
 
 | Layer | Call | Because |
 |---|---|---|
 | Model | **Buy** | Never build; assume it improves under you |
-| Person | **Build, closed** | The only layer that appreciates with time and app count |
+| Person | **Build, closed** | The only end-user layer that appreciates with time and app count |
 | Decision | **Build, closed** | Elicitation patterns compound across all users; they set cold-start quality |
 | Form | **Build, expect to open** | Commoditising — A2UI, MCP Apps. Keep it thin and the seam clean |
 | Execution | **Wrap** — with a small built exception for action inside the person's own session | Arms race, identity-gated, on the model curve |
 | App | **Per-app, but attack its unit cost** | Lever 2 is the whole game here |
-| Factory | **Build** | The only thing that moves lever 2. Mostly depreciating — **except replay and its corpus, which appreciate** |
+| Factory | **Build** | The only thing that moves lever 2 — but see the split below |
+
+**The Factory splits in two, and the halves behave oppositely.** The harness,
+pipelines and tooling are conventional infrastructure: useful, and steadily
+eroded by better models. The **counterfactual engine and its session corpus are
+the exception in this document — the one piece of Factory that appreciates on the
+model curve.**
 
 ---
 
-## Session replay — the exception in the Factory layer
+## The counterfactual engine
 
-Every other Factory component in this document depreciates: it exists because
-something is hard today and the model curve will erode it. **Replay is the
-exception, and it was missing from v1.**
+*The measurement instrument for everything in the cost model above. Without it,
+levers 1–3 are asserted rather than known.*
 
-**What exists** (`llm-slack-channel-bridge`, `REPLAY_DESIGN.md`, Phase 1
-building): per-turn capture of a session — transcript *and* source workspace —
-with deps reconstructable from the lockfile via a content-addressed depcache and
-build outputs re-derived, so a historical turn can be reconstituted and re-run.
-The primitive is:
+### What exists
+
+`llm-slack-channel-bridge`, `REPLAY_DESIGN.md`, Phase 1 building. Per-turn capture
+of transcript *and* source workspace; deps reconstructed from the lockfile via a
+content-addressed depcache; build output re-derived. The primitive:
 
 ```
 replay(session_id, from_turn=K, P)
     P = do_policy(model/effort) | do_context(prompt/tool) | do_resample(same)
 ```
 
-Two design details do more work than the replay itself:
+Two supporting assets do more work than the replay loop itself. **The mutation
+guard**: a turn that changed non-repo state in a way the snapshot can't explain —
+hand-patched `node_modules`, a `--no-save` install, an opaque artifact — is
+classified and **fails loudly** rather than rebuilding a different tree. Without
+it a replay grades a fiction. **The corpus**: ~936 sessions on EFS, never deleted,
+four models already in use across them, offline and batchable.
 
-- **The mutation guard.** A turn that changed non-repo state in a way the
-  snapshot can't explain — hand-patched `node_modules`, a `--no-save` install, an
-  opaque generated artifact — is classified and **fails loudly** rather than
-  silently rebuilding a different tree. Without it, a replay grades a fiction.
-  That guard is the difference between a demo and an instrument.
-- **The corpus.** ~936 sessions on EFS, never deleted, four models already in
-  use across them. Offline, batchable, no live-user risk.
+### Why turn-K intervention is the product
 
-### Why this is strategically different from everything else in Factory
+Filesystem reconstruction is the enabler — a necessary condition. **Intervening at
+a single turn is the value**, and it changes the economics, the validity and what
+can be sold.
 
-**It appreciates on the model curve.** Every model release creates fresh demand
-for the same question — *would this have been better?* — over a corpus that only
-grows. Almost nothing else in this document gets *more* valuable when the next
-frontier model ships. This one does, twice over: the corpus deepens, and each
-launch is a new reason to run the grid.
+Full-session replay costs `T × arms × N`. Turn-K costs `1 × arms × N`. At 50–200
+turns per coding session that is **one to two orders of magnitude** — the
+difference between a grid you run on every model launch and one you cost out and
+abandon. Three things follow:
 
-**It multiplies the cost curve directly.** Model routing and context engineering
-are lever-2 costs (make per-app work cheaper) that are currently set by intuition.
-Replay converts them into measurements. The design doc's own example: a ~7.7KB
-global preamble on **every turn of every session**, never once measured.
+1. **Granularity buys statistical validity.** N-per-cell sampling with confidence
+   intervals is only affordable if a cell is one turn. Full-session replay forces
+   n=1 by economics — which is the industry default of "we tried it and it seemed
+   better". Granularity and rigour are one insight, not two features.
+2. **Attribution.** A whole-session re-run yields an end-to-end delta that could
+   have originated at turn 3 or turn 47. Intervening at one turn isolates the
+   effect *at that decision point* — a causal claim rather than a correlation.
+3. **A routing policy is only derivable from per-turn counterfactuals.** "Which
+   model is better overall" is one-time procurement advice. "Which *kinds of turns*
+   does the cheap tier handle indistinguishably" is a policy — recurring,
+   measurable, worth a share of a known inference bill.
 
-### The novelty claim, narrowed honestly
+It also yields a measurement nobody currently offers: **the drift curve.** Vary K
+and measure how far downstream an intervention persists — does a cheap model at
+turn 12 cost you at turn 40? In stateful sessions that is *the* routing question.
 
-The instinct that this is unusual is right, but "session replay" as such is not.
-Commercially, [AgentOps replays sessions and LangSmith supports replay against new
-model versions](https://www.marktechpost.com/2026/08/09/top-llm-observability-and-evaluation-platforms-in-2026-langfuse-langsmith-braintrust-arize-and-more-compared/)
-with node-by-node state diffs; Langfuse and Braintrust cover tracing, datasets,
-prompt management and evals. Academically, `REPLAY_DESIGN.md` already surveys the
-nearest work and cites it — Causal Agent Replay (arXiv 2606.08275) for
-`do_policy`/`do_context`, SWE-Replay (arXiv 2601.22129) for the non-repo-mutation
-guard. That survey is more rigorous than most internal design docs manage, and it
-already reaches the right conclusion: each nearest system misses an axis.
+### Where it connects to the rest of the stack
 
-What is genuinely uncommon is the **conjunction**:
+- **Cost model, lever 2.** Model choice and context configuration are the largest
+  controllable inputs to agent-executed work, and today they are set by intuition:
+  the design doc's own example is a ~7.7KB global preamble on *every turn of every
+  session*, never once measured. Replay converts lever 2 from a hope into an
+  instrument.
+- **The Factory loop.** Each session captured is a future experiment; each model
+  launch re-runs the grid and re-tunes the configuration. The corpus deepens
+  either way.
+- **Person layer, by analogy not by dependency.** Both are accumulated assets that
+  a competitor can design but not copy. The corpus is to the Factory what the
+  profile is to the product.
+- **Performance.** Same principle as ADR 0026 — what is known in advance need not
+  be inferred at runtime. Replay is how you learn what can be known in advance.
 
-| | Trace/eval platforms | Framework time-travel | **Here** |
+### What is genuinely differentiated
+
+Two adjacent categories already exist, and neither covers this. Stating both in
+one table rather than claiming the whole territory:
+
+| | Trace / eval platforms | Model routers | **Counterfactual engine** |
 |---|---|---|---|
-| Re-run a turn under a different model | Yes | Partial | Yes |
-| Prompt/context perturbation | Yes | No | Yes |
+| Examples | LangSmith, Langfuse, Braintrust, Roark | Martian, RouteLLM, Not Diamond, OpenRouter, Entelligence, Cursor | — |
+| Replay a request against a new model | Yes | n/a | Yes |
+| Prompt / context perturbation | Yes | No | Yes |
+| Per-turn decisions for coding agents | No | **Yes — already shipping** | Yes |
 | **Workspace + filesystem reconstruction** | **No** | No | **Yes** |
-| **Correctness guard when state isn't reconstructable** | No | No | **Yes** |
-| Corpus of real stateful sessions | Customer's own | No | **~936, growing** |
+| **Mid-session intervention at turn K** | No | n/a | **Yes** |
+| **Observes the counterfactual** | Partially (whole request) | **Structurally never** | **Yes** |
+| Guard when state isn't reconstructable | No | n/a | **Yes** |
 
-The observation that matters: those platforms' data models treat an agent as *a
-sequence of LLM calls*. A coding agent is not that — it is a **stateful process
-mutating a filesystem**, and replaying it faithfully requires reconstructing that
-state. That is the gap, and it is narrow, real, and defensible for as long as the
-incumbents keep modelling agents as call sequences.
+Two observations carry the position:
 
-### As a licensing candidate
+> **Trace platforms model an agent as a sequence of LLM calls.** A coding agent is
+> a stateful process mutating a filesystem; replaying it faithfully means
+> reconstructing that state.
 
-Measured against 01 §Line 2, this scores better than the other candidates on
-several axes at once:
+> **Routers are predictive and forward-only.** They choose, and the road not taken
+> is never driven. No router can say what would have happened had it chosen
+> differently — on your workload, in your repository, at that turn.
 
-- **Horizontal.** Nothing about it is Youbiquity-specific; the buyer is anyone
-  running coding agents at material spend.
-- **Quantifiable value**, which makes it priceable — model routing is a direct
-  line-item saving, so ROI-based pricing is available rather than seat-based
-  guessing.
-- **No strategic adoption required.** A licensee doesn't have to buy into AUX,
-  the four-agent topology, or anything else.
-- **The corpus is an unreconstructable asset** — a competitor can copy the
-  design; they cannot copy 936 real sessions.
+Routing is mature and well-capitalised — reported valuations near $1.3B, 30–85%
+savings claimed in real deployments, per-turn routing already shipping for coding
+agents. **Building a router is a funded fight. Being the measurement layer beneath
+one is not**, and it converts routers and model-agnostic harnesses from
+competitors into channels: they all sell savings they cannot prove on a customer's
+own workload.
 
-Against that, honestly:
+That yields three sellable shapes: **audit** ("800 turns went to the frontier
+tier; 730 were indistinguishable a tier down — here is the overspend"),
+**calibration** (fit a policy to the customer's own history rather than to generic
+benchmarks), and **drift safety**.
 
-- **Coupled to this runtime.** EFS layout, session format, the ECS worker model.
-  Packaging it standalone is the real work, and it's the same packaging problem
-  every licensing candidate has.
-- **Incumbents could close the gap.** Workspace capture is not conceptually hard
-  once someone decides agents are stateful. The durable part is the guard and the
-  corpus, not the idea — so time matters.
-- **Crowded category.** Agent observability and eval is well funded. Winning
-  attention there costs marketing, which is the human-shaped work 01 warns about.
-- **Self-hosting.** Enterprise buyers will want it in their environment, which
-  raises the support tier.
+### The moat is the methodology, not the snapshot
 
-`OPEN` — this may be the **readiest** thing in the portfolio to license: it works,
-it's horizontal, its value is measurable in dollars, and it needs no strategic
-buy-in. That makes it a direct competitor for the "which asset first" slot in
-QUESTIONS Q13.
+Anyone can capture state in a quarter. Getting a *valid* answer out of a
+heterogeneous panel, where trajectories diverge the moment you intervene, is a
+research problem — and these choices are the asset:
 
-### Going deeper: where the novelty actually sits
+| Design choice | What it prevents |
+|---|---|
+| Baseline is a fresh replay of the original condition, **not the recorded outcome** | System-prompt regeneration drift confounding every result |
+| Normalise prefix thinking across the panel | Silently handicapping a model whose thinking is origin-locked and drops cross-model |
+| Sweep effort as an axis; labels aren't cross-tier comparable | Comparing a model with no effort parameter against one with thinking always on |
+| Blinded, order-randomised judge, never a contestant; ties → third-party arbiter | A model preferring its own output — the commonest silent bias in LLM-graded evals |
+| N per cell, action-match rate with CIs | n=1 conclusions |
+| Grade on the cost / quality / time frontier | Optimising quality into a bill nobody will pay |
+| Mutation guard fails loudly | Grading a reconstructed tree that differs from the one the turn actually had |
 
-Reading `REPLAY_DESIGN.md` closely moves the answer. **The snapshot is not the
-differentiator — the experimental design is.** Anyone can capture state. Getting
-a *valid* answer out of a heterogeneous model panel, where the trajectory diverges
-the moment you intervene, is a research problem, and the design doc has already
-solved several parts of it that most teams will get wrong:
+**In a measurement business, being right is the moat — the buyer cannot verify the
+answer themselves, which is why they are buying it.**
 
-| Design choice | Why it's non-obvious | What it prevents |
-|---|---|---|
-| **Baseline is a fresh replay of the original condition, not the recorded outcome** | The instinct is to compare against what actually happened | System-prompt regeneration drift confounding every result. Both arms get the identical regenerated prompt, so the drift cancels |
-| **Normalise prefix thinking across the panel** | Requires knowing that thinking blocks are origin-locked and drop cross-model (Fable), which you only learn by hitting it | Silently handicapping one model and calling it a quality difference |
-| **Effort labels aren't cross-tier comparable — sweep effort as an axis** | "Same effort setting" looks like the fair comparison | Comparing Haiku-with-no-effort-param against Fable-with-thinking-always-on and drawing a conclusion |
-| **Blinded, order-randomised judge, never a contestant; ties → third-party arbiter** | Tempting to grade with the best available model | A model preferring its own output — the most common silent bias in LLM-graded evals |
-| **N per cell, action-match rate with confidence intervals** | Slower and more expensive than one run | The industry default of n=1: "we tried the new model and it seemed better" |
-| **Grade on the cost / quality / time frontier** | Single-metric grading is easier to sell | Optimising quality into a bill nobody will pay |
-| **Mutation guard fails loudly** | Rebuild-on-mismatch looks like a reasonable fallback | Grading a reconstructed tree that differs from the one the turn actually had — measuring a fiction |
-
-**That table is the product.** A competitor can copy per-turn snapshotting in a
-quarter. Arriving independently at "compare replay-to-replay, not
-replay-to-record" requires either this depth of thought or a year of confusing
-results. In measurement businesses, **being right is the moat, because the buyer
-cannot verify the answer themselves** — which is precisely why they're buying it.
-
-### The value prop is turn-K intervention, not filesystem reconstruction
-
-Correcting the ranking in the previous subsection. **Filesystem reconstruction is
-the enabler — a necessary condition, not the product. Intervention at turn K is
-the product.** The distinction is not pedantic; it changes the economics, the
-validity, and what can be sold.
-
-**The economics.** A session of T turns evaluated by full-session replay costs
-`T × arms × N`. Evaluated by intervening at turn K it costs `1 × arms × N`. For
-coding sessions of 50–200 turns that is **one to two orders of magnitude** —
-which is the difference between a grid you can run on every model launch and one
-you cost out and abandon.
-
-Three consequences follow, and the third is the business.
-
-**1. Granularity is what makes rigour affordable.** The methodology praised above
-— N samples per cell, action-match rates, confidence intervals — is only
-purchasable if a cell is cheap. Full-session replay forces n=1 by economics
-alone, and n=1 is exactly the industry default the design doc is trying to beat.
-So turn-K intervention and statistical validity are the same insight, not two
-features: **granularity buys sample size, and sample size buys the answer.**
-
-**2. Attribution.** Re-running a whole session under a different model gives you
-an end-to-end outcome difference you cannot attribute — the delta could have
-originated at turn 3 or turn 47, and everything after diverges. Intervening at a
-single turn isolates the effect *at that decision point*. Full-session replay
-measures a correlation between configuration and outcome; **turn-K replay
-measures the causal effect of a configuration at a specific decision.** Different
-claim, not a cheaper version of the same one.
-
-**3. You cannot derive a routing policy from full-session replay.** Only from
-per-turn counterfactuals. "Which model is better overall" is a one-time
-procurement answer. "Which *kinds of turns* does the cheap model handle
-indistinguishably" is a **routing policy** — recurring, measurable, and worth a
-percentage of a known inference bill. That is a materially better product than
-migration advice, and it is unreachable without this granularity.
-
-**And it enables a measurement nobody currently offers: the drift curve.**
-Intervene at varying K and measure how far downstream the effect persists — does
-a cheap model at turn 12 cost you at turn 40? For stateful agent sessions this is
-*the* routing question, and it is unanswerable today. Every shipping router is
-stateless per request and structurally cannot see it.
-
-### Which reframes the competitive position
-
-Model routing is a mature, well-capitalised category — [Martian reportedly near a
-$1.3B valuation, RouteLLM showing 85% cost savings at 95% of frontier quality in
-controlled evals, with real deployments reporting
-30–85%](https://entelligence.ai/blogs/9-best-llm-routers-and-model-routing-tools-in-2026),
-alongside OpenRouter, LiteLLM, Not Diamond, and in-house routers at Cursor and
-Factory. **Entelligence's router already decides per turn for coding agents.** So
-per-turn routing is emphatically not novel, and building a router would be
-walking into a funded fight.
-
-But every one of those products shares a structural blind spot:
-
-> **Routers are predictive and forward-only. They choose, and the road not taken
-> is never driven. No router can tell you what would have happened if it had
-> chosen differently — on your workload, in your repository, at that turn.**
-
-Replay produces exactly that missing quantity. Which suggests the position is not
-*a router* but **the measurement layer routers cannot build**:
-
-- **Audit.** "Your router sent 800 turns to the frontier model last month. We
-  replayed them: 730 were indistinguishable on a cheaper tier, 70 regressed.
-  Here is the overspend." A category that currently cannot measure itself.
-- **Calibration.** Fit a routing policy to *your* history rather than to generic
-  benchmarks — which is precisely the "sophisticated learned model" the standalone
-  routers are sold on and cannot personalise.
-- **Safety.** The drift curve tells you whether the savings hold up over a
-  session, or merely defer a cost to turn 40.
-
-**This also solves distribution**, which was the hardest open problem in the
-previous subsection. Routers and model-agnostic harnesses stop being competitors
-and become channels: they all sell cost savings they cannot prove on a customer's
-own workload, and none of them can prove it without a counterfactual engine. Being
-the measurement layer for a well-funded category is a better position than being
-its ninth entrant.
-
-**On tool-call granularity** — a real extension of the same argument, and it gets
-cheaper and more precise still. The honest caveat: the turn boundary is where
-capture already fires nearly free, and *within* a turn the mutation-guard problem
-gets harder — partial tool effects, half-applied edits, and state that no lockfile
-or build command explains. The correctness burden rises faster than the cost
-falls. Worth doing, worth doing second.
-
-**Pricing consequence.** Migration advice is a project sale, priced on urgency.
-A routing policy with measured quality impact is a recurring, quantified saving —
-subscription or share-of-savings, renewing on every model launch. The second is a
-better business and it follows directly from the granularity.
-
-### The market trigger: forced migrations
-
-The commercial opening is not "teams want better evals." It's that **model
-vendors retire models on their own schedule, and enterprises are forced to
-migrate on it.** GitHub Copilot's September 2026 model retirements already have
-third-party migration and regression-test guides written about them.
-
-That makes the demand:
-
-- **Calendar-driven**, not discretionary — someone else sets the deadline.
-- **Recurring forever**, because model churn is permanent.
-- **Urgent and high-stakes**, because the alternative is switching blind.
-- **Budgeted**, because it's framed as risk mitigation rather than tooling.
-
-And the market has already articulated the need in the product's own vocabulary:
-current best-practice guidance for these migrations is *"supported model plus
-**evidence from our own workload**"* — which is a one-line description of what
-replay produces and what nothing on the market produces for stateful agents.
-
-The related tailwind: **model-agnostic coding harnesses** (OpenCode and similar,
-spanning 75+ providers) turn model choice into a recurring operational decision
-rather than a one-time architecture choice. Every such decision needs evidence.
-Those harnesses are also the obvious distribution partners — they sell
-switchability and have no way to prove it was the right switch.
-
-### Correcting my own framing from the previous section
-
-I said trace platforms don't do replay. That was too generous to us. The category
-**does** exist:
-
-- [Roark](https://roark.ai/blog/testing-voice-agents-silent-model-migrations)
-  captures real production calls and replays them against candidate logic —
-  "run your last two weeks of real traffic against the candidate before
-  promotion." For **voice** agents.
-- The `pin → replay → score → diff → promote` migration workflow is established
-  practice in [LLM regression testing](https://futureagi.com/glossary/llm-regression-testing/),
-  with production traces convertible into permanent regression tests.
-- There is even [academic work on item-level regressions in commercial LLM API
-  migrations](https://arxiv.org/html/2608.17719).
-
-So "replay production traffic against a candidate model" is **not** novel. What
-remains unserved is narrower and still real:
-
-> **For a stateless LLM app, replaying the trace *is* the replay. For a stateful
-> coding agent, the trace is meaningless without the filesystem.**
-
-That is the *enabler*. The differentiated capability is intervention **mid-session
-at turn K** rather than re-running whole requests, and the divergence problem that
-creates — see the subsection above, which supersedes the emphasis here.
-
-### Buyer, pricing, distribution
+### Commercial shape
 
 | | |
 |---|---|
-| **Buyer** | Platform / AI-infra teams at companies running coding agents at material inference spend; secondarily procurement, which needs a defensible artifact for standardising on a vendor |
-| **Trigger** | A vendor retirement notice, a budget review, or a new frontier release |
-| **Pricing** | ROI-linked rather than seat-based: routing optimisation is a measurable percentage of a known bill. A per-migration-decision project price also suits enterprise procurement, and prices the urgency rather than the software |
-| **Distribution** | Model-agnostic harness vendors are the highest-leverage channel — they sell switchability and cannot prove it. Second: the model vendors themselves, who benefit when migration risk falls |
+| **Trigger** | Vendor-forced model retirements — calendar-driven, recurring, budgeted as risk rather than tooling. Current best-practice guidance for these migrations already asks for *"evidence from our own workload"*, which is a one-line description of the output |
+| **Buyer** | Platform / AI-infra teams running coding agents at material spend; secondarily procurement, which needs a defensible artifact |
+| **Pricing** | Share of measured savings or subscription, renewing on every model launch — not a per-migration project sale, because a routing policy is recurring where migration advice is not |
+| **Distribution** | Routers and model-agnostic harnesses as channel; they cannot prove their own value proposition |
 
-### Risks, stated against the above
+**Risks.** The window is **12–18 months**, not open-ended: workspace
+reconstruction is a roadmap item for an incumbent, not a research project, once
+coding agents become the dominant workload — time matters more for this asset than
+for anything else in the portfolio. Our corpus proves the method and calibrates
+grading, but it is not a moat against a buyer's own data; position it as
+credibility. And the category is crowded, so the constraint is attention rather
+than capability.
 
-1. **The window is 12–18 months, not open-ended.** Workspace reconstruction is
-   not conceptually hard once someone decides coding agents are the dominant
-   workload. Braintrust, LangSmith or Galileo adding it is a roadmap item, not a
-   research project. **Time matters more for this asset than for anything else in
-   the portfolio.**
-2. **The methodology is publishable, therefore copyable.** See the
-   recommendation below — this is less of a problem than it looks.
-3. **Our corpus is not the customer's corpus.** 936 sessions prove the thing
-   works and calibrate the grading; they are not a moat against a buyer's
-   alternative, which is their own data. Position it as credibility, not asset.
-4. **Crowded, well-funded category.** The constraint is attention, not
-   capability — and attention is bought with marketing, which is exactly the
-   human-shaped work 01 warns against. This is the strongest argument for the
-   partner-distribution route over direct sales.
+`PROPOSED` — **publish the methodology, sell the implementation.** In measurement,
+the product is trust, and trust accrues to whoever defines how the measurement
+should be done. The hard parts — implementation, integration surface, calibration
+— don't leave with a paper. It converts copyability into authority: competitors
+implementing your design validate it. And it suits the group's constraints, being
+agent-assistable and needing no sales headcount, unlike buying attention in a
+crowded category.
 
-### Recommendation
-
-`PROPOSED` — **publish the methodology, sell the implementation.**
-
-Counterintuitive, and I think right. In measurement businesses the product is
-*trust*, and trust accrues to whoever defines how the measurement should be done.
-Publishing the experimental design — replay-to-replay baselining, thinking
-normalisation across heterogeneous panels, frontier grading, the mutation guard —
-costs little, because the hard parts are the implementation, the integration
-surface and the calibration. What it buys is category authority in a market where
-buyers cannot check the answer themselves and therefore buy the most credible
-methodology on offer.
-
-It also converts risk 2 into a moat: if the industry adopts your design as the
-correct way to run a model-migration experiment, competitors implementing it are
-validating you rather than displacing you.
-
-**And it fits the group's constraints unusually well** — publishing is
-agent-assistable, needs no sales headcount, and compounds. Compare that with
-buying attention in a crowded category, which needs exactly the humans the
-minimal-core thesis is trying to avoid.
+`OPEN` — this is a strong candidate for **first asset licensed** (01 §Line 2, and
+QUESTIONS Q13): it works, it is horizontal, its value is denominated in a bill the
+customer already receives, and it needs no strategic buy-in.
 
 ---
 
@@ -563,3 +413,8 @@ Ordered by what unblocks what.
    expensive that shouldn't have?*
 5. **Shared operations plane**, before app #3 rather than after.
 6. **Verification** — evaluate, then decide. Nothing above depends on it.
+
+**Running alongside, on its own clock:** the counterfactual engine. It is not
+sequenced with the list above because it doesn't block any of it — but its
+external window is 12–18 months, which is shorter than every other deadline in
+these documents.
