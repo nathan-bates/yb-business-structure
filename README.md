@@ -11,6 +11,7 @@ plainly so they can be argued with.
 |---|---|---|
 | [01-portfolio.md](01-portfolio.md) | Asset inventory, classification, entity shape, keep/kill/park | Draft v3 — grounded in project-k + aux |
 | 02-stack.md | Target architecture mapped to the portfolio; shared vs. per-product | Not started |
+| [QUESTIONS.md](QUESTIONS.md) | Open questions register, ordered by what they block | Live |
 | 03-organization.md | Operating model: human core, agent roles, P&L and reporting lines | Not started |
 
 ## Conventions
