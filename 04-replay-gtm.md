@@ -317,7 +317,8 @@ ways the market could be wrong.
 
 | Argument | Status after review | Cheapest test |
 |---|---|---|
-| **Model prices collapse ~95%**, so savings are immaterial *and* full-session replay becomes affordable, removing turn-K's efficiency advantage | **Live, and the deepest one.** Partial rescue: Jevons — unit price falls, usage rises, aggregate spend holds. But the optimisation target moves from *which model* to *which configuration finishes in fewest turns*. **Same engine, different pitch.** Time savings also survive price collapse | None; pivot when it lands. Hold the framing in this doc loosely |
+| **Model prices collapse ~95%**, so savings are immaterial *and* full-session replay becomes affordable, removing turn-K's efficiency advantage | **Live, and the deepest one — but survivable on the speed axis.** Partial rescue: Jevons — unit price falls, usage rises, aggregate spend holds. And the optimisation target moves from *which model* to *which configuration finishes in fewest turns*, which is a **speed** question that cheap tokens do not touch. **Same engine, different pitch** | None; pivot when it lands. Hold the cost framing loosely and keep speed measured from day one |
+| **Frontier families converge on quality**, so there is nothing left to tune | **Weakest of the set once speed is in scope.** Convergence on quality does not imply convergence on tokens/second, and effort trades against time regardless | Track the tier-to-tier spread on our own workload — we are positioned to measure our own market |
 | **Harness vendors ship it natively** — Cursor, Claude Code, Copilot, Factory own the session format, workspace, user and telemetry | **The most likely killer.** Defence is genuine: they compare models *within* their harness and will never show that a competitor's configuration wins. Cross-vendor, cross-harness neutrality is structurally unavailable to them — the same claim routing products are built on | Watch release notes; ask design partners what they expect their vendor to add |
 | **Model vendors remove the migration trigger** with long support windows and free assurance tooling | **Weak.** Vendor assurance answers *"is it safe to move"*, not *"which family and effort level"* — and vendors have **negative incentive** on the second, since the honest answer is often "use a cheaper tier." They will not build the thing that reduces their own revenue | — |
 | **Savings below the cost of buying** — $20k saved doesn't justify a procurement cycle and a security review | **Fair, and it repriced the product.** Resolved by metering rather than subscription (§Pricing), which removes the threshold and puts the mid-market back in scope | The five metadata diagnostics in weeks 4–8 |
@@ -332,8 +333,50 @@ ways the market could be wrong.
 2. **Drift is bounded and turn-K predicts policy outcomes.**
 3. Cross-vendor neutrality has visible commercial value against vendor tooling.
 4. Metered pricing clears at small deal sizes — no procurement cycle required.
-5. Configuration tuning remains a live question, i.e. the quality/cost spread
-   between families and effort levels stays material.
+5. Configuration tuning remains a live question — i.e. the
+   **quality / cost / speed** spread between families and effort levels stays
+   material.
+
+**Speed is the axis that makes conditions 1 and 5 robust**, and it deserves its own
+statement because it survives both lethal scenarios:
+
+- **Against price collapse:** if tokens approach free, latency and elapsed time
+  remain hard constraints. Agent throughput is bounded by wall-clock, not by bill.
+- **Against quality convergence:** even where families converge on quality, they
+  differ sharply in tokens/second, and effort levels trade directly against time.
+  There is still something to tune when there is nothing left to tune on quality.
+
+It also reaches a **different buyer**. Cost savings interest whoever owns the bill;
+speed interests whoever owns delivery throughput — engineering leadership, and
+delivery margin in a consultancy. That converts the pitch from *"spend less"*, a
+cost-centre conversation, to *"ship faster"*, which historically sells at higher
+prices and with less scrutiny.
+
+And the two framings converge on one measurement: **turns-to-completion**. A model
+that is slower per turn but needs half as many turns is faster end to end — which
+is exactly the "which configuration finishes in fewest turns" metric the
+price-collapse pivot lands on. The axis that survives cheap tokens and the axis
+that survives converged quality are the same axis.
+
+### Measuring speed costs more than measuring cost
+
+Three practical consequences, because latency is not deterministic the way token
+counts are:
+
+1. **Latency is confounded by infrastructure** — API load, region, time of day,
+   rate limiting. **Randomise arm order within a cell across time.** Running all
+   Haiku samples at 03:00 and all Opus at 09:00 produces a speed result that is
+   really a measurement of the provider's diurnal load.
+2. **Fast mode is a distinct cell, not an effort level.** On Opus 5 / 4.8 it runs
+   the same model at up to ~2.5× output tokens/second at premium pricing
+   ($10/$50). Speed is purchasable, so the frontier is genuinely
+   three-dimensional and fast mode belongs in the grid as its own arm.
+3. **Batch runs cannot measure latency.** The Batch API's 50% discount is
+   asynchronous by construction, so **the speed-measuring arms have to run
+   synchronously at full price.** Budget a smaller latency subsample — on the
+   order of 100 turns — at full rate, and put the quality/cost grid through
+   batch. That is a modest addition to the totals in §Budget, but it is not free
+   and it is easy to overlook until the numbers don't reconcile.
 
 Two of these are testable in the first month for under $1k, and one of them —
 **drift** — should be tested before anything is published, because a study built
