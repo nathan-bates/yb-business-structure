@@ -253,6 +253,97 @@ diagnostic, then continuous analysis as the customer's agent volume rises.
 usage-based pricing implies at least partial self-serve, which carries a docs and
 support load — the human-shaped work 01 warns about. Budget for it deliberately.)*
 
+## Budget
+
+Rates are Anthropic first-party, per MTok, as of 2026-09-10. Cache **write** is
+1.25× (5-min TTL) or 2× (1-hour); **Batch API is 50% off** and is the right shape
+for offline grids.
+
+| Model | Input | Output | Cache read |
+|---|---|---|---|
+| Haiku 4.5 | $1 | $5 | 0.1× |
+| Sonnet 5 | $2 | $10 | 0.1× |
+| Opus 5 / 4.8 | $5 | $25 | 0.1× |
+| Fable 5 / 5.1 | $10 | $50 | **0.025×** ($0.25) |
+
+### Cost per replayed turn
+
+`ASSUMPTION` — 25k input tokens at turn K (benchmark-shaped session), 2k output
+with thinking, 4k for Fable since thinking is always on. N=3 samples per cell
+sharing one cached prefix.
+
+| Arm | Per turn |
+|---|---|
+| Haiku 4.5 | $0.07 |
+| Sonnet 5 | $0.13 |
+| Opus 5 | $0.33 |
+| Fable 5.1 | $0.93 |
+| Control (fresh replay of the original condition) | $0.13 |
+| **Five-arm total** | **$1.59** |
+
+### Study totals
+
+| Grid | Tokens | With batch |
+|---|---|---|
+| Lean — 300 turns, 4 arms, N=3 | $199 | **~$100** |
+| Full — 300 turns, 5 arms, N=3 | $476 | **~$238** |
+| Publishable — 500 turns, 5 arms, N=5 | $1,125 | **~$563** |
+| Grading (judge on the ~30% of cells tests can't settle) | $188 | ~$94 |
+| Latency subsample — ~100 turns, **synchronous, no batch discount** | ~$160 | ~$160 |
+
+**The publishable study is roughly $800 in tokens.** At 6× these token
+assumptions it is ~$4k. **Tokens are not the constraint on this project;
+engineering time and compute are.**
+
+### The drift experiment costs more than the grid
+
+Correcting an earlier estimate of "a few hundred dollars": the drift experiment
+runs **forward to completion** from turn K, which is precisely the expensive
+full-session replay the product exists to avoid. Each run is 10–30 turns rather
+than one.
+
+- **Pilot** — 40 sessions × 2 K-positions × 2 arms × N=3 ≈ 480 runs at ~15 turns:
+  **~$300 with batch.** Enough to see whether a relationship exists.
+- **Conclusive** — 100 sessions × 3 K-positions × 2 arms × N=3: **~$1–2k.**
+
+### Cost levers, in order
+
+1. **Batch API — 50%**, for everything except the latency arms.
+2. **Cache the prefix and run samples within a cell sequentially.** A cache entry
+   is only readable once the first response begins streaming, so **N parallel
+   requests with the same prefix all pay full price** — parallelism forfeits the
+   0.1× reads and roughly doubles input cost.
+3. **Prefer objective grading.** SWE-bench-family instances ship tests, so most
+   cells grade on compute rather than tokens. Reserve the blinded judge for
+   genuinely ambiguous cells.
+4. **Hold effort fixed in the first grid.** A five-level effort sweep multiplies
+   arms by up to 5 *and* raises output tokens — a 5–8× jump. Second study, on a
+   subsample.
+
+### Subscriptions vs API keys
+
+Claude Max, ChatGPT Pro and Grok subscriptions are fine for exploration. Use
+**metered API keys for the study and anything commercial**, for three reasons:
+
+- **Batch's 50% is API-only** — that alone pays for the metered path.
+- **Rate limits.** A grid is bursty and sustained; interactive quotas will throttle it.
+- **The commercial product needs metered billing anyway**, and customer-side runs
+  use the customer's keys.
+
+Measuring in **tokens rather than dollars** removes attribution as a concern, so
+that is not an argument against the subscriptions — the three above are.
+
+`OPEN` — API keys with metered billing may not exist yet for all four vendors.
+This is a prerequisite, not a detail.
+
+### Not tokens
+
+**Compute.** Docker builds and test runs across a publishable grid are real CPU —
+on the order of $100–300 and considerably more wall-clock than the inference.
+Route it through `compute-run` rather than a session container.
+
+---
+
 ## Distribution
 
 1. **Publish a finding, not a product.** Run the grid on public corpora and
@@ -403,3 +494,106 @@ Set in advance so the decision is evidence rather than attachment:
 3. Dataset licences: cleared for commercial use?
 4. Does the metadata-only diagnostic actually persuade? Testable in week 4 with
    one warm intro, before anything is built for it.
+
+---
+
+## Handoff to an execution session
+
+*What a fresh bridge session needs in order to produce real results rather than
+more analysis. Everything below is operational.*
+
+### The first task, and it is not the grid
+
+**Run the drift experiment before anything else.** It is the falsification test
+for the product (see §Counter-arguments): if an intervention at turn K does not
+predict end-of-session outcome, the measurement is precise and irrelevant, and
+publishing a study built on it would be worse than publishing nothing.
+
+**Spec:**
+
+| | |
+|---|---|
+| **Corpus** | A public set with an objective end-state grader — SWE-bench-family, so tests decide pass/fail |
+| **Sessions** | 40 for the pilot; short trajectories preferred (10–40 turns) |
+| **K positions** | ~25%, ~50%, ~75% of turn count, so distance-to-end varies |
+| **Arms** | Control (fresh replay, original condition) + one cheaper tier |
+| **N** | 3 per cell |
+| **Run** | Forward to completion from K, then grade end state with the instance's tests |
+| **Record** | Per-turn action match at K; end-of-session pass/fail; distance from K to end; wall-clock; tokens; cost |
+| **The question** | Does agreement at turn K predict the end-state outcome, and does the effect decay or compound with distance to end? |
+| **Kill result** | No usable relationship between the turn-K signal and end-state outcome |
+| **Budget** | ~$300 with batch. Hard ceiling: $600 |
+
+### Where things are
+
+| | |
+|---|---|
+| Design of record | `REPLAY_DESIGN.md`, `REPLAY_WALKTHROUGH.md` (repo root of `llm-slack-channel-bridge`) |
+| Implementation | `packages/cloud-worker/src/replay-*.ts` — `replay-cli`, `replay-harness`, `replay-capture`, `replay-dispatch`, `replay-perturbation`, `replay-git-snapshot`, `replay-truncate`, `replay-reconstruct`, `replay-index` |
+| Own corpus | ~936 sessions on EFS, never deleted, four models in use |
+| Public corpora | `nvidia/Open-SWE-Traces` (9 languages, OpenHands + SWE-agent), plus the datasets in §Public corpora |
+| Heavy commands | `compute-run` — not the session container |
+
+### Prerequisites to clear before running anything
+
+1. **Metered API keys** for each vendor in the panel, stored in Secrets Manager
+   (not subscription OAuth). Blocking.
+2. **Dataset licences** confirmed for commercial use. Blocking for publication,
+   not for the pilot.
+3. **A results file convention**, so findings accumulate on disk rather than in a
+   transcript. Every run appends: session id, K, arm, model, effort, N index,
+   tokens in/out, `cache_read_input_tokens`, wall-clock, grade, cost.
+4. **A hard budget ceiling with a kill switch** — an `.abort` file checked between
+   items, so a runaway grid stops with partial results saved rather than burning
+   the ceiling.
+
+### Measurement conventions — fix these before the first run
+
+- **A "turn" is the unit the capture layer already snapshots.** Do not redefine it
+  mid-study.
+- **Verify caching is actually working**: `usage.cache_read_input_tokens > 0` on
+  the second sample of every cell. If it is zero, something in prompt assembly is
+  invalidating the prefix and input cost is ~10× what it should be. This fails
+  silently.
+- **Record wall-clock even in the batch arms**, but never *compare* speed across
+  batch and synchronous runs.
+- **Randomise arm order across time** in the latency subsample.
+
+### Known traps
+
+| Trap | Consequence |
+|---|---|
+| Parallel samples over one prefix | All pay full price; no cache reads |
+| Batch used for latency arms | Speed numbers meaningless |
+| Comparing effort labels across tiers | Not comparable; sweep effort as an axis. Haiku 4.5 has no effort parameter |
+| Passing thinking blocks cross-model | Origin-locked on Fable; normalise prefix thinking uniformly so every arm thinks fresh at K |
+| Grading only on tests | Inherits the ["lucky pass"](https://arxiv.org/pdf/2605.12925) problem — tests passing for the wrong reason |
+| Judge is a contestant | Model prefers its own output. Blind it, randomise order, third-party arbiter on ties |
+| Baseline is the recorded outcome | Confounds every result with prompt-regeneration drift. Baseline must be a **fresh replay of the original condition** |
+| Replaying turns with external side effects | Skip them — readable off `tool_log`. Write-guard and egress denied regardless |
+
+### Decision gates
+
+| Gate | Result | Action |
+|---|---|---|
+| Drift pilot | Relationship exists | Proceed to the quality/cost/speed grid |
+| Drift pilot | No relationship | **Stop.** Report it; do not publish |
+| Drift pilot | Ambiguous | Scale to the conclusive design (~$1–2k) before proceeding |
+| Grid | Defensible figures across ≥2 harnesses and ≥3 languages | Write the publication |
+| Grid | Fails that bar | Generalisation claim is false — see §Kill criteria |
+
+### Deliverable
+
+Not a summary in a transcript. **A results file, plus a written finding** with the
+grid, the confidence intervals, the methodology, and the negative results stated
+as plainly as the positive ones. That document is simultaneously the scientific
+artifact, the marketing artifact and the sales artifact — which is why it is worth
+writing properly the first time.
+
+### What this session should *not* do
+
+- Build product packaging. Not until the drift result exists.
+- Approach customers. Stage 1 needs the finding first.
+- Extend the grid to effort sweeps. Second study.
+- Optimise the runner. Correctness of reconstruction beats speed of reconstruction
+  at this stage.
