@@ -9,15 +9,20 @@ plainly so they can be argued with.
 
 | Doc | Covers | Status |
 |---|---|---|
-| [01-portfolio.md](01-portfolio.md) | Asset inventory, classification, entity shape, keep/kill/park | Draft v3 — grounded in project-k + aux |
-| 02-stack.md | Target architecture mapped to the portfolio; shared vs. per-product | Not started |
-| [QUESTIONS.md](QUESTIONS.md) | Open questions register, ordered by what they block | Live |
-| 03-organization.md | Operating model: human core, agent roles, P&L and reporting lines | Not started |
+| [01-portfolio.md](01-portfolio.md) | Thesis, three lines, where value accrues, economics, entity shape | v2 |
+| [02-stack.md](02-stack.md) | Layer map, build/wrap calls, shared-vs-per-app, seams, data architecture | v1 |
+| [03-organization.md](03-organization.md) | Human core, agent roles, contracting model, attention and decision latency | v1 |
+| [QUESTIONS.md](QUESTIONS.md) | Open questions, ordered by what they block | v2 |
 
 ## Conventions
 
-- **ASSUMPTION** — something inferred, safe to act on until contradicted.
-- **NEEDS YOU** — a decision or fact only a founder can supply; blocks work downstream.
-- **DECISION** — settled; changing it means revisiting the docs that depend on it.
+- `OPEN` — undecided; a founder call is needed. Tracked in [QUESTIONS.md](QUESTIONS.md).
+- `ASSUMPTION` — inferred, safe to act on until contradicted.
+- `PROPOSED` — a recommendation, argued but not settled.
+- `DECIDED` — settled; changing it means revisiting the docs that depend on it.
+- `CONTINGENT` — depends on an open question; don't build against it yet.
 
-Every substantive change lands as its own commit so the argument can be read as a diff.
+Every substantive change lands as its own commit, so the argument can be read as a
+diff. The docs were rewritten clean on 2026-09-10; the incremental argument that
+produced them is in the git history, and the positions that were tried and
+retired are summarised in 01's appendix so they don't get re-litigated.
