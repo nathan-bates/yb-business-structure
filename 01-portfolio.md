@@ -243,37 +243,92 @@ asset** — the consulting offering and the app factory — rather than a line 1
 asset. That resolves the tension flagged above in favour of line 2, and it is a
 simplification worth taking.
 
-### 2c. So what is the niche?
+### 2c. So what is the niche? (researched 2026-09-10)
 
-Nathan's test — *unless there's a niche no one else is building toward* — is the
-right one. Four candidates, ordered by how structurally hard they are for a large
-incumbent to copy:
+An earlier draft of this section asserted four candidate niches from reasoning
+rather than evidence. Nathan challenged it; the research says he was right and I
+was wrong on the two most important points. What follows is sourced.
 
-1. **Acting in the person's own accounts, never intermediating the transaction.**
-   The spike already does this: add-to-cart in the person's own Amazon session,
-   one aggregated cart over the merchants' real carts. Incumbents *can* do this,
-   but it fights their monetisation — they want to become the transaction
-   intermediary and take a rate. A product that deliberately leaves the purchase
-   in the merchant's cart under the user's own account, loyalty and payment
-   method is one they can copy only by cannibalising the model they're building.
-   **Business-model consequence: no take rate.** Monetisation has to be
-   subscription or B2B licensing, and that should be decided deliberately.
-2. **A cross-provider, user-owned preference layer.** Incumbents' preference and
-   memory features exist to increase lock-in. A preference store that is
-   portable *by design* — the `library` metaphor, scope-gated, the person's
-   knowledge — is anti-strategic for them and therefore durable for you.
-3. **Per-person generative UI.** Incumbents converge on one chat interface for a
-   billion users; their interface is their brand and their scale advantage.
-   Composing a different UI per person is orthogonal to that and unattractive at
-   their scale. *Honest caveat: adaptive UI is a graveyard of prior attempts.
-   The claim to defend is that LLM composition plus a real feedback flywheel is
-   what those attempts lacked.*
-4. **Earned autonomy as an auditable, per-capability mechanic.** Incumbents ship
-   autonomy as a settings toggle. A trust ledger that accrues per capability,
-   with a legible record of why, is a different and more defensible thing.
+**Candidate 1 — "act in the person's own accounts, never intermediate the
+transaction" — is NOT a niche. It is now the industry's mainstream design.**
 
-Candidates 1 and 2 are the strong ones — both are positions a large company is
-*disincentivised* to take, which is a better shield than being first.
+- OpenAI **deprecated Instant Checkout in March 2026**, moving to a model where
+  the agent recommends and the shopper completes on the *merchant's own site*,
+  explicitly so brands keep the customer relationship, login, and loyalty
+  engagement.
+- The **April 2026 UCP update added Identity Linking**, so shoppers on
+  UCP-integrated platforms get the same loyalty and member benefits they'd have
+  logged into the retailer directly.
+
+My reasoning — that take-rate incentives would deter incumbents from leaving the
+purchase with the merchant — was simply wrong. They tried intermediated checkout
+and *retreated from it*. Merchant-side checkout is currently the preferred model
+across the industry.
+
+**Aggregation is also occupied — but only partially, and the boundary is the
+whole opportunity.**
+
+**Google Universal Cart** (announced at I/O, 19 May 2026) combines purchases from
+multiple merchants into a single cart across Search, Gemini, YouTube and Gmail,
+with Google Wallet supplying loyalty information and merchant offers. Early
+merchants: Nike, Sephora, Target, Ulta, Walmart, Wayfair, and Shopify merchants
+including Fenty and Steve Madden.
+
+So "clean multi-merchant aggregation" as a general claim is taken. **But
+Universal Cart is built on UCP, and UCP is a participation protocol.** It can
+only aggregate merchants who integrate. That leaves two structural gaps:
+
+1. **Walled gardens that will never join a Google protocol.** Amazon is not
+   mentioned anywhere in the Universal Cart coverage, and as a rival ecosystem
+   has no reason to participate. The largest retailer is therefore structurally
+   outside protocol-based aggregation.
+2. **The long tail** — merchants who will not integrate anything, ever.
+
+**The spike already reaches both**, because it drives the person's own
+authenticated session rather than asking permission: add-to-cart in the person's
+own Amazon session, one aggregated cart over the merchants' real carts, at
+Amazon and Total Wine.
+
+> **This is the defensible statement of the niche:** not "cleaner aggregation
+> than Google" — four people do not win a UX-quality contest against Google — but
+> **aggregation across merchants that protocol-based aggregation structurally
+> cannot reach.** Amazon is the flagship proof. That is a permission-free
+> position, and it is durable exactly because the incumbents' approach is
+> permission-based by construction.
+
+*Source discrepancy, flagged rather than resolved:* a 2026 protocol guide states
+that neither ACP nor UCP specifies cross-merchant carts, and lists multi-item
+carts as "coming soon" — while the May 2026 Universal Cart coverage describes
+cross-merchant carts shipping. Most likely Universal Cart is a Google product
+layer above UCP rather than a spec feature. Worth confirming before this is used
+externally.
+
+**Generative UI is contested too.** Google's **A2UI** (late 2025) lets agents
+generate widgets inline in a conversation; **MCP Apps**, Open-JSON-UI and
+CopilotKit occupy adjacent ground. AUX therefore has direct standards
+competition, which reinforces the earlier conclusion: do not expect to win on
+protocol design. Anthropic's **Claude Commerce Agents** (2 September 2026) even
+ships an Apache-2.0 shopping-agent blueprint whose five skills include
+*memory-personalization* — so personalization-as-a-feature is being commoditised
+as well.
+
+The distinction that survives: every one of these generates UI from **content
+context, inline in a chat transcript**. None is driven by a durable, accumulated
+model of a specific person, and none has a feedback flywheel converting each
+interaction into a better-fitting interface next time. That is a narrower claim
+than "generative UI" and it is the one worth defending.
+
+**Revised niche, in one sentence:** reach the merchants protocols can't, and
+present the result through an interface shaped by an accumulating per-person
+preference model — with the aggregated cart as the first demonstration of both
+at once.
+
+**Sources.** [OpenAI deprecating Instant Checkout / merchant-side model + UCP
+Identity Linking](https://opascope.com/insights/ai-shopping-assistant-guide-2026-agentic-commerce-protocols/) ·
+[Google Universal Cart](https://www.digitalcommerce360.com/2026/05/20/google-universal-cart-for-agentic-commerce/) ·
+[Grok Bot shopping / Stripe Link virtual cards](https://www.axios.com/2026/06/03/exclusive-spacexai-and-gopuff-help-you-shop-for-more-stuff) ·
+[Claude Commerce Agents](https://www.marktechpost.com/2026/09/03/anthropic-released-claude-commerce-agents-an-apache-2-0-blueprint-for-shopping-and-merchant-agents-across-retail-travel-telecom-and-entertainment/amp/) ·
+[Generative UI frameworks, A2UI, MCP Apps](https://www.copilotkit.ai/blog/the-developer-s-guide-to-generative-ui-in-2026)
 
 ### 3. The apps are the demand side, and one is not enough.
 
