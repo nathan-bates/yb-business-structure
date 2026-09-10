@@ -111,14 +111,18 @@ missing knowledge. So the preference layer isn't merely the moat — it's also t
 performance strategy, and the model-assisted flag in 0026 is where latency will
 re-enter. It should carry an explicit latency budget, not just a feature flag.
 
-> **Finding worth acting on.** Both halves of the moat — the User Agent's
-> preference KB and the Arbiter's elicitation patterns — sit **outside** what
-> `project-k` and `aux` are currently building. Nine packages exist for the form
-> layer (protocol, renderer, design system, vocabulary, pattern library, Kay).
-> The Arbiter has a contract (ADR 0027) but no implementation and an explicitly
-> open knowledge base; the User Agent has a query protocol but no store. Build
-> effort is concentrated on the layer most likely to be commoditised or given
-> away, and absent from the two components identified as proprietary.
+> **Correction to an earlier draft of this document.** It claimed both halves of
+> the moat were unbuilt. That was wrong: the `Youbiquity` org holds reference
+> implementations for each — **`arbiter`** (the decider; owns what gets asked)
+> and **`library`** (the User Agent + User KB, with a Librarian scope gate
+> separating the "restricted section" of domain facts Kay may never see from the
+> "open stacks" of presentation preferences). Both have `src/` and `test/`.
+>
+> The thin one is **`market`** — the Service Agent/Broker, holding drivers for
+> external businesses and answering *what can it be asked* (C10) and *what can it
+> effect* (C9). Created 2026-09-02, README only. That is the component through
+> which the entire ecosystem reaches the outside world, and it is the least
+> built. It is also where any Sextant-derived driver would land.
 
 ### 2. Sextant solves the standards cold-start problem, and that's its real job.
 
@@ -133,13 +137,9 @@ merely "map-making IP", but *the adoption strategy*.
 
 There are three distinct ways to use it, and they are not equivalent:
 
-- **(a) Internal adapter-generator.** Point Sextant at an app you don't control;
-  its graph becomes a Service Agent driver. You gain coverage *without anyone
-  adopting anything*. This is the cold-start answer, and it needs no
-  counterparty's permission — which is both its strength and its ToS risk.
-  Concrete seam: ADR 0029/0030's **write recipes** ("authored by the framework,
-  armed by a person") are exactly what Sextant's exploration output could
-  generate.
+- **(a) Internal adapter-generator.** Sextant's graph becomes a Service Agent
+  driver. Concrete seam: ADR 0029/0030's **write recipes** ("authored by the
+  framework, armed by a person"). **Constrained by source access — see below.**
 - **(b) External integration SDK.** Give it to app owners: "run this, get an AUX
   manifest, you're a citizen." Lowers adoption cost — but it is productisation,
   with docs, support and SLAs, i.e. the human-shaped work that fights the
@@ -149,10 +149,61 @@ There are three distinct ways to use it, and they are not equivalent:
   patterns, feeding the Tier-3 pattern library and the Arbiter's elicitation
   patterns. Quietly the most compounding of the three.
 
-**Recommendation: (a) now, (c) as a by-product, (b) only for named partners, and
-never self-serve until the core is proven.** Note that the consulting line sells
-Sextant as a tool — meaning line 2 and line 1 are competing for the same asset,
-and pulling it toward (b). That tension is currently unmanaged.
+#### The source-access constraint
+
+Sextant today requires the codebase. Its rigor comes from things only source
+grants: istanbul/nyc **coverage instrumentation**, injected `data-sextant-id`
+**stable selectors**, **state seeding** via API/DB, and reading role/permission
+catalogs. So "point it at any app" is not available, and the cold-start claim
+needs narrowing.
+
+What splits cleanly:
+
+| Capability | Needs source? |
+|---|---|
+| Coverage measurement / completeness signal | **Yes** |
+| Stable selectors | **Yes** |
+| Ephemeral-user seeding, role catalogs | **Yes** |
+| Exploration → state/transition graph | No, in principle |
+| Recipe authoring + verification by replay | No, in principle |
+
+The Service Agent needs the bottom two, not the top three — so this is an
+engineering gap rather than an impossibility. But losing source costs three real
+things, and one of them bites the thesis:
+
+1. **No completeness signal.** Coverage is how you know exploration finished.
+   Without it you cannot tell a mapped app from a partially mapped one.
+2. **A brittleness treadmill.** Without stable selectors, third-party UI churn
+   breaks recipes. Maintenance scales with apps × churn rate — the direct enemy
+   of marginal-cost-to-zero. Recipes decay; **patterns don't**, which is the
+   strongest argument for (c).
+3. **No seeding.** You cannot create test users in someone else's app.
+   Exploration must run live in the real user's account, side-effecting — which
+   is precisely why ADR 0029 makes the first write a hold on a fixture venue.
+
+**Revised recommendation — three access tiers, matching `market`'s own driver
+taxonomy ("a shop with an API, a shop that must be driven in a browser, a venue
+that can hold a table"):**
+
+- **Tier 1 — own apps** (source, build, DB): full Sextant, full rigor. Where the
+  marginal-cost thesis actually gets proven.
+- **Tier 2 — partners** (agreement, sandbox credentials, possibly no source):
+  exploration + recipes, no coverage metric, stability notice negotiated in the
+  agreement. **This is where option (b) matters more than I first credited** —
+  the integration SDK is the tier-2 unlock.
+- **Tier 3 — unaffiliated third parties**: do *not* attempt to map the app.
+  Use co-browse (the user is genuinely present in their own session) and go
+  **depth-first** — a small number of high-value capabilities per domain (buy,
+  book, hold) rather than whole-app maps.
+
+The strategic correction: cold-start is **not** solved by unilaterally mapping
+the world. It is solved by depth in tier 3 and relationships in tier 2 — and
+the durable asset extracted from all three tiers is the pattern library, not
+the recipes.
+
+Note also that the consulting line sells Sextant as a tool, pulling it toward
+(b), while the ecosystem line wants it at (a) and (c). That tension is currently
+unmanaged.
 
 ### 3. The apps are the demand side, and one is not enough.
 
@@ -267,8 +318,10 @@ experiment.
 1. **Delegation compounds.** The flywheel's core claim: people give more autonomy
    as trust accrues. v0 proved the *mechanism*, explicitly not learning-at-scale.
    Everything rests on this and it is not yet evidenced.
-2. **Sextant can map apps it didn't co-evolve with.** The adoption path depends
-   on it; demonstrated mainly against VesselHaven so far.
+2. **Sextant can map apps it didn't co-evolve with — without source.** Today it
+   cannot; the black-box path is unbuilt. The adoption path for tiers 2–3
+   depends on it, and it is demonstrated only against VesselHaven, which
+   co-evolved with it.
 3. **A second vertical launches without adding humans.**
 4. **Consulting can be capped.** Organizational discipline; the usual failure mode.
 5. **The preference layer is separable and defensible.** If it isn't, the
