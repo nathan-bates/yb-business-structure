@@ -221,22 +221,37 @@ anyone's laptop indefinitely.
 
 ## Pricing
 
-**Flat subscription, justified by measured savings. Never a share of savings.**
+`PROPOSED` — **metered, per token of the session analysed.** Not subscription, and
+not a share of savings.
 
-Share-of-savings is the obvious idea and it is a trap: it takes a percentage of a
-number *we also produce*. Buyers see the conflict immediately, and it undermines
-the only thing being sold, which is trustworthy measurement. Use savings to anchor
-and justify the fee; never to compute it.
+**Why metered rather than subscription.** A subscription has to clear a
+procurement threshold: at 40% savings, justifying $50k/yr at 3× ROI needs roughly
+**$375k/yr of customer inference spend**, which prices out everyone below the
+largest buyers. A $500 analysis needs no procurement cycle at all. Metering also
+degrades gracefully — when a routing policy stabilises and usage falls to periodic
+re-checks, revenue dips instead of churning to zero, which is the honest answer to
+"is this a one-time purchase wearing a subscription costume."
 
-Anchoring: their monthly agent inference spend is known to them. Published routing
-results in the wider market claim 30–85% savings, which sets the frame without
-needing a promise. Price the subscription materially below the demonstrated
-recoverable amount and let the diagnostic do the arguing.
+**Why per *analysed* token rather than per *consumed* token.** This distinction
+decides whether the business survives falling model prices:
 
-Land-and-expand shape: **diagnostic → routing policy subscription → continuous
-migration and regression assurance**, renewing on every model launch.
+| Basis | If inference drops 95% |
+|---|---|
+| Price per token consumed running the replay (cost-plus) | **Revenue falls 95%** alongside COGS — the customer's savings shrink and so does the fee |
+| **Price per token of the customer's analysed session** | Revenue tracks **their workload volume**, which grows, while COGS falls — margin expands |
 
----
+Anchor the rate against replay COGS (~$1.59 per turn across a five-arm panel at
+N=3, before batch — see §Budget) at a healthy multiple, then decouple it from
+inference price by denominating in *their* tokens.
+
+**Never a share of savings.** It takes a percentage of a number we also produce.
+Buyers see the conflict immediately, and it undermines the only thing being sold.
+
+Land-and-expand becomes usage growth rather than seat negotiation: a first
+diagnostic, then continuous analysis as the customer's agent volume rises.
+*(Trade-off to accept: metering needs metering and billing infrastructure, and
+usage-based pricing implies at least partial self-serve, which carries a docs and
+support load — the human-shaped work 01 warns about. Budget for it deliberately.)*
 
 ## Distribution
 
@@ -294,6 +309,35 @@ question.
 5. **Drift into bespoke consulting**, because this segment will ask for it and the
    commercial bench is good at it. 03's scope rule applies here first: sell
    implementation of a licensed product, never bespoke work.
+
+## Counter-arguments — what would make this insolvent
+
+Distinct from the kill criteria below, which cover *execution* failure. These are
+ways the market could be wrong.
+
+| Argument | Status after review | Cheapest test |
+|---|---|---|
+| **Model prices collapse ~95%**, so savings are immaterial *and* full-session replay becomes affordable, removing turn-K's efficiency advantage | **Live, and the deepest one.** Partial rescue: Jevons — unit price falls, usage rises, aggregate spend holds. But the optimisation target moves from *which model* to *which configuration finishes in fewest turns*. **Same engine, different pitch.** Time savings also survive price collapse | None; pivot when it lands. Hold the framing in this doc loosely |
+| **Harness vendors ship it natively** — Cursor, Claude Code, Copilot, Factory own the session format, workspace, user and telemetry | **The most likely killer.** Defence is genuine: they compare models *within* their harness and will never show that a competitor's configuration wins. Cross-vendor, cross-harness neutrality is structurally unavailable to them — the same claim routing products are built on | Watch release notes; ask design partners what they expect their vendor to add |
+| **Model vendors remove the migration trigger** with long support windows and free assurance tooling | **Weak.** Vendor assurance answers *"is it safe to move"*, not *"which family and effort level"* — and vendors have **negative incentive** on the second, since the honest answer is often "use a cheaper tier." They will not build the thing that reduces their own revenue | — |
+| **Savings below the cost of buying** — $20k saved doesn't justify a procurement cycle and a security review | **Fair, and it repriced the product.** Resolved by metering rather than subscription (§Pricing), which removes the threshold and puts the mid-market back in scope | The five metadata diagnostics in weeks 4–8 |
+| **Turn-K counterfactuals don't predict policy outcomes** — trajectories are path-dependent, so a better decision at K can yield a worse session | **Live and unresolved. Needs real data.** This is the falsification test for the entire product, not a feature: if drift is large and unpredictable, the measurement is precise and irrelevant | **The drift experiment, weeks 1–2, a few hundred dollars — and it must precede publication** |
+| **One-time purchase wearing a subscription costume** — a fitted policy holds for months | **Rejected.** Tuning is continuous regardless of churn: new efforts, families, workload mixes. Metering lets the customer decide when it is worth running, and revenue dips rather than churning when a policy stabilises | Ask the first two customers what a renewal is *for* |
+| **Open-source commoditisation** | **Withdrawn.** Reasoned by analogy rather than from evidence. Publishing a methodology is not publishing an implementation, and the implementation — workspace reconstruction, mutation guard, harness adapters, grading — is the hard part, not weekend OSS. The realistic version of this fear is the harness-vendor row above | — |
+
+### Solvency conditions
+
+1. Aggregate agent spend keeps rising as unit price falls, so *something* stays
+   worth optimising.
+2. **Drift is bounded and turn-K predicts policy outcomes.**
+3. Cross-vendor neutrality has visible commercial value against vendor tooling.
+4. Metered pricing clears at small deal sizes — no procurement cycle required.
+5. Configuration tuning remains a live question, i.e. the quality/cost spread
+   between families and effort levels stays material.
+
+Two of these are testable in the first month for under $1k, and one of them —
+**drift** — should be tested before anything is published, because a study built
+on an invalid premise is worse than no study.
 
 ## Kill criteria
 
