@@ -724,6 +724,67 @@ months, treat it as evidence against the portfolio strategy rather than as a
 one-off overrun, and revisit before starting app #3. A threshold set in advance is
 a test; one set afterwards is a rationalisation.
 
+### 2l. Why VesselHaven isn't a clean baseline — and the adoption problem
+
+The acceleration tooling was built *during* VH, and adoption was painful and
+remains contested. Three consequences.
+
+**1. VH's $250k / 11 months is not a control measurement.** It bundles building
+the factory with using it, plus the disruption of adopting tools mid-flight.
+That cuts both ways: the number overstates what an app costs *with* a factory,
+and understates how much of the spend was one-time. It also means the
+recurring/non-recurring split asked for in §2j is harder to recover than it
+looked — but more valuable, because **app #2 is the first real measurement the
+group will ever have.** Instrument it accordingly.
+
+**2. The incentive under the adoption problem is structurally misaligned, and it
+is not a personality issue.** The thesis requires work done during app #1 to make
+app #2 cheaper. But the people building app #1 are, in the main, contracted for
+app #1. They bear the full cost of adopting unfamiliar tooling and capture none
+of the benefit, which accrues to an app they may never touch. Resistance under
+those conditions is the rational response, not a failure of will — and no amount
+of advocacy fixes an incentive.
+
+Remedies, roughly in order of how structural they are:
+
+- **Move factory work out of app delivery.** The core owns and builds the tools;
+  delivery consumes them. Contractors are then asked to *use* something, not to
+  *invest* in something.
+- **Contract for it explicitly.** If factory contribution is a deliverable with
+  scope and payment attached, it stops being an unfunded ask.
+- **Measure delivery on app-N+1 cost, not app-N throughput** — only works where
+  the same people continue across apps, which is worth knowing either way.
+
+**3. The minimal-core thesis offers a third path, and it should be named
+honestly.** Agents adopt tooling instantly and without politics. If the build
+loop contains few humans, the adoption problem largely dissolves — which makes
+"fewer humans in the build loop" a *remedy* for tool contention rather than only
+a cost strategy.
+
+That is convenient enough to deserve suspicion. VesselHaven was built by people.
+There is no evidence yet that the agent-executed path works at whole-app scale,
+and "replace the humans who resist the tools" is a strategy that fails badly if
+the agents can't actually do the work. So it should be tested, not assumed.
+
+**The two paths to the time target are different bets, and blending them hides
+which one is working:**
+
+| | Path A — human team + tools | Path B — agent-executed + human review |
+|---|---|---|
+| Requires | Solving adoption: incentives, scope, ownership | Agents performing at whole-app scale |
+| Known cost | Management overhead, ongoing friction | Unproven; VH gives no evidence either way |
+| Failure mode | Tools built, not used; curve doesn't bend | Quality/throughput collapse; humans re-enter late and expensively |
+
+**Make app #2 the experiment, and instrument it to answer *why* the number moved.**
+The single most informative metric available is not dollars: it is **the fraction
+of merged work that was agent-originated**, tracked per app. Cost tells you
+whether the curve bent; that ratio tells you which path bent it — and therefore
+whether the result generalises to app #3.
+
+> **NEEDS YOU** — Which path is app #2 actually testing? If the honest answer is
+> "mostly A with some B", say so explicitly and set the ratio in advance, because
+> a blended result with no instrumentation will be unreadable.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first

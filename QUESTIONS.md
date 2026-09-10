@@ -65,6 +65,19 @@ Two sub-questions from §2k, both cheap to answer and both decisive:
   the time target is an org problem rather than an engineering one, and agents
   alone will not reach it.
 
+## Q1c — Which path is app #2 testing: human-team-plus-tools, or agent-executed?
+
+§2l. Tool adoption is contested and the incentive is misaligned — contractors
+paid for app #1 bear the adoption cost and capture none of the app-#2 benefit.
+Three structural remedies exist (move factory work out of delivery; contract for
+it; measure on N+1 cost), plus a fourth the minimal-core thesis implies: fewer
+humans in the build loop, since agents don't resist tooling. That last one is
+convenient enough to need testing rather than assuming.
+
+Decide which path app #2 runs, and instrument **the fraction of merged work that
+was agent-originated** — cost says whether the curve bent, that ratio says which
+path bent it, and therefore whether it generalises.
+
 ## Q2 — Is the consumer aggregator accepted as a demo rather than the product?
 
 §2d recommends repositioning from consumer aggregator to per-person interface
