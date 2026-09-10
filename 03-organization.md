@@ -77,60 +77,79 @@ each owning a domain**, with the CTO owning what crosses between them:
 
 | Director domain | Focus |
 |---|---|
+| **Platform** *(Peer 1)* | Building the tech — the counterfactual engine, the shared platform, the factory |
 | **Applied / integration** | How the tech gets applied and integrated on the consulting side |
-| **Core tech** | Building the tech itself — the counterfactual engine, the platform |
-| **Product engineering** | How the tech supports the ecosystem and the apps |
+| **Product engineering** *(Peer 2)* | How the tech supports the ecosystem and the apps |
 
-This resolves the objection in the previous version of this section. Escalations
-stop at a director; the CTO holds the **envelope** — what may be promised, what
-architecture is permitted, what must be reused. Envelope decisions are low-volume
-and batchable; delivery escalations are neither, and keeping the two on different
-people is the whole point.
+Escalations stop at a director; the CTO holds the **envelope** — what may be
+promised, what architecture is permitted, what must be reused. Envelope decisions
+are low-volume and batchable; delivery escalations are neither, and keeping the two
+on different people is the point.
 
-**It also keeps the minimal-core thesis intact, which is worth making explicit:**
-a director here is *one human supervising an agent team*, not one human
-supervising a department. The layer is thin by construction — see §Agent roles for
-what sits beneath each domain. That is what distinguishes this from ordinary
-headcount growth, and it should stay true as a design constraint rather than by
-accident.
+**The axis here is build-versus-apply, not business line** — one builder, two
+application surfaces. That is a better fit for this company than a line-aligned
+split, and it is worth being explicit about why: the shared column of 02's cost
+model (person layer, factory, ops plane, shared schema) has an owner **by
+construction** rather than by exception. A line-aligned engineering org would have
+left it orphaned, and the shared column is the entire cost thesis.
 
-**And it makes the engineering org mirror the portfolio**, which is mostly good:
-three lines, three domains, and the seams in 02 land on organisational boundaries
-rather than cutting across them. Conway's law working in the group's favour.
+It also mirrors the stack's own primary seam: shared versus per-app becomes
+builder versus appliers.
 
-#### The risk it creates: orphaned shared assets
+**It keeps the minimal-core thesis intact**, and this should hold as a design
+constraint rather than by luck: a director here is *one human supervising an agent
+team*, not one human supervising a department. See §Agent roles for what sits
+beneath each domain.
 
-Line-aligned teams reliably under-invest in shared infrastructure — and **shared
-infrastructure is this company's entire cost thesis.** The person layer, the
-factory, the ops plane, the shared identity and profile schema belong to no single
-line, benefit every line, and are what levers 1 and 3 depend on (02 §The cost
-model). With three line-aligned directors and nobody owning the shared column,
-those assets get built late, twice, or not at all.
+#### The risk this axis creates instead
 
-Two ways to fix it, and one of them should be chosen deliberately:
+Not orphaned shared assets — a different pair:
 
-- **A fourth domain — platform/shared.** Explicit owner for the shared column,
-  including the ops plane. Cleanest, and costs a slot.
-- **The shared column *is* the CTO's own domain.** Defensible, because the
-  envelope and the shared assets are nearly the same thing — and it gives the CTO
-  something to build rather than only to govern. Cheaper, but it means the shared
-  column competes with replay execution for the same person's time.
+- **The builder builds what nobody applies.** Shared platform work drifts from
+  what the two application surfaces actually need. The remedy is that the
+  appliers set requirements on the builder, and the envelope arbitrates when they
+  conflict; that only works if it's stated, because the builder's domain is the
+  one with no external customer telling it when it's wrong.
+- **The two appliers fork.** Consulting-side and product-side integration solve
+  the same problem twice in incompatible ways — which quietly moves work from the
+  shared column into the per-app column, reversing lever 1. Watch for the same
+  capability appearing in both.
 
-`OPEN` — which. This is the decision that determines whether the cost curve has an
-owner.
+#### Timing: bets first, then assess
 
-#### Sequencing: which director first
+`DECIDED (Nathan, 2026-09-10)` — no role is filled today. **Make the bets, let
+them run 1–3 months, then assess where a director level is most needed.** Which
+domain comes first depends on where the bets landed and how their timelines
+behaved — not on a plan made in advance.
 
-The structure is a target; today there is no layer, so escalations do reach the
-founders. Two questions the target doesn't answer:
+That's consistent with §When a human gets added, and it's the right posture. One
+thing it needs to work:
 
-- **Which domain is filled first?** The argument from the clocks: fill the domain
-  whose escalations are most interrupt-driven, which is **applied/integration** —
-  because that is what currently threatens replay's deadline and the ecosystem's
-  continuous clock. Filling core-tech first would feel more natural to a technical
-  founder and would protect the bets less.
-- **What holds until then?** If the answer is "Nathan does", the scope rule below
-  is not a nice-to-have — it is the only thing keeping the interim survivable.
+> **Instrument the decision now, because it can't be reconstructed later.**
+
+In three months the question will be "where is the director needed?", and the
+honest answer will come from evidence nobody is currently collecting. Three cheap
+measurements, starting immediately:
+
+| Signal | Why it decides |
+|---|---|
+| **Founder hours by domain** | Where attention is actually going, as opposed to where it was allocated |
+| **Escalation count by domain** | Which surface generates interrupts — the direct argument for a director there |
+| **Which clock is slipping** | Replay's deadline and the ecosystem's accumulation are the two things a director exists to protect |
+
+Same argument as VesselHaven's cost decomposition: trivial to capture as it
+happens, guesswork afterwards.
+
+**And the assessment point has a natural date.** VesselHaven ships, the replay
+sprint produces its first market feedback, and the community/identity decision
+lands — all inside the same 1–3 months. That's one review gate with several
+signals arriving together, not three separate check-ins. Worth treating it as a
+single scheduled assessment.
+
+**A director need not be a hire.** It could be a promoted contractor, a fractional
+person, or a domain run by agents with a founder as nominal lead until the load
+justifies otherwise. The role emerging and the role being filled are separate
+decisions, and only the first is being made here.
 
 ### Scope still does more work than structure
 
@@ -543,8 +562,12 @@ It decides whether the app #2 time target is an engineering problem or this one.
 7. **Bespoke consulting sold at all.** Novel technical problems escalate past a
    director to whoever holds the architecture — which is the person carrying both
    clocked bets. The director layer bounds escalation; the scope rule reduces it.
-8. **Nobody owns the shared column.** Three line-aligned directors and no owner
-   for the person layer, factory and ops plane means the assets that levers 1 and
-   3 depend on get built late, twice, or never — and the cost curve has no owner.
-9. **The ops plane never gets built**, because it sits with the founder who also
-   carries revenue, and revenue always wins the week.
+8. **The two application surfaces fork**, solving the same integration problem
+   twice — which moves work from the shared column back into the per-app column
+   and reverses lever 1.
+9. **The platform domain drifts from what the appliers need**, because it is the
+   only domain with no external customer to tell it when it is wrong.
+10. **The ops plane never gets built**, because it sits with the founder who also
+    carries revenue, and revenue always wins the week.
+11. **The three-month assessment runs on memory**, because nothing was
+    instrumented — and the loudest domain wins rather than the most constrained one.
