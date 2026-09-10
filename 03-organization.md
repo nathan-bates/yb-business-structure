@@ -70,42 +70,84 @@ founding team is not bogged down in consulting minutiae:**
 | Sales | **Agi** |
 | New products | **Chris** |
 
-### The conflict to resolve first
+### The engineering layer beneath the CTO
 
-The goal and the first row are in tension. **If technical consulting reports to
-Nathan, consulting escalations reach Nathan by construction** — and technical
-escalations in a services business are the most interrupt-driven work there is:
-client-specific breakage, environment drift, deadline pressure, scope argument.
-That *is* the minutiae the separation is meant to prevent.
+`PROPOSED` — not a founder taking escalations, but **peer engineering directors,
+each owning a domain**, with the CTO owning what crosses between them:
 
-It matters more than it would in most groups because of what else sits on the same
-person: replay's technical execution (the bet with a **12–18 month** step-function
-deadline) and the ecosystem architecture (the bet that **loses depth every
-month**). Those are important-and-not-urgent. Consulting escalations are
-urgent-and-not-important. **Urgent always wins**, and the thing it wins against is
-the only unprotected clock in the portfolio.
+| Director domain | Focus |
+|---|---|
+| **Applied / integration** | How the tech gets applied and integrated on the consulting side |
+| **Core tech** | Building the tech itself — the counterfactual engine, the platform |
+| **Product engineering** | How the tech supports the ecosystem and the apps |
 
-### Separation is a function of what you sell, not of who reports to whom
+This resolves the objection in the previous version of this section. Escalations
+stop at a director; the CTO holds the **envelope** — what may be promised, what
+architecture is permitted, what must be reused. Envelope decisions are low-volume
+and batchable; delivery escalations are neither, and keeping the two on different
+people is the whole point.
 
-A reporting line does not stop escalation; **scope does.**
+**It also keeps the minimal-core thesis intact, which is worth making explicit:**
+a director here is *one human supervising an agent team*, not one human
+supervising a department. The layer is thin by construction — see §Agent roles for
+what sits beneath each domain. That is what distinguishes this from ordinary
+headcount growth, and it should stay true as a design constraint rather than by
+accident.
+
+**And it makes the engineering org mirror the portfolio**, which is mostly good:
+three lines, three domains, and the seams in 02 land on organisational boundaries
+rather than cutting across them. Conway's law working in the group's favour.
+
+#### The risk it creates: orphaned shared assets
+
+Line-aligned teams reliably under-invest in shared infrastructure — and **shared
+infrastructure is this company's entire cost thesis.** The person layer, the
+factory, the ops plane, the shared identity and profile schema belong to no single
+line, benefit every line, and are what levers 1 and 3 depend on (02 §The cost
+model). With three line-aligned directors and nobody owning the shared column,
+those assets get built late, twice, or not at all.
+
+Two ways to fix it, and one of them should be chosen deliberately:
+
+- **A fourth domain — platform/shared.** Explicit owner for the shared column,
+  including the ops plane. Cleanest, and costs a slot.
+- **The shared column *is* the CTO's own domain.** Defensible, because the
+  envelope and the shared assets are nearly the same thing — and it gives the CTO
+  something to build rather than only to govern. Cheaper, but it means the shared
+  column competes with replay execution for the same person's time.
+
+`OPEN` — which. This is the decision that determines whether the cost curve has an
+owner.
+
+#### Sequencing: which director first
+
+The structure is a target; today there is no layer, so escalations do reach the
+founders. Two questions the target doesn't answer:
+
+- **Which domain is filled first?** The argument from the clocks: fill the domain
+  whose escalations are most interrupt-driven, which is **applied/integration** —
+  because that is what currently threatens replay's deadline and the ecosystem's
+  continuous clock. Filling core-tech first would feel more natural to a technical
+  founder and would protect the bets less.
+- **What holds until then?** If the answer is "Nathan does", the scope rule below
+  is not a nice-to-have — it is the only thing keeping the interim survivable.
+
+### Scope still does more work than structure
+
+Independent of the reporting layer:
 
 > **Never sell bespoke work. Sell implementation of licensed product.**
 
-Bespoke engagements generate *novel* technical problems, which can only escalate
-upward — to the person who knows the architecture. Productised implementation
-generates *known* problems, which are documented, delegable, and route to the
-product backlog where they belong. The separation the goal describes is achievable,
-but it comes from the scope rule rather than the org chart.
+Bespoke engagements generate *novel* technical problems, which escalate as far as
+whoever knows the architecture — past the director, in the hard cases. Productised
+implementation generates *known* problems, which stay with the director, are
+documented, and route to the product backlog where they are actually useful. The
+director layer bounds escalation; the scope rule reduces how much there is to
+bound. Both, not either.
 
-Two supporting mechanisms:
-
-- **A delivery lead inside the services unit owns technical delivery. Nathan owns
-  the envelope, not the work** — what may be promised, what architecture is
-  permitted, what must be reused. Envelope decisions are batchable and low-volume;
-  delivery escalations are neither.
-- **The entity structure already supports this.** Services sit in Platform (01
-  §Entity shape) with their own P&L and staff. Legal and operational separation
-  reinforce the scope rule instead of relying on individual discipline.
+The entity structure reinforces it: services sit in Platform (01 §Entity shape)
+with their own P&L and staff, so separation is legal and operational rather than
+purely a matter of discipline.
 
 ### Sales needs a boundary, or the easy sale wins
 
@@ -498,8 +540,11 @@ It decides whether the app #2 time target is an engineering problem or this one.
    one with no customers asking.
 6. **Commercial model unchanged**, so the cost curve never bends and Apps grows
    linearly in people regardless of how good the factory is.
-7. **Bespoke consulting sold at all.** Every bespoke engagement creates novel
-   technical problems that can only escalate to the one person holding both
-   clocked bets. The scope rule is the separation; the reporting line is not.
-8. **The ops plane never gets built**, because it sits with the founder who also
+7. **Bespoke consulting sold at all.** Novel technical problems escalate past a
+   director to whoever holds the architecture — which is the person carrying both
+   clocked bets. The director layer bounds escalation; the scope rule reduces it.
+8. **Nobody owns the shared column.** Three line-aligned directors and no owner
+   for the person layer, factory and ops plane means the assets that levers 1 and
+   3 depend on get built late, twice, or never — and the cost curve has no owner.
+9. **The ops plane never gets built**, because it sits with the founder who also
    carries revenue, and revenue always wins the week.
