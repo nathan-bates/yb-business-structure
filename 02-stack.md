@@ -66,6 +66,7 @@ them doesn't subtract — it divides.
 | **Person data → less runtime inference** | What is known in advance need not be computed. Latency and cost both fall as the profile deepens | Turns an accumulating asset into a performance advantage |
 | **Model curve → wrapped layers** | Execution and raw capability improve on someone else's budget | **Free multiplier**, but only on layers you wrapped rather than built |
 | **Specs → agent output → verification** | Better specs make agents more effective; more agent output makes verification more valuable | The factory's internal loop |
+| **Sessions → replay corpus → tuned factory** | Every session captured is a future experiment; each model launch re-runs the grid and re-tunes model/context choices | Appreciates on the model curve — rare in this document |
 | **Scale → operations** | One support pool, one moderation practice, one compliance posture serving N apps | Turns a linear cost into a sub-linear one — see below |
 
 **Where the multipliers break — these are the real risks in this document:**
@@ -145,7 +146,110 @@ depreciates.
 | Form | **Build, expect to open** | Commoditising — A2UI, MCP Apps. Keep it thin and the seam clean |
 | Execution | **Wrap** — with a small built exception for action inside the person's own session | Arms race, identity-gated, on the model curve |
 | App | **Per-app, but attack its unit cost** | Lever 2 is the whole game here |
-| Factory | **Build** | It is the only thing that moves lever 2 |
+| Factory | **Build** | The only thing that moves lever 2. Mostly depreciating — **except replay and its corpus, which appreciate** |
+
+---
+
+## Session replay — the exception in the Factory layer
+
+Every other Factory component in this document depreciates: it exists because
+something is hard today and the model curve will erode it. **Replay is the
+exception, and it was missing from v1.**
+
+**What exists** (`llm-slack-channel-bridge`, `REPLAY_DESIGN.md`, Phase 1
+building): per-turn capture of a session — transcript *and* source workspace —
+with deps reconstructable from the lockfile via a content-addressed depcache and
+build outputs re-derived, so a historical turn can be reconstituted and re-run.
+The primitive is:
+
+```
+replay(session_id, from_turn=K, P)
+    P = do_policy(model/effort) | do_context(prompt/tool) | do_resample(same)
+```
+
+Two design details do more work than the replay itself:
+
+- **The mutation guard.** A turn that changed non-repo state in a way the
+  snapshot can't explain — hand-patched `node_modules`, a `--no-save` install, an
+  opaque generated artifact — is classified and **fails loudly** rather than
+  silently rebuilding a different tree. Without it, a replay grades a fiction.
+  That guard is the difference between a demo and an instrument.
+- **The corpus.** ~936 sessions on EFS, never deleted, four models already in
+  use across them. Offline, batchable, no live-user risk.
+
+### Why this is strategically different from everything else in Factory
+
+**It appreciates on the model curve.** Every model release creates fresh demand
+for the same question — *would this have been better?* — over a corpus that only
+grows. Almost nothing else in this document gets *more* valuable when the next
+frontier model ships. This one does, twice over: the corpus deepens, and each
+launch is a new reason to run the grid.
+
+**It multiplies the cost curve directly.** Model routing and context engineering
+are lever-2 costs (make per-app work cheaper) that are currently set by intuition.
+Replay converts them into measurements. The design doc's own example: a ~7.7KB
+global preamble on **every turn of every session**, never once measured.
+
+### The novelty claim, narrowed honestly
+
+The instinct that this is unusual is right, but "session replay" as such is not.
+Commercially, [AgentOps replays sessions and LangSmith supports replay against new
+model versions](https://www.marktechpost.com/2026/08/09/top-llm-observability-and-evaluation-platforms-in-2026-langfuse-langsmith-braintrust-arize-and-more-compared/)
+with node-by-node state diffs; Langfuse and Braintrust cover tracing, datasets,
+prompt management and evals. Academically, `REPLAY_DESIGN.md` already surveys the
+nearest work and cites it — Causal Agent Replay (arXiv 2606.08275) for
+`do_policy`/`do_context`, SWE-Replay (arXiv 2601.22129) for the non-repo-mutation
+guard. That survey is more rigorous than most internal design docs manage, and it
+already reaches the right conclusion: each nearest system misses an axis.
+
+What is genuinely uncommon is the **conjunction**:
+
+| | Trace/eval platforms | Framework time-travel | **Here** |
+|---|---|---|---|
+| Re-run a turn under a different model | Yes | Partial | Yes |
+| Prompt/context perturbation | Yes | No | Yes |
+| **Workspace + filesystem reconstruction** | **No** | No | **Yes** |
+| **Correctness guard when state isn't reconstructable** | No | No | **Yes** |
+| Corpus of real stateful sessions | Customer's own | No | **~936, growing** |
+
+The observation that matters: those platforms' data models treat an agent as *a
+sequence of LLM calls*. A coding agent is not that — it is a **stateful process
+mutating a filesystem**, and replaying it faithfully requires reconstructing that
+state. That is the gap, and it is narrow, real, and defensible for as long as the
+incumbents keep modelling agents as call sequences.
+
+### As a licensing candidate
+
+Measured against 01 §Line 2, this scores better than the other candidates on
+several axes at once:
+
+- **Horizontal.** Nothing about it is Youbiquity-specific; the buyer is anyone
+  running coding agents at material spend.
+- **Quantifiable value**, which makes it priceable — model routing is a direct
+  line-item saving, so ROI-based pricing is available rather than seat-based
+  guessing.
+- **No strategic adoption required.** A licensee doesn't have to buy into AUX,
+  the four-agent topology, or anything else.
+- **The corpus is an unreconstructable asset** — a competitor can copy the
+  design; they cannot copy 936 real sessions.
+
+Against that, honestly:
+
+- **Coupled to this runtime.** EFS layout, session format, the ECS worker model.
+  Packaging it standalone is the real work, and it's the same packaging problem
+  every licensing candidate has.
+- **Incumbents could close the gap.** Workspace capture is not conceptually hard
+  once someone decides agents are stateful. The durable part is the guard and the
+  corpus, not the idea — so time matters.
+- **Crowded category.** Agent observability and eval is well funded. Winning
+  attention there costs marketing, which is the human-shaped work 01 warns about.
+- **Self-hosting.** Enterprise buyers will want it in their environment, which
+  raises the support tier.
+
+`OPEN` — this may be the **readiest** thing in the portfolio to license: it works,
+it's horizontal, its value is measurable in dollars, and it needs no strategic
+buy-in. That makes it a direct competitor for the "which asset first" slot in
+QUESTIONS Q13.
 
 ---
 
