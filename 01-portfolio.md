@@ -393,6 +393,68 @@ Identity Linking](https://opascope.com/insights/ai-shopping-assistant-guide-2026
 [Ninth Circuit reversal](https://www.engadget.com/2230471/perplexity-has-successfully-overturned-amazon-injunction-on-its-ai-shopping-bot/) ·
 [CFAA analysis of agent access](https://nohacks.co/blog/amazon-perplexity-cfaa-agent-visitor-rights)
 
+### 2e. Testing the "reach is universal" hypothesis (researched 2026-09-10)
+
+Nathan's hypothesis: *there probably isn't a meaningful set of merchants that
+aren't already accessible to the latest bots.* Broadly correct for consumer
+retail — but the research surfaces two qualifications, and the first inverts the
+question.
+
+**Reach is being re-gated by identity, not by capability.**
+
+- **Cloudflare, from 15 September 2026:** new domains get Training- and
+  Agent-classified bots **blocked by default on pages that display ads**; Search
+  stays allowed. Existing domains keep their configuration. Cloudflare replaced
+  the blunt block-AI-bots switch with per-category control in July 2026.
+- **Shopify, 7 May 2026:** stricter rate limits on any bot or agent hitting the
+  Storefront API or Shopify-hosted pages **without a signed identity**. The
+  ChatGPT, Perplexity and Copilot agents that Agentic Storefronts supports are
+  signing their requests.
+- Akamai reports AI bot traffic up **more than 300%** between 2025 and early 2026,
+  which is what is driving the clampdown.
+
+So the risk is not "merchants nobody can reach." It is **"merchants only *they*
+can reach"** — access allocated by signed-agent programmes whose members are the
+incumbents. For a four-person company this is worse than a coverage gap: it is a
+gate that closes quietly, and it further strengthens the decision to wrap a
+recognised provider rather than to be an unrecognised agent.
+
+**Co-browse is the exception, and it degrades gracefully.** Execution inside the
+person's own browser is not agent traffic to classify — same session, same
+fingerprint, same account, person present. As the signed-agent regime tightens,
+that property becomes *more* valuable, not less.
+*Stated honestly: this is also a position that a merchant could characterise as
+routing around its controls. The Ninth Circuit's reversal helps, the Amazon case
+is unresolved, and this should be a deliberate posture with legal input rather
+than an accident of architecture.*
+
+**Reach is not the binding constraint anyway — reliability is.** On real
+websites (WebRetriever), agents average **21.1%** success on basic navigation,
+29.2% with operational documentation, and best-in-class Gemini-2.5-Pro in
+computer-use mode reaches 45.2%. End-to-end tasks combining navigation with
+extraction average **11.8%**. WebArena's best single agent is 61.7% against 78%
+for humans. Failure modes are mundane: dynamic UI elements cause 73% of reading
+failures, CAPTCHAs 36% of handling failures.
+
+Against that, Browser Use Cloud reports **80.0%** for claude-fable-5 in June 2026.
+The spread between ~12% and 80% is not model quality — it is **scaffolding**. And
+scaffolding is precisely what the group already builds: a framework-authored,
+person-armed, replay-verified **recipe** is deterministic where live navigation is
+probabilistic, which makes it both more reliable and faster. The same principle
+as ADR 0026: what you know in advance, you do not have to infer at runtime.
+
+**Conclusion.** The hypothesis holds, and it reinforces rather than weakens the
+repositioning in 2d. Reach is commoditised; what is not yet commoditised is
+*completing the task reliably*, and that is an engineering-scaffolding problem
+rather than an integration-breadth problem — which is the one kind of race a
+small team can enter, because it is won by design rather than by headcount.
+
+**Sources.** [Cloudflare AI traffic options and Sept 15 defaults](https://developers.cloudflare.com/changelog/post/2026-07-01-ai-traffic-options/) ·
+[Cloudflare signed agents](https://blog.cloudflare.com/signed-agents/) ·
+[WebRetriever real-website success rates](https://arxiv.org/pdf/2607.06118) ·
+[WebArena](https://www.emergentmind.com/topics/webarena-benchmark) ·
+[Browser Use benchmark](https://browser-use.com/posts/ai-browser-agent-benchmark)
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first
