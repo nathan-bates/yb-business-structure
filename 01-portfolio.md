@@ -205,6 +205,76 @@ Note also that the consulting line sells Sextant as a tool, pulling it toward
 (b), while the ecosystem line wants it at (a) and (c). That tension is currently
 unmanaged.
 
+### 2b. Do not race on integration breadth — wrap it
+
+**DECISION (proposed, Nathan 2026-09-10):** `market` is a thin adapter over
+execution providers that already work, not a driver library Youbiquity builds.
+
+The reasoning is hard to argue with: integration breadth scales with headcount
+and capital, it is copyable, and OpenAI, Google and xAI are all shipping
+computer-use and connector layers. Four people do not out-scan a hundred. Any
+plan whose success requires winning that race is a plan to lose slowly.
+
+The good news is that the architecture already anticipated this. `market`'s
+contract is **C10 find-candidates / C9 effect** — *what can it be asked* and
+*what can it effect* — not "here are our drivers". That is an interface over
+execution, so making providers substitutable is a build decision, not an
+architectural change. This is commoditise-your-complement: let the execution
+layer get cheap and better on someone else's budget, and own the layer above it.
+
+**What the wrapper must still contain**, or it isn't a strategy:
+
+- **At least two real provider implementations.** An adapter with one
+  implementation is not an abstraction, it's a dependency. This is also the only
+  real mitigation for platform risk.
+- **Outcome verification.** Did the booking actually happen? A pass-through that
+  can't confirm its own effects leaves you owning the blame and none of the
+  control.
+- **Per-provider quality signal**, so routing can improve — and so provider
+  substitution is evidence-driven rather than a rewrite.
+- **The interaction record stays yours.** Providers see the action; they do not
+  see the approve/edit/feedback loop. That signal is the flywheel's input and
+  the thing no execution vendor can reconstruct.
+
+**Consequence for Sextant.** If the group is not building a driver library,
+Sextant's role as the AUX adoption bridge largely evaporates. What remains is
+tier-1 rigor on owned apps and pattern-mining. **Sextant reverts to a line 2/3
+asset** — the consulting offering and the app factory — rather than a line 1
+asset. That resolves the tension flagged above in favour of line 2, and it is a
+simplification worth taking.
+
+### 2c. So what is the niche?
+
+Nathan's test — *unless there's a niche no one else is building toward* — is the
+right one. Four candidates, ordered by how structurally hard they are for a large
+incumbent to copy:
+
+1. **Acting in the person's own accounts, never intermediating the transaction.**
+   The spike already does this: add-to-cart in the person's own Amazon session,
+   one aggregated cart over the merchants' real carts. Incumbents *can* do this,
+   but it fights their monetisation — they want to become the transaction
+   intermediary and take a rate. A product that deliberately leaves the purchase
+   in the merchant's cart under the user's own account, loyalty and payment
+   method is one they can copy only by cannibalising the model they're building.
+   **Business-model consequence: no take rate.** Monetisation has to be
+   subscription or B2B licensing, and that should be decided deliberately.
+2. **A cross-provider, user-owned preference layer.** Incumbents' preference and
+   memory features exist to increase lock-in. A preference store that is
+   portable *by design* — the `library` metaphor, scope-gated, the person's
+   knowledge — is anti-strategic for them and therefore durable for you.
+3. **Per-person generative UI.** Incumbents converge on one chat interface for a
+   billion users; their interface is their brand and their scale advantage.
+   Composing a different UI per person is orthogonal to that and unattractive at
+   their scale. *Honest caveat: adaptive UI is a graveyard of prior attempts.
+   The claim to defend is that LLM composition plus a real feedback flywheel is
+   what those attempts lacked.*
+4. **Earned autonomy as an auditable, per-capability mechanic.** Incumbents ship
+   autonomy as a settings toggle. A trust ledger that accrues per capability,
+   with a legible record of why, is a different and more defensible thing.
+
+Candidates 1 and 2 are the strong ones — both are positions a large company is
+*disincentivised* to take, which is a better shield than being first.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first
@@ -295,11 +365,13 @@ experiment.
 
 ## Risks
 
-1. **Standards adoption.** The hardest category to win, and 2026 is crowded —
-   agent-to-UI and agent-to-tool protocols are actively contested by
-   better-capitalised parties. Winning on protocol design alone is unlikely;
-   winning on *adoption path* (Sextant) or *accumulated preference data* is
-   more plausible.
+1. **Standards adoption.** The hardest category to win, and 2026 is crowded.
+   Winning on protocol design alone is unlikely; winning on accumulated
+   preference data is more plausible.
+1b. **Platform risk.** Wrapping execution providers means their terms, their
+   granularity, their roadmap — and the possibility that they build the
+   preference/UI layer themselves. Mitigated only by holding two live provider
+   implementations and by owning the interaction signal they never see.
 2. **Open-source value capture.** If the protocol and renderer are open and the
    preference layer isn't clearly separated, the group could do the standards
    work and capture none of it.
@@ -318,10 +390,10 @@ experiment.
 1. **Delegation compounds.** The flywheel's core claim: people give more autonomy
    as trust accrues. v0 proved the *mechanism*, explicitly not learning-at-scale.
    Everything rests on this and it is not yet evidenced.
-2. **Sextant can map apps it didn't co-evolve with — without source.** Today it
-   cannot; the black-box path is unbuilt. The adoption path for tiers 2–3
-   depends on it, and it is demonstrated only against VesselHaven, which
-   co-evolved with it.
+2. **Someone else's execution layer is good enough to wrap.** Replaces the
+   earlier claim about Sextant mapping unfamiliar apps, which the wrapper
+   decision makes moot. Testable now: the spike drives real writes at Amazon and
+   Total Wine through recipes the framework authored and a person armed.
 3. **A second vertical launches without adding humans.**
 4. **Consulting can be capped.** Organizational discipline; the usual failure mode.
 5. **The preference layer is separable and defensible.** If it isn't, the
