@@ -7,6 +7,11 @@ time-boxed by external events and lose the window if not answered.*
 
 ## Time-boxed — the window closes on its own
 
+*Three clocks now run, not two: VesselHaven's ship date (Q1), app #2's start (Q2),
+replay's ~12–18 month competitive window, and the ecosystem's ~18–36 month
+data-possession window. The last is continuous rather than a deadline — it costs
+depth every month rather than expiring on a date.*
+
 ### Q1 — One community, or one per app?
 **Closes when VesselHaven's community ships.**
 

@@ -45,21 +45,72 @@ constrained tail**:
 
 | | Bet | Clock | Uncertainty | Scope |
 |---|---|---|---|---|
-| **Ecosystem** | `project-k` + `aux` + `arbiter` + `library` + `market` | **None external** — 3–5 yr, self-paced | High: the product shape is undecided | Unbounded |
+| **Ecosystem** | `project-k` + `aux` + `arbiter` + `library` + `market` | **~18–36 months** — see below; not self-paced | High: the product shape is undecided | Unbounded |
 | **Core tech** | The counterfactual engine (replay) | **12–18 months, externally set** | Low: it works; the question is commercial | Bounded and known |
 | **Apps** | As many as the resource budget allows | Per app | Medium each, low in aggregate | Each one small |
 
-**The two large bets are near-opposites, and that matters for scheduling.** One
-has an unbounded horizon, high uncertainty and no deadline. The other is a known
-quantity with a closing external window. When they compete for attention, the
-instinct is to favour the bigger prize — but:
+**Both large bets have windows.** An earlier version of this section treated the
+ecosystem bet as self-paced. It isn't. Every component is already shipping
+separately — generative UI standards (A2UI, MCP Apps), agentic browsing, Universal
+Cart, and an Apache-2.0 commerce-agent blueprint whose skill list includes
+*memory-personalisation*. Assembling them in a personalised form is a matter of
+time, not of invention.
 
-> **The bet with an externally-imposed clock should win, because the other one's
-> window doesn't close.** Losing the timed bet while holding the untimed one is
-> strictly worse than the reverse, and the reverse is always recoverable.
+**But the clock is not "until someone ships the combination". It is "until the
+person's profile already lives somewhere else."** That distinction determines what
+to do about it. The relevant evidence is possession, not capability:
 
-That is the clearest scheduling rule available from this document, and it applies
-directly to the next quarter.
+- All three major assistants rebuilt memory during 2026.
+- **Gemini's is account-level** — "Personal Intelligence", rebranded and expanded
+  14 January 2026 — so the profile lives in an account the person already has,
+  which is the strongest possession play available.
+- There is **no cross-vendor portability** by default; profiles are being
+  consolidated where the person already is.
+
+Judgement, not measurement: that puts the ecosystem window at roughly **18–36
+months** — longer than replay's, because the incumbents' interface is chat and
+their scale advantage argues *against* per-person composition, but far short of
+self-paced.
+
+### What that implies is different from "go faster"
+
+> **The ecosystem bet's schedule is set by data-accumulation lead time, not by
+> build time.** Accumulated behaviour cannot be sprinted later. Architecture can.
+
+So the response is not to accelerate the four-agent build. It is to **start the
+data clock now, at low product maturity** — identity, profile schema, community —
+because those are what begin accumulating, and every month of delay is a month of
+signal that does not exist.
+
+**Revised scheduling rule.** Not "the bet with a deadline wins" — both have one.
+Prioritise by **the shape of the loss per unit of delay**:
+
+| | Replay | Ecosystem |
+|---|---|---|
+| Loss shape | **Step function** — one competitor release removes the differentiation | **Continuous** — each month is un-accumulated signal |
+| What delay costs | A market position | Depth that can't be recovered later |
+| Correct response | **A burst.** Sprint to a defensible position | **An early start**, which can run at low intensity |
+
+They therefore compete for *different kinds* of attention, which is the resolution:
+**start the ecosystem's data clock now, sprint replay, defer the four-agent
+architecture.** The thing that cannot be delayed is accumulation; the thing that
+can is the architecture around it.
+
+**A refinement that matters for how much of this to believe.** Shallow preference
+is already portable — Claude imports memory from ChatGPT, Gemini and Grok, and
+third-party universal-memory extensions exist. So "they'll possess the profile
+first" is weaker than it sounds *for the shallow layer*. What is **not** importable
+is the behavioural record: which recommendations were accepted, which were edited,
+what autonomy was granted and then extended. Bullet-point facts move; a trust
+history does not. **Depth beats possession — and depth only accrues through use**,
+which is the same conclusion by another route.
+
+**And the cost of "intentionally undecided" is now visible.** This document
+previously argued against setting a decision date, on the grounds that staying
+open produced a better architecture. That still holds for the *architecture*. What
+it cannot do is stay open while the data clock runs, because indecision spends the
+calendar that accumulation needs. The resolution is the same as above: decide what
+is needed to start accumulating, and leave the rest open.
 
 **The two bets are also not independent.** 01 earlier described the ecosystem as
 an option whose premium the other lines pay. That is now concrete: **replay is the
