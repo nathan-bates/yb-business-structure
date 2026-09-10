@@ -514,6 +514,69 @@ It also fixes the sequencing, and the order is the opposite of the instinct:
 technology → users. A preference layer with no users does not compound; it is
 just a schema.
 
+### 2g. Wedge, not moat — correcting a category error
+
+VesselHaven is **not** a domain relationship. It is one app, nearly ready to
+launch, pre-revenue, built to prove the factory and develop muscle memory — one
+line item among many. Treating it as the strategic relationship (as §2f's closing
+paragraph did) was wrong.
+
+Removing that premise exposes a category error running through §2c–§2f. Those
+sections asked *what is durable in five years* and correctly retired six answers.
+But a company with no customers does not yet need a moat:
+
+> **A moat protects a position you already hold. A wedge is why the first cohort
+> shows up at all.** They are different questions and they have different
+> answers. Moats are late-game and made of accumulated data. Wedges are
+> early-game and usually made of *fit* — solving one workflow so specifically
+> that the generalist is annoying by comparison.
+
+This matters because it rehabilitates assets the model-curve test disqualified.
+A wedge is **allowed** to depreciate; that is what wedges are for. You use a
+depreciating advantage to buy a relationship, and the relationship compounds
+after. What is fatal is investing in a depreciating asset and *expecting it to be
+the moat* — which is the actual error the model-curve test protects against, and
+a narrower claim than the one §2f made.
+
+So the model-curve test survives, with a correction: **apply it to what you
+expect to defend with, not to what you expect to win the first cohort with.**
+
+### 2h. The portfolio is the distribution strategy
+
+If no single app is the relationship, and the factory makes app N+1 progressively
+cheaper, then the strategy is not "pick a vertical and compound in it". It is:
+**many small apps, each cheap, with one preference layer spanning all of them.**
+The compounding assets are the cross-app preference profile and the cost curve
+itself — neither of which lives in any single app.
+
+That is coherent, it matches the stated goal that each next app costs less, and
+it is a genuinely unusual position: the giants build one interface for everyone,
+and vertical SaaS companies build one app for one market. Nobody much is building
+*many* small apps sharing one accumulating model of the person.
+
+**But it has a single point of failure, and it is the question the portfolio now
+turns on:**
+
+> **Do the apps share a user?**
+>
+> If the same person uses several of them, the preference layer compounds across
+> the portfolio and app selection should be driven by *same person, different
+> need*. If they don't, you have N disjoint tiny datasets rather than one
+> compounding asset — and the group is a software shop with excellent tooling,
+> which is a fine business but not this one.
+
+This inverts how apps get chosen. Not "which market is most attractive" assessed
+independently per app, but "which app deepens the profile of a person we already
+serve". Marine yacht owners, for instance, are also high-net-worth individuals
+with property, travel, insurance and concierge needs — that is a coherent person,
+and it would make VesselHaven the first probe of a cohort rather than a market
+entry. Whether that is the actual intended cohort is Nathan's to say.
+
+**Immediate, cheap action while it's fresh:** VesselHaven's real cost — human
+hours, elapsed weeks, agent spend — is the first datapoint on the cost curve that
+the entire line-3 thesis rests on. Capture it at launch. Without app #1's number,
+app #2's number means nothing.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first

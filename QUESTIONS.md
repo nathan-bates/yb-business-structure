@@ -10,37 +10,31 @@ architecture for a business that hasn't been chosen yet.
 
 ---
 
-## Q0 — The question everything now rests on
+## Q0 — Do the apps share a user?
 
-**Is marine the domain you compound in — or just the one you happen to have?**
+*(Replaces the earlier Q0, "is marine the domain you compound in" — that question
+assumed VesselHaven was a strategic relationship. It isn't: it's one app of many,
+pre-revenue, built to prove the factory.)*
 
-The conclusion of the whole analysis is that the moat is a relationship in a
-domain. VesselHaven is the only relationship in the portfolio. That makes this
-question load-bearing in a way it wasn't three drafts ago, and it deserves a
-real answer rather than a default.
+The portfolio compounds only if the same person uses more than one app. If they
+do, the preference layer spans the portfolio and app selection should be driven
+by *same person, different need*. If they don't, the group holds N disjoint small
+datasets and is a software shop with excellent tooling.
 
-What would decide it:
+What would decide it: name the **cohort**, not the market. Who is the person the
+next three apps all serve? If that person can't be named in a sentence, the
+cross-app preference layer is a hope rather than a plan.
 
-- **Decision cadence.** How often does a user in this domain make a
-  high-consideration decision the platform could mediate — charter, berth,
-  maintenance, provisioning, insurance, crew? A flywheel needs repetition. Four
-  decisions a year takes a decade to compound; forty a year takes a season.
-- **Fragmentation.** Are suppliers numerous, un-integrated and un-aggregated?
-  That is what makes an aggregation layer valuable *and* what keeps Google out.
-- **Value per decision.** High enough to justify a subscription in the absence of
-  a take rate?
-- **Relationship ownership.** See Q1.
+## Q1 — What is the wedge for app #1's first hundred users?
 
-If marine scores badly, the honest answer may be that the right vertical is one
-you don't currently serve — which is a much bigger decision than a doc revision,
-and better made deliberately than by inertia.
+Per §2g, a wedge is not a moat and is allowed to depreciate. Why does the first
+cohort choose a VesselHaven — or app #2 — over asking Gemini? "Fit" is a real
+answer; it just has to be specific enough to name.
 
-## Q1 — Who owns VesselHaven, and does it have paying users?
-
-Open since the first draft, now critical rather than administrative. If
-VesselHaven is a client's IP, **you do not own the relationship**, and the
-strategy in §2d/§2f has no substrate. The entity shape also changes: it becomes
-services revenue rather than a portfolio company.
+Corollary, cheap and time-sensitive: **capture VesselHaven's true build cost at
+launch** — human hours, elapsed weeks, agent spend. It is the first point on the
+cost curve the whole line-3 thesis depends on, and it is much harder to
+reconstruct later.
 
 ## Q2 — Is the consumer aggregator accepted as a demo rather than the product?
 
@@ -118,5 +112,7 @@ enough to be wrong.
 - **Is `market` a driver library?** No — a provider wrapper (§2b, decided 2026-09-10).
 - **Sextant's role?** Line 2/3 asset; its AUX-adoption role evaporated with §2b.
 - **Direct subsidiary or grandchild for VesselHaven?** Grandchild — keeps verticals individually disposable.
-- **Six candidate niches** — all retired by research (§2c–§2f). Superseded by
-  "the moat is a relationship in a domain."
+- **Six candidate niches** — all retired by research (§2c–§2f) as *moats*.
+  Partially rehabilitated as *wedges* by §2g.
+- **"Is marine the domain to compound in?"** — retired: VesselHaven is one app of
+  many, not a relationship. Replaced by Q0 above.
