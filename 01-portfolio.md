@@ -1,163 +1,207 @@
 # 01 — Portfolio
 
+> **Revision note.** An earlier draft treated the agent factory as the flagship.
+> It isn't — it's a building block. This version is restructured around the
+> ecosystem play as the centre of gravity, with three revenue lines beneath it.
+
 ## The governing idea
 
-Youbiquity's four assets are not peers. One earns revenue from end customers,
-one is defensible IP, one is the factory that builds the others, and one is the
-control surface for the factory. Treating them as a flat "product portfolio" is
-the most common way this kind of group gets structured badly — it produces an
-org chart with a team per product, which is precisely the outcome a
-minimal-human-core company must avoid.
+Youbiquity is **three revenue lines and one option.**
 
-The structure proposed here follows from a single thesis:
+Two of the lines earn money on a knowable timescale and generate evidence. The
+third — the ecosystem play — is the only one with a venture-scale outcome, and
+is also the most likely to fail. The structure's job is to let the first two
+fund and de-risk the third without consuming the attention it needs.
 
-> **The factory is the company. The portfolio is how the factory is monetized.**
-> Value accrues if the marginal cost of launching vertical app N+1 falls toward
-> zero — not from any one app succeeding.
+Stated for the investor conversation, because this is the whole pitch in two
+sentences:
 
-That thesis implies one governing metric, and the whole structure should be
-legible against it:
+> We are not asking you to fund a moonshot with no revenue. We are asking you to
+> fund an **option** on a large outcome, where the other two lines pay for the
+> option premium and produce the technology the option depends on.
 
-**Humans per revenue line.** Today ~3–4 humans / 1 revenue line. The structure
-is working if that ratio falls as revenue lines are added, and failing if a new
-app requires a new team — regardless of how well the app itself performs.
+## The three lines
+
+| | **1. Ecosystem** | **2. Core tech** | **3. Apps** |
+|---|---|---|---|
+| **What** | Aggregation/orchestration platform: acts across many third-party apps on the user's behalf, recommends by preference, then executes (scheduling; shopping) | Sell/lease the agent stack — bridge, ProductLens, Sextant, aux — as a consulting offering | VesselHaven, App #2, #3… vertical SaaS built by the factory |
+| **Assets** | `project-k`, `aux` | `llm-slack-channel-bridge`, Sextant, Archon/ProductLens | VesselHaven |
+| **Horizon** | 3–5 yr | Now | 1–2 yr |
+| **Risk** | High — unproven, contested space | Low | Medium |
+| **Scales with** | Network effects | **Humans (linear)** | Factory maturity (sub-linear) |
+| **Role** | The outcome | Runway + credibility | Proof of the cost curve |
+
+The middle column is the one to watch. Consulting is the only line whose costs
+scale linearly with headcount — it is simultaneously the nearest revenue and the
+most direct threat to the minimal-core goal. It should be **capped deliberately**,
+not grown opportunistically.
+
+> **NEEDS YOU** — Is consulting meant to fund the ecosystem play, or is it a
+> parallel bet you'd grow on its own merits? If the former, it needs a stated
+> ceiling (engagements/yr, or % of founder time) written into the operating model
+> in 03. Left uncapped, it wins by default — it's the only line with customers
+> asking for more of it today.
+
+## Why these are one company and not four hobbies
+
+This is the part an investor will probe, so it's worth stating precisely. The
+ecosystem play needs three capabilities. Youbiquity has already built all three,
+for unrelated-looking reasons:
+
+1. **A map of apps you don't control.** To act inside a third-party app, an agent
+   must understand its structure without documentation or an API. That is exactly
+   what Sextant does — autonomous exploration producing a graph where design,
+   code and behaviour are one artifact. Built as a testing tool; **it is actually
+   a map-making tool.** This is the strongest and least obvious asset in the group.
+2. **Hands.** Something that executes inside a real, authenticated session when
+   no API exists. That's aux and the co-browse work.
+3. **A runtime.** Somewhere agents live, hold credentials, and are supervised.
+   That's Claude Code Cloud.
+
+Apps (line 3) then serve two purposes: they prove the factory's cost curve, and
+they become the **first citizens** of the ecosystem — the reference
+implementations for the interfaces and patterns the platform wants to dictate.
+
+> **ASSUMPTION** — This reading of `project-k` and `aux` comes from your
+> description; I have no read access to either repo (the App isn't installed on
+> the `Youbiquity` org — see 02 open items). Correct anything I've mischaracterised
+> before this argument gets used externally.
+
+## The differentiator worth testing early
+
+"Interacts with other apps through whatever means necessary" has an unavoidable
+problem: **credential custody.** An agent acting on your behalf across dozens of
+services normally has to hold your logins. That is a serious security surface, a
+regulatory burden, and the single most common reason users refuse this category
+of product.
+
+The co-browse model appears to sidestep it — execution happens **in the user's
+own authenticated browser session**, so the platform never holds the credentials.
+If that holds up, it isn't just an implementation detail; it's a defensible
+market position against better-funded competitors who will be asked "so you have
+all my passwords?" in every enterprise review.
+
+> **NEEDS YOU** — Is that an accurate reading of the aux/co-browse execution
+> model? If yes, it deserves to be a stated pillar of the ecosystem strategy
+> rather than a technical footnote.
 
 ## Asset inventory
 
-| Asset | Class | What it is | Customer | Status |
-|---|---|---|---|---|
-| **VesselHaven** | Revenue vertical | Yacht management SaaS — vessels, quotes, invoices, transactions, role/permission model | End customers (marine) | Live; only asset with a plausible external customer today |
-| **Sextant** | IP engine | Design ≡ code ≡ test plan ≡ graph equivalence; autonomous exploration, gap analysis, coverage-driven test generation | Internal (today) | Working; unproductised |
-| **Claude Code Cloud** (`llm-slack-channel-bridge`) | Factory | Slack-spawned cloud agent sessions, per-user credential brokering, layered memory, co-browse, sandbox provisioning | Internal (today) | Load-bearing; runs daily |
-| **Archon + ProductLens** | Work layer | Work-item ↔ conversation ↔ codebase mapping; PR association; the factory's intake and tracking surface | Internal | Mid-consolidation into Claude Code Cloud |
-
-> **ASSUMPTION** — Archon and ProductLens are one asset, not two: they are being
-> consolidated, and neither stands alone commercially. Treated as a single
-> "work layer" throughout. Say if you'd rather keep them distinct.
-
-> **NEEDS YOU** — Revenue and IP facts I can't determine from the repos:
-> 1. Does VesselHaven have paying customers / signed pilots, or is it pre-revenue?
-> 2. Is VesselHaven **your** IP, or a client's? If a client's, it is services
->    revenue, not a product line, and the entity shape below changes materially.
-> 3. Is any revenue landing today from consulting/services against these assets?
-
-## Classification, and why it drives the entity shape
-
-Three of the four assets share a property: **they have no external customer and
-are not intended to be sold separately.** They are the means of production. The
-fourth is the only thing a customer currently pays for.
-
-That asymmetry, not the product taxonomy, is what the legal structure should
-express. Concretely: you want to be able to sell, spin out, or lose VesselHaven
-**without touching the factory**, and you want the factory's IP owned somewhere
-that no single app's fate can reach.
+| Asset | Line | Class | Status |
+|---|---|---|---|
+| **project-k** | 1 | Flagship (pre-product) | PoC |
+| **aux** | 1 (+ possible standalone) | Execution substrate — the "hands" | PoC; responsive-surface / true-send working |
+| **Sextant** | 1 + 2 | Map-making IP; consulting asset | Working, unproductised |
+| **Claude Code Cloud** | 1 + 2 | Agent runtime; the factory | Load-bearing, runs daily |
+| **Archon / ProductLens** | 2 | Work layer | Mid-consolidation |
+| **VesselHaven** | 3 | Revenue vertical; first ecosystem citizen | Live |
 
 ## Proposed entity shape
 
 ```
                     Youbiquity Group  (umbrella / holdco)
                     - investor equity sits here
-                    - owns all platform IP
+                    - owns all platform IP, licenses it down
                     - employs the human core
+                    - INCUBATES the ecosystem play (no entity yet)
                               |
               +---------------+---------------+
               |                               |
      Youbiquity Platform            Youbiquity Apps  ("App Portfolio")
-     (the factory — cost centre)    (holding co for verticals)
-     - Sextant                                |
-     - Claude Code Cloud              +-------+-------+
-     - Archon / ProductLens           |               |
-     - licenses down to Apps     VesselHaven      App #2, #3...
-                                 (grandchild)
+     (core tech + consulting)       (holding co for verticals)
+     - Sextant, bridge,                       |
+       Archon/ProductLens               +-----+-----+
+     - now REVENUE-generating,          |           |
+       not a pure cost centre      VesselHaven   App #2, #3...
 ```
 
-**DECISION (proposed) — VesselHaven is a grandchild, not a direct subsidiary.**
-You asked which. Grandchild, for one reason that outweighs the added
-administrative overhead: it makes each vertical **individually disposable**. A
-buyer for VesselHaven can acquire a clean entity whose assets are the app, its
-contracts and its customers — while the Sextant and Claude Code Cloud IP that
-built it stays in the group, still licensed to every other app. A direct
-subsidiary holding app-and-platform-entangled IP forces you to carve out at sale
-time, under time pressure, with a buyer's lawyers setting the pace.
+Two changes from the earlier draft:
 
-The same structure gives you a second option worth having: if the App Portfolio
-ever raises separately or takes a strategic partner, that happens one level below
-the group, without diluting platform ownership.
+**The ecosystem play stays inside the Group for now.** Pre-product, it has
+nothing to protect and nothing to sell. It gets its own entity at the first of:
+outside capital specific to it, a filing worth protecting, or a partner
+requiring a counterparty. Creating it earlier is administrative cost with no
+corresponding benefit.
 
-**Platform IP sits in the Group (or a thin IPCo beneath it), not in Platform Ltd.**
-Licensed down to each vertical on an intra-group arrangement. This is the piece
-your accountant will care about most, and it is much cheaper to establish now,
-pre-revenue, than to restructure later.
+**Platform is no longer a pure cost centre.** Consulting revenue lands there,
+which makes the intra-group IP licensing arrangement more important, not less —
+Platform will be both earning externally and charging internally.
 
-> **NEEDS YOU** — Jurisdiction(s) and any existing entities to treat as fixed.
-> The shape above is jurisdiction-neutral; the IP-licensing mechanics are not,
-> and transfer-pricing rules will shape the intra-group arrangement.
+**VesselHaven remains a grandchild**, for the reason given before: it keeps each
+vertical individually disposable without touching platform IP. That reasoning
+strengthens under the ecosystem thesis — a vertical may be worth more to an
+acquirer *because* it's a working citizen of the platform, and you want to be
+able to sell one without selling the standard.
 
-## The one strategic decision this document can't make for you
+## Attention allocation — the actual scarce resource
 
-**Is Sextant (and/or Claude Code Cloud) sold externally, or kept as the moat?**
+Three lines, three horizons, 3–4 people. Capital isn't the binding constraint;
+founder attention is. A structure that doesn't say how attention splits will
+default to whatever is loudest, which is always the line with paying customers.
 
-Both are defensible; they lead to different companies, and the choice cascades
-into 02 and 03.
+Proposed rule, to be made concrete in 03:
 
-*Case for selling the factory:* larger TAM, higher multiples, and Sextant's
-core claim — that design, code and tests are one artifact — is a category-level
-idea, not a feature. Dev-tools comparables price well.
+- **Lines 2 and 3 are agent-delivered by default.** Any founder hour spent on
+  them is a bug to be automated, not a cost of doing business.
+- **Line 1 gets protected founder attention** — it is the only line that cannot
+  be delegated to agents, because it's the one where the product doesn't exist yet.
+- **Shift triggers stated in advance**, so reallocation is a decision rather than
+  a drift: e.g. app #2 launching under a stated human-hour budget; a consulting
+  engagement exceeding the cap; a `project-k` milestone slipping two quarters.
 
-*Case against, which I think is stronger given your stated goal:* selling
-developer infrastructure means supporting other companies' stacks. That means
-docs, support, sales engineering, SLAs, backwards compatibility, and a roadmap
-you no longer control — all of it human-shaped work that does not compress with
-agents. **Selling the factory contradicts minimizing the human core.** Keeping
-it internal lets it stay opinionated, coupled to your own stack, and free to
-break itself weekly.
+## Risks specific to the ecosystem play
 
-**Recommendation:** keep the factory internal for now, monetize through the app
-portfolio, and revisit external licensing only once a second vertical has shipped
-and proven the marginal-cost thesis. At that point you have evidence for the
-claim, and the factory has been hardened by a second consumer — which is exactly
-what a first external customer would have forced anyway, but on your schedule.
+Named plainly, because an investor will raise them and pre-empting is stronger
+than answering:
 
-> **NEEDS YOU** — Accept, reject, or defer. This is the highest-leverage
-> decision in the document; 02 and 03 assume the recommendation unless told
-> otherwise.
+1. **Counterparty risk.** You are operating inside apps you don't control. ToS
+   restrictions, bot detection, and deliberate blocking are permanent structural
+   risks, not bugs to fix once. Mitigation is partly the co-browse model (the
+   user is genuinely present) and partly commercial (be a demand source apps want).
+2. **Platform competition.** Well-funded incumbents are moving on
+   agents-that-act-across-apps, and standardisation (MCP and successors) may
+   commoditise the integration layer. Differentiation must be preference
+   modelling, execution reliability, or trust — not merely having connectors.
+3. **The aggregation trap.** Aggregators need supply *and* demand before either
+   is valuable. VesselHaven-style owned apps are a partial answer to cold start;
+   whether one vertical is enough is unproven.
+4. **Trust and data.** Preference data is the moat and the liability
+   simultaneously. Get the custody model right early — retrofitting it is
+   expensive, as the credential-handling work in the bridge already demonstrates.
 
 ## Keep / kill / park
 
-| Asset | Call | Reasoning |
-|---|---|---|
-| Claude Code Cloud | **Keep — invest** | The factory. Every other asset's cost curve runs through it. |
-| Sextant | **Keep — invest, don't productise** | The moat, per the decision above. Productising is a different company. |
-| VesselHaven | **Keep — but as proof, not as the point** | Its job is to demonstrate the marginal-cost thesis, and to pay bills while doing so. |
-| Archon / ProductLens | **Park at "good enough"** | Real risk of becoming a product in its own right. It is intake and tracking for a four-person company. Finish the consolidation, then freeze. |
-| Co-browse / responsive-surface | **Kill or absorb** | Genuinely clever, but it is a feature of the factory, not an asset. Absorb into Claude Code Cloud and stop tracking it separately. |
+| Asset | Call | Change | Reasoning |
+|---|---|---|---|
+| project-k | **Invest — protected** | — | The option. Everything else is instrumental to it. |
+| aux | **Invest** | ⬆ *reversed from "kill or absorb"* | Not a stray feature of the factory — the execution substrate for line 1, and possibly a product. |
+| Sextant | **Invest — reframe** | ⬆ | Stop describing it as a testing tool internally. It's the map-making layer. |
+| Claude Code Cloud | **Keep — invest** | — | Runtime for lines 1 and 2. |
+| VesselHaven | **Keep — as proof and as citizen** | — | Cost-curve evidence plus ecosystem reference implementation. |
+| Archon / ProductLens | **Park at "good enough"** | — | Still the call most likely to be wrong; it's now also line-2 consulting inventory, which argues for a little more polish than "freeze". |
 
-> **NEEDS YOU** — Anything here you'd defend? Especially the Archon/ProductLens
-> park: it is the call most likely to be wrong, because I can see its code but
-> not how much of your week it actually absorbs.
+## What has to be true
 
-## What has to be true for this to work
+Falsifiable claims, ordered by how much rests on them:
 
-Stated as falsifiable claims, so the investor conversation is about evidence
-rather than vision:
+1. **An agent can reliably act inside apps it wasn't built for.** The entire
+   ecosystem play. Sextant's graph is the evidence base; it has so far been
+   demonstrated mainly against VesselHaven, which co-evolved with it.
+2. **Users will delegate real decisions** — scheduling, spending — to a
+   recommendation layer. Product risk, not technical.
+3. **A second vertical launches without adding humans.** Line 3's thesis; still untested.
+4. **Consulting can be capped.** Organizational discipline, and historically where
+   companies in this shape fail: the cash line quietly becomes the company.
+5. **The human core can supervise across three lines at this ratio.** The bet 03 must make concrete.
 
-1. **A second vertical can be launched without adding humans.** Untested. This
-   is the thesis; everything else is commentary. Until app #2 ships with the
-   existing headcount, the structure is a hypothesis.
-2. **Sextant's equivalence claim holds on a codebase nobody hand-tuned for it.**
-   Currently demonstrated against VesselHaven, which co-evolved with it.
-3. **The factory's operating cost stays sub-linear in app count.** Per-user
-   sandbox provisioning and per-session cloud workers are the cost drivers
-   worth watching; 02 will put numbers to this.
-4. **The human core can supervise the agent fleet at this ratio.** Three to four
-   people directing agent-executed engineering across multiple products is the
-   organizational bet 03 has to make concrete.
+## Open questions
 
-## Open questions blocking 02 and 03
-
-1. VesselHaven: paying customers? Whose IP? (blocks the entity shape)
-2. Sell-the-factory decision: accept the recommendation, or argue it?
-3. Jurisdiction and existing entities.
-4. Where does the prospective employee sit — Platform (factory) or Apps
-   (vertical delivery)? The answer says a lot about which you believe is the
-   constraint right now.
+1. Consulting: fund-the-ecosystem, or parallel bet? (needs a cap either way)
+2. Is the co-browse "never hold credentials" reading correct?
+3. VesselHaven — paying customers? Whose IP?
+4. Jurisdiction and existing entities.
+5. Where does the prospective employee sit? Under this structure the answer
+   almost writes itself — Platform, so consulting delivery doesn't consume
+   founder attention — but that's yours to confirm.
+6. Repo access to `Youbiquity/project-k` and `Youbiquity/aux` so this document
+   can be grounded in what's actually built.
