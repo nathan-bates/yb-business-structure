@@ -79,10 +79,46 @@ The candidates:
 - **The app portfolio** — real but bounded by the apps' own markets.
 
 **Recommendation: treat the preference/knowledge layer as the crown jewel and
-allocate accordingly.** Open the protocol, open the renderer, keep the User
-Agent's knowledge model and its accumulation loop closed. Concretely, that means
-the C7 presentation-query boundary is a *commercial* boundary as much as an
-architectural one — worth being deliberate about now, while it's cheap.
+allocate accordingly.** Open the protocol, open the renderer, keep the knowledge
+model and its accumulation loop closed. The C7 presentation-query boundary is a
+*commercial* boundary as much as an architectural one.
+
+It has **two halves, with different economics** — worth separating, because they
+are often discussed as one thing:
+
+| | **Per-person preference** | **Per-scenario elicitation** |
+|---|---|---|
+| What | How *this* person wants to be shown things; what they'll delegate | The right questions to ask for a task ("buying a laptop"), and in what order |
+| Owner | User Agent KB | **Arbiter** — pattern KB |
+| Compounds | Per user | **Across all users** |
+| Buys you | Retention, switching cost | Quality on a new user's *first* session — cold-start |
+| Status | ADR 0010/0019 schema; no accumulation at scale | `buy-task-experience` is design-ahead-of-evidence; Arbiter KB is an open question |
+
+Consistency is the reason this must be owned rather than delegated to a
+general-purpose model: an out-of-the-box LLM asked "what should I ask someone
+buying a laptop?" is non-deterministic across runs, and an interface that asks
+different questions on Tuesday than it did on Monday cannot accumulate trust —
+which is the flywheel's only currency.
+
+**Performance is the same asset viewed twice.** A 30-second think is fatal to
+this UX, and the architecture already knows it: ADR 0026 records that Kay
+*selects* rather than generates — `decideForm` is a pure exhaustive switch
+resolving the same shape to the same Tier-3 pattern, with model-assisted
+composition going behind a flag. That is snappiness by construction. The general
+principle worth making explicit: **the more you know about the person and the
+scenario, the less you have to infer at runtime.** Latency is what you pay for
+missing knowledge. So the preference layer isn't merely the moat — it's also the
+performance strategy, and the model-assisted flag in 0026 is where latency will
+re-enter. It should carry an explicit latency budget, not just a feature flag.
+
+> **Finding worth acting on.** Both halves of the moat — the User Agent's
+> preference KB and the Arbiter's elicitation patterns — sit **outside** what
+> `project-k` and `aux` are currently building. Nine packages exist for the form
+> layer (protocol, renderer, design system, vocabulary, pattern library, Kay).
+> The Arbiter has a contract (ADR 0027) but no implementation and an explicitly
+> open knowledge base; the User Agent has a query protocol but no store. Build
+> effort is concentrated on the layer most likely to be commoditised or given
+> away, and absent from the two components identified as proprietary.
 
 ### 2. Sextant solves the standards cold-start problem, and that's its real job.
 
@@ -95,9 +131,28 @@ into the AUX world**: you don't need an app to adopt the protocol if you can
 derive its surface and drive it. Which makes Sextant not a testing tool, not
 merely "map-making IP", but *the adoption strategy*.
 
-If that holds, Sextant is underinvested relative to its role, and the consulting
-line (which sells it) is competing directly with the ecosystem line for the same
-asset. That tension is currently unmanaged.
+There are three distinct ways to use it, and they are not equivalent:
+
+- **(a) Internal adapter-generator.** Point Sextant at an app you don't control;
+  its graph becomes a Service Agent driver. You gain coverage *without anyone
+  adopting anything*. This is the cold-start answer, and it needs no
+  counterparty's permission — which is both its strength and its ToS risk.
+  Concrete seam: ADR 0029/0030's **write recipes** ("authored by the framework,
+  armed by a person") are exactly what Sextant's exploration output could
+  generate.
+- **(b) External integration SDK.** Give it to app owners: "run this, get an AUX
+  manifest, you're a citizen." Lowers adoption cost — but it is productisation,
+  with docs, support and SLAs, i.e. the human-shaped work that fights the
+  minimal-core goal. Cheap for *partners and owned apps*; expensive as a
+  self-serve public tool.
+- **(c) Pattern-mining source.** Mapping many apps reveals recurring interaction
+  patterns, feeding the Tier-3 pattern library and the Arbiter's elicitation
+  patterns. Quietly the most compounding of the three.
+
+**Recommendation: (a) now, (c) as a by-product, (b) only for named partners, and
+never self-serve until the core is proven.** Note that the consulting line sells
+Sextant as a tool — meaning line 2 and line 1 are competing for the same asset,
+and pulling it toward (b). That tension is currently unmanaged.
 
 ### 3. The apps are the demand side, and one is not enough.
 
@@ -160,9 +215,26 @@ attention is.
 - **Lines 2 and 3 are agent-delivered by default.** A founder hour spent there
   is a bug to be automated.
 - **Line 1 gets protected attention** — it's the only line whose product doesn't
-  exist yet, and `project-k` explicitly holds its product architecture undecided.
-  That is the right posture for research and an expensive one to leave open
-  indefinitely; it should have a decision date.
+  exist yet.
+
+**On `project-k` holding its product architecture "intentionally undecided":**
+an earlier draft of this doc said it needs a decision date. That was too blunt,
+and the ADR record argues against it — ADR 0016 reversed the framing of the
+entire repository and produced a materially better architecture precisely because
+the question stayed open. Arbitrary dates force premature commitment in genuine
+research.
+
+The sharper version: keep the *product architecture* open, but close the
+*strategic* question of which layer the company is built on — because that is
+what routes the next N agent-months, and it is currently routing them into the
+form layer while the moat sits unbuilt. What each open question needs is not a
+date but **named evidence that would decide it**, plus a review cadence and an
+escalation when the same question survives two reviews. Two things do force
+timing, though: the v0 POC proved the mechanism explicitly *not*
+learning-at-scale, and the next evidence requires real users accumulating real
+preferences — so choosing what to build to get that evidence **is** the product
+decision. It cannot stay open much past the point where you want the next
+experiment.
 - **Shift triggers stated in advance**: app #2 launched under a stated
   human-hour budget; a consulting engagement exceeding the cap; a `project-k`
   milestone slipping two quarters.
@@ -186,8 +258,9 @@ attention is.
    logins — the most common reason users refuse this category. Co-browse
    executing in the user's own session appears to sidestep it. If that reading
    is right it's a market position, not a footnote. *(Still unconfirmed.)*
-5. **Research with no decision date.** "Intentionally undecided" is correct for
-   now and corrosive if it persists past the point where a decision is possible.
+5. **Building the commoditisable layer.** The live risk is not indecision — it
+   is that effort concentrates on the form layer (open, copyable) while the
+   preference and elicitation layers (proprietary, compounding) stay unbuilt.
 
 ## What has to be true
 
@@ -206,7 +279,8 @@ attention is.
 1. Consulting: funds the ecosystem, or parallel bet? What's the cap?
 2. Is the co-browse "never hold credentials" reading correct?
 3. Does the open-protocol / closed-preference-layer split match your intent?
-4. What would make `project-k`'s product architecture decidable — and by when?
+4. Who owns the Arbiter's elicitation KB and the User Agent's preference store,
+   and when does build effort shift toward them?
 5. VesselHaven — paying customers? Whose IP?
 6. Jurisdiction and existing entities.
 7. Where does the prospective employee sit? Platform, on this reading.
