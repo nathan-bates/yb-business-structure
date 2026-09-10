@@ -53,6 +53,18 @@ launch** — human hours, elapsed weeks, agent spend. It is the first point on t
 cost curve the whole line-3 thesis depends on, and it is much harder to
 reconstruct later.
 
+## Q1b — What is the cost floor, and how much of VH's 11 months was waiting?
+
+Two sub-questions from §2k, both cheap to answer and both decisive:
+
+- **Name F**, the per-app floor, and what sits in it. If halving held forever the
+  entire portfolio would cost ~$500k; it won't, and F alone determines how many
+  apps the portfolio can hold. The likely floor is operational (support, GTM,
+  compliance), not engineering.
+- **Of 11 months, how much was waiting on a human decision?** If a large share,
+  the time target is an org problem rather than an engineering one, and agents
+  alone will not reach it.
+
 ## Q2 — Is the consumer aggregator accepted as a demo rather than the product?
 
 §2d recommends repositioning from consumer aggregator to per-person interface

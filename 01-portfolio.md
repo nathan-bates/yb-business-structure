@@ -650,6 +650,80 @@ rule out small verticals entirely and push toward apps with larger addressable
 cohorts. It is also the strongest argument yet for resolving Q7 (monetisation)
 early rather than late.
 
+### 2k. The cost curve, made testable
+
+**Targets (Nathan, 2026-09-10):** halve per app, on cost *and* time, until an
+asymptotic wall.
+
+| | Cost | Elapsed |
+|---|---|---|
+| VesselHaven (actual) | ~$250k | ~11 months |
+| App #2 (target) | ≤$125k | ≤5.5 months |
+| App #3 (target) | ≤$62k | ≤3 months |
+| Floor | **?** | **?** |
+
+**The floor is the only number that matters.** If halving held forever, every app
+Youbiquity will ever build would cost $250k ÷ (1 − 0.5) = **$500k in total** —
+the whole infinite portfolio for the price of two VesselHavens. It won't, because
+there's a floor F, and past the first few apps the cost of N apps is roughly
+$500k + N × F. So F alone decides how many apps the portfolio can hold, and
+therefore whether "many small apps sharing a preference layer" is a real strategy
+or a slogan. **Name F, and name what's in it.** That is a more useful exercise
+than hitting any individual halving target.
+
+For contrast: at a 20%-per-app improvement rather than 50%, the series doesn't
+meaningfully converge — app #6 still costs $82k. The difference between "halves"
+and "improves a lot" is the difference between a portfolio and a software shop.
+
+**What has to compress, and what won't:**
+
+| Component | Compresses? | Mechanism |
+|---|---|---|
+| UI/UX design + build | **Strongly** | Kay/AUX — the single biggest lever, and the one being built |
+| Auth, payments, notifications, infra | **Strongly** | Shared services; one-time |
+| Integrations | Yes | The §2b wrapper decision |
+| QA / verification | Yes | Sextant, on owned apps (tier 1) |
+| Domain modelling | **Weakly** | Only compresses if app #2 serves the *same cohort* — another argument for §2h |
+| Content/data seeding, go-to-market, support | **No — and grows with app count** | |
+
+That last row is the likely location of the wall, and it means **the asymptote is
+probably operational, not engineering.** Build cost falls; the cost of *operating*
+N apps — support surfaces, app-store presences, compliance, incident response —
+rises roughly linearly. A portfolio strategy dies of operations long before it
+dies of engineering. Worth modelling in `02`/`03` rather than discovering.
+
+**Time and cost have different floors, and this is the part I'd most want tested.**
+Cost falls with automation. Elapsed time falls only if the *critical path*
+shortens — and on an 11-month project with a 3–4 person core, a large share of the
+critical path is usually not build throughput but **decision latency**: waiting for
+review, for a design call, for a founder to choose between two options.
+
+If, say, half of VH's 11 months was waiting rather than building, then agents
+doubling build throughput yields ~8 months, not 5.5 — and the halving target is
+unreachable by engineering means alone. **To halve elapsed time you have to attack
+decision latency**: fewer decision points, pre-committed defaults, more delegation
+to agents with standing authority. Which is the same scarce resource as the
+attention-allocation problem — meaning the cost curve and the org design are one
+problem, not two. `03` should treat them together.
+
+> **NEEDS YOU** — Of VH's 11 months, roughly what fraction was *waiting on a
+> human decision* versus *work in progress*? A rough split is enough. It
+> determines whether the time target is an engineering problem or an org problem,
+> and those have completely different remedies.
+
+**Define the measurement before app #2 starts**, or the numbers won't be
+comparable and the curve will be unfalsifiable:
+
+- What counts in the money — contractors, founder time (at what notional rate?),
+  agent/model spend, infrastructure, design, third-party licences?
+- What counts as "released" — feature-complete, in-store, first paying user?
+- What counts as the start — first commit, or first decision to build?
+
+**Pre-commit the failure threshold.** If app #2 lands above ~$150k or beyond ~7
+months, treat it as evidence against the portfolio strategy rather than as a
+one-off overrun, and revisit before starting app #3. A threshold set in advance is
+a test; one set afterwards is a rationalisation.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first
