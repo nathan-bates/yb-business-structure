@@ -78,6 +78,20 @@ Decide which path app #2 runs, and instrument **the fraction of merged work that
 was agent-originated** — cost says whether the curve bent, that ratio says which
 path bent it, and therefore whether it generalises.
 
+## Q1d — Does the incumbent bid fixed-price on app #2?
+
+§2m. Under time-and-materials the buyer captures none of the productivity gain,
+so the cost curve is unreachable by tooling alone — and an hourly agency's
+business model (selling hours) is structurally opposed to Youbiquity's strategy
+(reducing hours). The cheapest diagnostic is to request a fixed-price bid for
+app #2; a vendor who won't price their own output has answered the question.
+
+Time-sensitive: the cheapest moment to change commercial terms is a project
+boundary, and VH is nearly launched. If app #2 starts on T&M, the terms carry.
+
+If the partner changes, expect app #2 to be a confounded measurement (new team's
+learning curve vs. factory leverage) and treat app #3 as the real test.
+
 ## Q2 — Is the consumer aggregator accepted as a demo rather than the product?
 
 §2d recommends repositioning from consumer aggregator to per-person interface

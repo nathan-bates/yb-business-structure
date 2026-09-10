@@ -785,6 +785,68 @@ whether the result generalises to app #3.
 > "mostly A with some B", say so explicitly and set the ratio in advance, because
 > a blended result with no instrumentation will be unreadable.
 
+### 2m. Hourly billing makes the cost curve unreachable
+
+The diagnosis is structural and worth stating in its strongest form, because it
+governs everything in §2j–§2l:
+
+> **Under time-and-materials, the buyer captures none of the productivity gain.**
+> A tool that doubles a contractor's output converts into their leisure, not into
+> Youbiquity's cost reduction. Worse, if adoption *does* reduce billed hours, the
+> vendor's revenue falls — so a body-shop is not merely indifferent to the
+> factory, it is **rationally opposed** to it.
+
+No amount of tooling, advocacy or change management survives that. The cost curve
+is a **contracting** problem before it is an engineering problem.
+
+There is a deeper version, and it is the one that supports Nathan's conclusion.
+Even with a perfectly aligned single contract, an hourly agency's *business model*
+is selling hours; Youbiquity's strategy is reducing hours. You can align one
+project that way. You cannot align a relationship. **A body-shop is the wrong
+counterparty for a factory-based build regardless of how any individual engagement
+is priced.**
+
+**Options, least to most disruptive:**
+
+| Option | Captures gain? | Cost |
+|---|---|---|
+| **Fixed price per deliverable** | Yes — price set on output | Scope disputes, padded estimates, quality shortcuts; needs good specs |
+| **Target cost + gainshare** | Partly, and keeps vendor motivated to adopt | More complex to administer |
+| **Equity / employment for continuing people** | Fully | Fixed cost; but a small owning core is the stated goal anyway |
+| **New partner, fixed-price from day one** | Yes | Loses domain continuity; see the measurement warning below |
+| **Agents + thin human review** (path B, §2l) | Eliminates the question | Unproven at whole-app scale |
+
+**Youbiquity is unusually well-placed for fixed-price**, and this is not a
+generic recommendation. Fixed-price contracting fails when acceptance criteria are
+vague. This group produces ADRs, specs, contracts (C5/C6/C7/C9/C10), invariants
+and a test-equivalence engine whose entire premise is that **design ≡ code ≡ test
+plan**. That is precisely the artifact set that makes "done" checkable rather than
+arguable — the main reason fixed-price engagements usually degenerate. The
+architecture the group already built is, incidentally, a procurement asset.
+
+**The cheapest diagnostic available, and it costs nearly nothing:** ask the
+incumbent for a **fixed-price bid on app #2**. Their answer is the decision.
+A vendor who won't price their own output is telling you either that they don't
+believe the tools help, or that they don't intend to use them. Either way the
+question resolves without a confrontation about hours.
+
+**The timing matters, and the window is open now.** The cheapest moment to change
+a commercial model is a project boundary. VH is nearly launched and app #2 hasn't
+started. If app #2 begins under time-and-materials, the terms carry for another
+cycle by default.
+
+> **Measurement warning if the partner changes.** App #2 would then measure a new
+> team's learning curve as much as the factory's leverage — a confounded reading.
+> If you switch, expect app #2 to be noisy and treat **app #3** as the real test
+> of the curve. Better to know that going in than to conclude the factory failed
+> when what you measured was onboarding.
+
+**Before switching, check the continuity risk is as low as it looks.** Are the
+ADRs, specs and tests genuinely the system of record, or does critical domain
+knowledge live only in particular people's heads? This group documents unusually
+heavily, so the answer is plausibly "low" — but it is worth confirming rather than
+assuming, because it is the one thing that makes vendor changes expensive.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first
