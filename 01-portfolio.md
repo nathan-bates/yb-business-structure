@@ -165,10 +165,55 @@ the highest-urgency item in these documents, ahead of both large bets. It is als
 the cheapest of the three to get right, and the only one whose window closes on
 someone else's schedule — VesselHaven's ship date.
 
-**Ownership risk worth naming:** the shape maps cleanly onto three people, except
-that the replay bet needs technical depth *and* a commercial motion at the same
-time. It spans CTO and COO, which makes it the bet most likely to be
-under-owned — and it is the one with the deadline.
+**Ownership, resolved.** The replay bet needs technical depth and a commercial
+motion simultaneously, which is why it looked most at risk of being under-owned.
+It isn't: Nathan owns technical execution, and the commercial half sits with two
+co-founders and an investor who are **former consultants — the capital came from
+selling a large consulting firm.**
+
+That is a materially better fit than it first appears, and it changes replay's
+prospects more than any technical fact in these documents:
+
+- **Enterprise selling is the least agent-delegable function in the business**
+  (03) and the gate on line 2 scaling at all. The group has it in-house, at
+  founder level, rather than needing to hire it.
+- Scoping, pricing, MSAs, procurement cycles and enterprise security reviews are
+  the unglamorous machinery a licensing business runs on. This team has done all
+  of it.
+- The same skills fix the app-delivery problem: **the shift to fixed-price
+  contracting is a discipline ex-consultants already have** — scoping, SOWs,
+  milestone acceptance. It's a known path rather than a new competence.
+
+**And it opens a channel that isn't in the stack analysis.** Large consultancies
+are an unusually good buyer for the counterfactual engine, and this team can reach
+them warm:
+
+- They run coding agents across many client codebases — high inference spend,
+  high variance, many simultaneous model retirements.
+- They must justify tooling choices to clients, so an evidence artifact has
+  procurement value beyond the savings.
+- **Agent inference is cost-of-delivery for them, so routing savings convert
+  directly into gross margin.** That is a far stronger sales story than "reduce
+  your AI bill" — it is margin expansion on work already sold, which is the one
+  pitch a consulting P&L owner never declines.
+
+Distribution was the hardest open problem for the replay bet. Between the
+founders' network and consultancies as a buyer segment, it is now the
+best-supported part of it.
+
+**The risk this creates, stated plainly.** 01 and 03 both name the same failure
+mode — line 2 drifting into embedded consulting because it closes faster than
+licensing does. **With three ex-consultants on the commercial side, that pull is
+now a founding-team trait rather than a market temptation.** Consulting deals will
+feel easy and licensing will feel slow, and the instinct will be well-founded in
+experience that was earned in a different business model.
+
+A related and gentler question: a consulting firm sells on a multiple of a
+people-based EBITDA; a licensing business sells on a multiple of recurring
+revenue. The exit that funded this group came from the first kind. If the
+group's shared intuition about "what a valuable company looks like" is calibrated
+on that, it will bias toward a people business at every fork. Worth surfacing
+between the three of you before the caps in 03 have to do the work alone.
 
 ### What the ecosystem play might be
 

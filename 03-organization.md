@@ -47,7 +47,7 @@ matrix means nothing is owned:
 | Line | Accountable | Contributing |
 |---|---|---|
 | **Ecosystem** | Nathan — it's an architecture-shaped bet and the option-holder should hold it | Chris on product shape |
-| **Core Tech** | Agi — licensing is a commercial motion before it is a technical one | Nathan on what's licensable |
+| **Core Tech** | **Split, deliberately** — Nathan owns technical execution; the commercial motion sits with the ex-consultant founders and investor | Each half is genuinely owned rather than nominally shared |
 | **Apps** | Chris — app selection is the cohort question in operational form | Agi on delivery, Nathan on factory |
 
 `OPEN` — react to this. The reasoning is that each line's *binding constraint*
@@ -393,7 +393,11 @@ It decides whether the app #2 time target is an engineering problem or this one.
 ## Failure modes
 
 1. **Consulting grows because it closes faster than licensing does.** The only
-   linear row in the scaling table wins by default. Arrives disguised as good news.
+   linear row in the scaling table wins by default, and it arrives disguised as
+   good news. **This is now a founding-team risk, not only a market one:** with
+   three ex-consultants on the commercial side, consulting deals will feel easy
+   and licensing will feel slow — an instinct earned in a business model whose
+   economics were the opposite of this one's.
 2. **Shared machinery built after the growth instead of before.** The sub-linear
    rows quietly become linear, and the fix is a rewrite under load.
 3. **Agents without standing authority.** Every agent action becomes a founder
