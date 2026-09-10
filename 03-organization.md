@@ -46,13 +46,102 @@ matrix means nothing is owned:
 
 | Line | Accountable | Contributing |
 |---|---|---|
-| **Ecosystem** | Nathan — it's an architecture-shaped bet and the option-holder should hold it | Chris on product shape |
-| **Core Tech** | **Split, deliberately** — Nathan owns technical execution; the commercial motion sits with the ex-consultant founders and investor | Each half is genuinely owned rather than nominally shared |
-| **Apps** | Chris — app selection is the cohort question in operational form | Agi on delivery, Nathan on factory |
+| **Ecosystem** | Nathan — architecture-shaped bet; the option-holder should hold it | Chris on product shape |
+| **Core Tech** | **Split, deliberately** — Nathan on technical execution, Agi on the commercial motion | The ex-consultant bench, including the investor |
+| **Apps** | Chris — app selection is the cohort question in operational form | Agi on delivery and ops, Nathan on factory |
+
+See §Reporting structure for the functional lines beneath this, and for the one
+conflict in them.
 
 `OPEN` — react to this. The reasoning is that each line's *binding constraint*
 should match its owner's remit: Ecosystem is blocked on architecture decisions,
 Core Tech on commercial motion, Apps on product/cohort judgement.
+
+---
+
+## Reporting structure
+
+`PROPOSED (Nathan, 2026-09-10)` — with a stated goal of **clean separation, so the
+founding team is not bogged down in consulting minutiae:**
+
+| Function | Rolls up to |
+|---|---|
+| Consulting — technical portions | **Nathan** |
+| Sales | **Agi** |
+| New products | **Chris** |
+
+### The conflict to resolve first
+
+The goal and the first row are in tension. **If technical consulting reports to
+Nathan, consulting escalations reach Nathan by construction** — and technical
+escalations in a services business are the most interrupt-driven work there is:
+client-specific breakage, environment drift, deadline pressure, scope argument.
+That *is* the minutiae the separation is meant to prevent.
+
+It matters more than it would in most groups because of what else sits on the same
+person: replay's technical execution (the bet with a **12–18 month** step-function
+deadline) and the ecosystem architecture (the bet that **loses depth every
+month**). Those are important-and-not-urgent. Consulting escalations are
+urgent-and-not-important. **Urgent always wins**, and the thing it wins against is
+the only unprotected clock in the portfolio.
+
+### Separation is a function of what you sell, not of who reports to whom
+
+A reporting line does not stop escalation; **scope does.**
+
+> **Never sell bespoke work. Sell implementation of licensed product.**
+
+Bespoke engagements generate *novel* technical problems, which can only escalate
+upward — to the person who knows the architecture. Productised implementation
+generates *known* problems, which are documented, delegable, and route to the
+product backlog where they belong. The separation the goal describes is achievable,
+but it comes from the scope rule rather than the org chart.
+
+Two supporting mechanisms:
+
+- **A delivery lead inside the services unit owns technical delivery. Nathan owns
+  the envelope, not the work** — what may be promised, what architecture is
+  permitted, what must be reused. Envelope decisions are batchable and low-volume;
+  delivery escalations are neither.
+- **The entity structure already supports this.** Services sit in Platform (01
+  §Entity shape) with their own P&L and staff. Legal and operational separation
+  reinforce the scope rule instead of relying on individual discipline.
+
+### Sales needs a boundary, or the easy sale wins
+
+"Sales rolls up to Agi" leaves open *sales of what*. If one function sells both
+consulting and licences, the faster-closing product wins — which is precisely the
+drift this group is already wary of, and the wariness is well-founded.
+
+`PROPOSED` — a structural mechanism rather than a willpower one:
+
+> **Consulting is sold only attached to a licence, and capped as a percentage of
+> licence revenue.**
+
+This is self-enforcing through the sales motion: every engagement must *grow*
+licence revenue rather than substitute for it, and the cap moves only when
+licensing moves. Far more robust than a cap on founder time, which requires
+somebody to say no in the moment.
+
+### The gap this structure leaves
+
+**Operations.** Agi holds COO and sales. Sales is a growth function with revenue
+attached; operations is a scaling function with none. Under the portfolio thesis,
+**operations is the asymptote** — the shared ops plane is what makes the app tail
+affordable at all (02 §Operations, lever 3). Inside one person, sales and ops
+compete, and ops loses, because revenue-bearing work always does win that fight.
+
+That is not an argument against the assignment; it is an argument for naming the
+ops plane as a deliverable with a date, owned by Agi but built by agents, rather
+than as something that happens when there is time. There will not be time.
+
+### What each founder is then actually protecting
+
+| | Owns | Must be protected from |
+|---|---|---|
+| **Nathan** | Technical envelope, replay execution, ecosystem architecture | Delivery escalation — the single highest-risk leak in the structure |
+| **Agi** | Sales, commercial terms, operations | Letting the easier sale set the mix; letting ops slip behind revenue |
+| **Chris** | New products — app tail and ecosystem product | Being pulled into delivery; it is the line with no customer demanding attention, so it loses contention silently |
 
 ---
 
@@ -409,3 +498,8 @@ It decides whether the app #2 time target is an engineering problem or this one.
    one with no customers asking.
 6. **Commercial model unchanged**, so the cost curve never bends and Apps grows
    linearly in people regardless of how good the factory is.
+7. **Bespoke consulting sold at all.** Every bespoke engagement creates novel
+   technical problems that can only escalate to the one person holding both
+   clocked bets. The scope rule is the separation; the reporting line is not.
+8. **The ops plane never gets built**, because it sits with the founder who also
+   carries revenue, and revenue always wins the week.
