@@ -455,6 +455,65 @@ small team can enter, because it is won by design rather than by headcount.
 [WebArena](https://www.emergentmind.com/topics/webarena-benchmark) ·
 [Browser Use benchmark](https://browser-use.com/posts/ai-browser-agent-benchmark)
 
+### 2f. The model-curve test
+
+The reliability argument in 2e does not survive contact with the trajectory.
+80% was `claude-fable-5` in June 2026, already a generation back. Frontier labs
+are working directly on exactly this number, and any advantage measured as *"the
+model can't do X reliably yet"* is an advantage with an expiry date set by
+someone else's release schedule.
+
+That retires the last candidate. Across this document, six have now failed:
+acting in the person's own accounts, clean aggregation, permission-free reach,
+generative UI mechanics, personalisation-as-a-feature, and reliability
+scaffolding. They failed for the same underlying reason, which is worth naming
+once and then applying as a rule:
+
+> **The model-curve test.** For any proposed investment, ask: *does this get
+> more valuable or less valuable when the next frontier model ships?*
+> Capability gaps depreciate — you are betting against the curve. Accumulated
+> assets appreciate — a better model makes them worth more.
+
+Sorted by that test:
+
+| Asset | Next model ships → | Verdict |
+|---|---|---|
+| Reliability scaffolding, recipes | Subsumed | **Depreciating** |
+| Drivers / reach / integrations | Subsumed, and identity-gated besides | **Depreciating** |
+| Generative UI mechanics | Subsumed (A2UI, MCP Apps, native composition) | **Depreciating** |
+| Per-person preference data | Worth *more* — better model, better use of it | **Appreciating** |
+| Domain data the giants don't hold | Worth more | **Appreciating** |
+| Earned-autonomy / trust record | Worth more | **Appreciating** |
+| Customer relationships in a vertical | Unaffected | **Durable** |
+
+**Build what appreciates. Wrap what depreciates. Time-box anything whose value
+assumption is "models won't do this well soon."**
+
+Applied concretely: build `library` (the preference store), the autonomy/trust
+record, and domain-data capture inside the verticals. Wrap `market`, the model,
+and the reliability scaffolding. Keep the aggregated-cart spike **only for what
+it generates** — preference signal and proof the topology works end to end — not
+as a capability demo, because the capability is on the curve.
+
+**And the honest last turn of the screw.** The giants accumulate per-person
+preference too, across hundreds of millions of users. So "own the preference
+layer" is not safe *in general* either — it is safe only where you hold the
+relationship and they do not. Which means:
+
+> **The moat is not a layer. It is a relationship in a domain.**
+> Every layer in this stack is reachable by a better-funded competitor. What is
+> not reachable is being the system of record for a specific population's
+> specific decisions, in a domain where the giants have no relationship and
+> insufficient reason to build one.
+
+This is the same conclusion 2d reached from the market side, arrived at
+independently from the technology side, which is some evidence it is right.
+
+It also fixes the sequencing, and the order is the opposite of the instinct:
+**distribution in a vertical → accumulated data → compounding advantage.** Not
+technology → users. A preference layer with no users does not compound; it is
+just a schema.
+
 ### 3. The apps are the demand side, and one is not enough.
 
 VesselHaven's job is now threefold: prove the factory's cost curve, be the first
