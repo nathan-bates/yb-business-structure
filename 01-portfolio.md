@@ -38,6 +38,87 @@ Sold as embedded consulting it is linear in headcount and wins attention by
 default; **licensed**, it has a far better hour:income ratio and scales without
 adding people. See §Line 2 should be licensing-led.
 
+### The shape of the bets
+
+`PROPOSED (Nathan, 2026-09-10)` — the portfolio is **two large bets and a
+constrained tail**:
+
+| | Bet | Clock | Uncertainty | Scope |
+|---|---|---|---|---|
+| **Ecosystem** | `project-k` + `aux` + `arbiter` + `library` + `market` | **None external** — 3–5 yr, self-paced | High: the product shape is undecided | Unbounded |
+| **Core tech** | The counterfactual engine (replay) | **12–18 months, externally set** | Low: it works; the question is commercial | Bounded and known |
+| **Apps** | As many as the resource budget allows | Per app | Medium each, low in aggregate | Each one small |
+
+**The two large bets are near-opposites, and that matters for scheduling.** One
+has an unbounded horizon, high uncertainty and no deadline. The other is a known
+quantity with a closing external window. When they compete for attention, the
+instinct is to favour the bigger prize — but:
+
+> **The bet with an externally-imposed clock should win, because the other one's
+> window doesn't close.** Losing the timed bet while holding the untimed one is
+> strictly worse than the reverse, and the reverse is always recoverable.
+
+That is the clearest scheduling rule available from this document, and it applies
+directly to the next quarter.
+
+**The two bets are also not independent.** 01 earlier described the ecosystem as
+an option whose premium the other lines pay. That is now concrete: **replay is the
+funding mechanism** — near-term, horizontal, priced against a bill the customer
+already receives. It upgrades line 2 from "runway" to "the thing that buys time
+for the bet with no deadline", which is a stronger reason to prioritise it than
+revenue alone.
+
+**The app tail is a portfolio of options, not a set of products.** Each app is
+cheap, mostly modest, occasionally significant — so the arithmetic is number of
+shots × cost per shot, which makes the cost curve visceral: at $250k per app a
+$500k budget buys **two** shots; at $62k it buys **eight**. The cost curve is not
+an efficiency metric, it is *how many tickets you hold*.
+
+Two disciplines follow, neither of which the group has yet:
+
+- **A kill rule.** Options expire; products linger. Without an explicit criterion
+  for shutting or parking an app, the tail consumes the budget through operations
+  — the asymptote identified in the cost model.
+- **A constraint that most option portfolios don't carry.** These are **options on
+  a shared cohort, not independent lottery tickets.** Unconstrained shots give
+  diversification but no compounding; cohort-constrained shots give compounding
+  but concentrate the risk in one population. **This group's thesis requires the
+  second**, which means app selection is not "what looks promising" but "what
+  deepens the same person". It is a real cost — fewer available shots — paid for
+  the multiplier.
+
+### Community is the coupling, not a fourth bet
+
+Community is the only asset that touches all three bets at once, which makes it
+structurally different from anything else in the portfolio:
+
+- **To the ecosystem** it supplies the signal that reveals a *person* rather than
+  a transaction — the class of data that transfers between domains and that no
+  single app produces.
+- **To the apps** it converts N separate user bases into **one cohort**. Without
+  it, "the apps share a user" is an assertion in a schema. With it, it is a place
+  people actually are.
+- **To the cost curve** it does something under-priced: it makes app N+1's
+  go-to-market a *shared* cost rather than a per-app one. Members recruit members,
+  and an existing community is the launch channel for the next app. Go-to-market
+  is the largest non-engineering per-app line in the cost model, and community is
+  the only lever that moves it.
+
+> **Community is the coupling constant.** Getting it right doesn't add a line
+> item — it determines whether the portfolio multiplies or merely adds. Three bets
+> bound by a shared cohort are one system; three bets without it are three
+> businesses sharing an office.
+
+That is the argument for treating the identity-model decision (QUESTIONS Q1) as
+the highest-urgency item in these documents, ahead of both large bets. It is also
+the cheapest of the three to get right, and the only one whose window closes on
+someone else's schedule — VesselHaven's ship date.
+
+**Ownership risk worth naming:** the shape maps cleanly onto three people, except
+that the replay bet needs technical depth *and* a commercial motion at the same
+time. It spans CTO and COO, which makes it the bet most likely to be
+under-owned — and it is the one with the deadline.
+
 ### What the ecosystem play might be
 
 `OPEN` — **this is not settled, and earlier drafts of this document stated it

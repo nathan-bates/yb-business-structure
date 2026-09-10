@@ -30,6 +30,12 @@ question. The cheapest moment to change commercial terms is a project boundary.
 
 ## Blocks the strategy
 
+### Q2b — What is the kill rule for an app?
+The app tail is a portfolio of options; options expire but products linger.
+Without an explicit criterion for shutting or parking an app, the tail consumes
+the budget through operations — the asymptote in the cost model. Cheap to decide
+now, expensive to decide while attached to something.
+
 ### Q3 — Who is the cohort?
 Name the person the next three apps all serve, in a sentence. If that can't be
 done, the cross-app preference layer is a hope rather than a plan, and the
