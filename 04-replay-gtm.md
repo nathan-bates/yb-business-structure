@@ -378,6 +378,108 @@ belongs under the consulting cap.
    credibility requirement, for three or four people. **The security play may be
    individually better and collectively worse.**
 
+### SAM from a security lens
+
+`ESTIMATE` — same method as §Market opportunity, different denominator. The
+structural difference: cost-framing revenue is a percentage of the customer's
+inference spend, which **caps** it. Security-framing revenue is priced against a
+security budget, which is not tied to token volume at all.
+
+#### Denominators
+
+| Market, 2026 | Size | Growth |
+|---|---|---|
+| Information security, total | $244.2B | +13.3% |
+| Application security | **$67.2B** | +15.5%, → ~$116B by 2030 |
+| AI cybersecurity | $51.4B | ~+98% YoY |
+| **Agentic AI security** | **$1.65–1.8B** | **42% CAGR → $13.5–17.8B by 2032** |
+
+Agentic AI security is the right category. It is small today and growing faster
+than anything else in this document.
+
+#### Top-down slice
+
+Agentic AI security includes runtime enforcement, agent identity, gateways and
+monitoring as well as testing and assurance. Testing/assurance is perhaps 20% of
+the category, and coding agents perhaps 35% of that — they generate most of the new
+attack data but enterprises also secure customer-facing agents.
+
+$1.65B × 20% × 35% ≈ **$115M** for coding-agent security testing and assurance.
+
+#### Bottom-up, tiered by ACV
+
+More credible, because ACV is the variable that matters here.
+
+| Tier | Orgs `ASSUMPTION` | ACV | Total |
+|---|---|---|---|
+| Very large enterprises | 200 | $200k | $40M |
+| Large enterprises | 1,000 | $75k | $75M |
+| Mid-market and tech | 3,000 | $25k | $75M |
+| **SAM** | | | **~$190M** |
+
+ACV anchors: AppSec and ASPM enterprise deals commonly run $50–300k/yr; a new,
+narrowly-scoped category lands lower initially, $30–120k. Buyer count is bounded by
+the ~70% of large-enterprise engineering orgs using coding workflows, discounted
+hard for maturity — **only 9.5% of organisations currently secure more than 81% of
+their agents**, which is simultaneously the demand signal and the reason near-term
+buying is slower than the gap implies.
+
+#### The numbers, and the comparison that matters
+
+| | Cost lens | **Security lens** |
+|---|---|---|
+| SAM 2026 | ~$145M | **~$115–190M (midpoint ~$150M)** |
+| CAGR | ~36% | **~42%** |
+| Typical ACV | $40–60k (2% of a $2M inference bill) | **$75k, up to $200k** |
+| Revenue capped by | Customer's inference spend | **Nothing structural** |
+| Survives price collapse | Partly (speed only) | **Yes** |
+| Realistic capture for an unbranded entrant | 2–5% | **1–3%** (credibility-gated) |
+| **Realistic ARR, 3–4 years** | **$3–7M** | **$1.5–5.5M** |
+
+**The SAMs are roughly the same, and so is the outcome band.** That is the
+important, slightly deflating finding: switching lenses does not change the size of
+the prize.
+
+**But it changes the number of customers needed to reach it**, and that is the
+variable that actually binds this group:
+
+> At $75–200k ACV instead of $40–60k, **the same ARR needs roughly half the
+> logos.** For three or four people whose scarcest resource is sales attention —
+> not market size — ACV matters more than TAM. Security wins on the constraint that
+> actually binds.
+
+The offset is that each sale is harder: credibility gating, longer cycles, and a
+CISO rather than a platform lead.
+
+#### The intersection that resolves the choice
+
+Last section framed this as cost-to-consultancies versus security-to-CISOs. That
+framing was wrong, because **consultancies are a buyer in both — and for them the
+security angle is not an optimisation, it is an obligation.**
+
+A consultancy running coding agents on *client* code carries a contractual and
+reputational duty: prove the agents did not introduce a vulnerability, leak client
+credentials, or exfiltrate anything. That is a client requirement, so demand is
+**mandatory rather than discretionary** — the best kind there is, and the same
+structural property as vendor-forced model retirements, but with a larger budget
+behind it.
+
+> **Lead with security, sold to consultancies, through the existing warm network.**
+> It combines the higher ACV and uncapped budget of the security lens with the only
+> distribution advantage the group actually has — and a warm introduction from a
+> former partner substantially mitigates the credibility gate that makes a cold
+> CISO approach hard.
+
+`OPEN` — that recommendation supersedes the "pick one" framing below. What remains
+open is whether it is sold to the consultancy's **delivery** leadership (margin and
+obligation) or its **security** function (assurance), which determines the
+entry point and the first artifact.
+
+**Sources.** [Application security market 2026](https://finance.yahoo.com/technology/ai/articles/global-application-security-market-reach-145400948.html) ·
+[Agentic AI security market](https://www.marketsandmarkets.com/PressReleases/agentic-ai-security.asp) ·
+[Information security spending 2026](https://softwarestrategiesblog.com/2026/03/24/information-security-spending-2026/) ·
+[Agent security coverage statistics](https://www.gravitee.io/state-of-ai-agent-security)
+
 ### The conclusion this points to
 
 `OPEN` — **this may not be an additional play. It may be the better primary
