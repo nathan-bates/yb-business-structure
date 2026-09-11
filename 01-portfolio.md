@@ -38,6 +38,101 @@ Sold as embedded consulting it is linear in headcount and wins attention by
 default; **licensed**, it has a far better hour:income ratio and scales without
 adding people. See §Line 2 should be licensing-led.
 
+### The layer cake
+
+```
+        ╔══════════════════════════════════════════════════════════════════╗
+  L1    ║  THE PERSON — one identity, one profile, one accumulating model  ║
+        ╚══════════════════════════════════════════════════════════════════╝
+                 ▲ serves                                │ signal
+        ┌──────────────────────────────────────────────────────────────────┐
+  L1    │  COMMUNITY                                                       │
+        │  spans every app · the widest layer · the coupling constant      │
+        └──────────────────────────────────────────────────────────────────┘
+        ┌───────────────┬───────────────┬───────────────┬──────────────────┐
+  L3    │  VesselHaven  │    App #2     │    App #3     │   App N …        │
+        │  (thin)       │  (thinner)    │  (thinner)    │   (thinnest)     │
+        └───────────────┴───────────────┴───────────────┴──────────────────┘
+        ┌──────────────────────────────────────────────────────────────────┐
+  L1    │  SHARED PLATFORM                                                 │
+        │  identity · library (preference) · arbiter (elicitation)         │
+        │  kay + aux (form) · market (execution wrapper) · ops plane       │
+        └──────────────────────────────────────────────────────────────────┘
+        ┌──────────────────────────────────────────────────────────────────┐
+  L2    │  FACTORY                                                         │
+        │  agent runtime · pipelines · verification                        │
+        │  counterfactual engine  ──────────────► licensed externally      │
+        └──────────────────────────────────────────────────────────────────┘
+        ┌──────────────────────────────────────────────────────────────────┐
+        │  MODELS — bought; improve under you                              │
+        └──────────────────────────────────────────────────────────────────┘
+
+        L1 ecosystem   L2 core tech   L3 apps
+```
+
+**How to read it.** Width is reach, not importance.
+
+- **Community is the widest layer that isn't the person.** It spans every app,
+  which is what converts N user bases into one cohort — and it is the only layer
+  that reaches *sideways* rather than just up and down. That is why it is the
+  coupling constant rather than a feature of any one app (§Community is the
+  coupling).
+- **The apps get thinner as you move right.** That is the cost curve drawn: app N+1
+  inherits more from the shared platform and adds less of its own.
+- **The Factory is the only layer with no end-user surface.** It exists solely to
+  change the cost of everything above it — and it is the only layer that also sells
+  sideways, out of the stack, as line 2.
+- **The Person layer and the Factory's counterfactual engine are the only two
+  things that appreciate** when the next model ships. Everything between them is
+  either commoditising or bought.
+- **Lines don't map to strata.** The ecosystem play (L1) is *both* the top and a
+  large part of the middle; core tech (L2) sits underneath everything; apps (L3)
+  are a thin band. An org chart drawn from the revenue lines would cut this
+  diagram in the wrong places — see 03 §Reporting structure, where engineering is
+  split build-versus-apply precisely to avoid that.
+
+### How the layers feed each other
+
+```mermaid
+flowchart LR
+    MODELS["Models<br/>(bought)"] --> FACTORY["Factory<br/>runtime · pipelines"]
+    CFE["Counterfactual engine"] -->|"tunes model + context choice"| FACTORY
+    FACTORY -->|"drives cost per app down"| APPS["Apps<br/>VesselHaven · #2 · #3 · N"]
+    PLATFORM["Shared platform<br/>identity · library · arbiter · form · market"] --> APPS
+    FACTORY --> PLATFORM
+
+    APPS -->|"users"| COMMUNITY["Community"]
+    COMMUNITY -->|"person-level signal<br/>(what they care about, who they trust)"| LIBRARY["Library<br/>preference + trust record"]
+    APPS -->|"task-level signal"| LIBRARY
+    LIBRARY -->|"better fit · less runtime inference<br/>improves every app retroactively"| APPS
+    COMMUNITY -->|"launch channel for app N+1<br/>(GTM becomes a shared cost)"| APPS
+
+    LIBRARY -->|"the moat"| ECO["Ecosystem play"]
+    APPS -->|"first citizens"| ECO
+    COMMUNITY -->|"the cohort made real"| ECO
+
+    CFE -->|"licensed externally"| REV["Line 2 revenue"]
+    APPS -->|"subscription revenue"| REV
+    REV -->|"funds the bet with no deadline"| ECO
+```
+
+**The three loops worth naming**, because they are what makes this a system rather
+than a stack:
+
+1. **Factory → apps → factory.** Cheaper apps justify more apps, which justify more
+   factory investment. Slow, compounding, and gated by the commercial model (§How
+   engineering gets bought).
+2. **Apps → community → library → apps.** The core multiplier. App #3 improves apps
+   #1 and #2 *retroactively*, because the profile they all read got deeper. Break
+   this — apps that don't share a user — and the portfolio becomes addition.
+3. **Counterfactual engine → line 2 revenue → ecosystem.** The funding loop. It is
+   the only arrow in the diagram that leaves the stack and comes back as money.
+
+And the asymmetry the diagram makes obvious: **community is the only box with three
+outbound arrows** — signal to the library, cohort to the ecosystem, and distribution
+back to the apps. Nothing else in the system reaches that far, which is why getting
+it wrong is expensive in three directions at once.
+
 ### The shape of the bets
 
 `PROPOSED (Nathan, 2026-09-10)` — the portfolio is **two large bets and a
