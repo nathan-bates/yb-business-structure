@@ -124,6 +124,10 @@ flowchart LR
     REV3 -->|"funds"| ECO
 
     CLIENTS -.->|"hardening · integration adapters · references"| PLATFORM
+
+    SERVICES ==>|"plants the interface layer<br/>inside client products"| ADOPT["ECOSYSTEM ADOPTION<br/>each client becomes a citizen"]
+    LIC ==>|"SIs deploy it across<br/>their own client base"| ADOPT
+    ADOPT ==>|"solves cold start without<br/>asking anyone to adopt a standard"| ECO
 ```
 
 **Four things this makes explicit that the cake could not:**
@@ -144,6 +148,58 @@ flowchart LR
 4. **Both revenue lines terminate in the same place.** Line 2 and line 3 exist to
    fund the bet that has no customer demanding it. That is the structure's entire
    logic, and it is the one arrow worth defending when attention gets contested.
+
+### The third role: consulting as ecosystem distribution
+
+The heavy arrows are the ones that matter most, and they were missing.
+
+**A consultancy engagement can plant the interface layer inside a client's
+product.** The client becomes an AUX citizen without ever being asked to adopt a
+standard — they bought an implementation, and the standard arrived with it. That is
+how enterprise middleware and most protocol standards actually spread: consultants
+install them.
+
+**And selling to systems integrators is leveraged distribution, not just revenue.**
+An SI that standardises on the interface layer as part of its own delivery practice
+carries it into dozens of client engagements. One relationship becomes many
+installs — **the closest thing to a distribution flywheel available to a
+four-person company**, and a direct answer to the standards cold-start problem this
+document raised early and never resolved. (Sextant was the earlier answer to cold
+start; the wrapper decision in 02 retired that role. This replaces it, and it needs
+no permission from anyone.)
+
+That makes the services arm do three jobs at once, and only the first is obvious:
+
+| Role | Output |
+|---|---|
+| Revenue | Licence + bounded implementation fees |
+| Hardening | Adapters, robustness, reference logos that internal use never produces |
+| **Distribution** | **Ecosystem citizens, planted one engagement at a time and multiplied through SIs** |
+
+**Three honest caveats, because this arrow is not free:**
+
+1. **Consultant-planted adoption is shallow until the client owns it.** Installed
+   as a vendor artifact, it gets ripped out at the next refresh. It counts as
+   adoption only when the client's own team extends it.
+2. **It accelerates the commitment cap.** More installs means more compatibility
+   obligations, sooner — the licensing constraint from §Line 2 bites harder the
+   better this works.
+3. **It is the most likely route to roadmap capture.** A services-led architecture
+   becomes whatever the last client needed. The ecosystem line must keep roadmap
+   ownership; delivery gets to inform it, never to set it.
+
+**And a sequencing point that follows from those.** This channel pulls toward
+**freezing the architecture** — you cannot install what is still moving. But
+`project-k` deliberately holds its product architecture open, and this document has
+twice argued that keeping it open produced a better result. So the adoption arrow
+is a **later** arrow: valuable, and actively harmful if pulled early, because it
+would force a premature freeze on the one bet whose value comes from staying
+undecided a while longer.
+
+Use the near-term consulting engagements for revenue and hardening. Switch the
+distribution arrow on when the interface layer is stable enough to install — and
+treat *that* as the real milestone for the ecosystem play, rather than any internal
+architecture decision.
 
 **The two caps belong on this diagram, not in the stack** (03 §Attention
 allocation): a **time cap** on bespoke consulting, because it is linear in humans
