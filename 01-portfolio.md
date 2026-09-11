@@ -40,56 +40,117 @@ adding people. See §Line 2 should be licensing-led.
 
 ### The layer cake
 
+Width is reach. The right-hand column is what each layer sells, and to whom —
+without it the diagram is only half the business.
+
 ```
-        ╔══════════════════════════════════════════════════════════════════╗
-  L1    ║  THE PERSON — one identity, one profile, one accumulating model  ║
-        ╚══════════════════════════════════════════════════════════════════╝
-                 ▲ serves                                │ signal
-        ┌──────────────────────────────────────────────────────────────────┐
-  L1    │  COMMUNITY                                                       │
-        │  spans every app · the widest layer · the coupling constant      │
-        └──────────────────────────────────────────────────────────────────┘
-        ┌───────────────┬───────────────┬───────────────┬──────────────────┐
-  L3    │  VesselHaven  │    App #2     │    App #3     │   App N …        │
-        │  (thin)       │  (thinner)    │  (thinner)    │   (thinnest)     │
-        └───────────────┴───────────────┴───────────────┴──────────────────┘
-        ┌──────────────────────────────────────────────────────────────────┐
-  L1    │  SHARED PLATFORM                                                 │
-        │  identity · library (preference) · arbiter (elicitation)         │
-        │  kay + aux (form) · market (execution wrapper) · ops plane       │
-        └──────────────────────────────────────────────────────────────────┘
-        ┌──────────────────────────────────────────────────────────────────┐
-  L2    │  FACTORY                                                         │
-        │  agent runtime · pipelines · verification                        │
-        │  counterfactual engine  ──────────────► licensed externally      │
-        └──────────────────────────────────────────────────────────────────┘
-        ┌──────────────────────────────────────────────────────────────────┐
-        │  MODELS — bought; improve under you                              │
-        └──────────────────────────────────────────────────────────────────┘
+        ╔══════════════════════════════════════════════════╗
+  L1    ║  THE PERSON — one identity, one profile          ║   not sold
+        ╚══════════════════════════════════════════════════╝
+        ┌──────────────────────────────────────────────────┐
+  L1    │  COMMUNITY                                       │   not sold —
+        │  spans every app · the coupling constant         │   it IS the cohort
+        └──────────────────────────────────────────────────┘
+        ┌───────────┬───────────┬───────────┬──────────────┐
+  L3    │VesselHaven│  App #2   │  App #3   │  App N …     │──► end customers
+        │  (thin)   │ (thinner) │ (thinner) │ (thinnest)   │    subscription
+        └───────────┴───────────┴───────────┴──────────────┘
+        ┌──────────────────────────────────────────────────┐
+  L1    │  SHARED PLATFORM                                 │┈┈► LATER: library+kay
+        │  identity · library · arbiter                    │    embedded in others'
+        │  kay + aux · market · ops plane                  │    apps  (B2B2C)
+        └──────────────────────────────────────────────────┘
+        ┌──────────────────────────────────────────────────┐
+  L2    │  FACTORY                                         │──► NOW: counterfactual
+        │  runtime · pipelines · verification              │    engine, Claude Code
+        │  counterfactual engine                           │    Cloud — licensed
+        └──────────────────────────────────────────────────┘
+        ┌──────────────────────────────────────────────────┐
+        │  MODELS — bought; improve under you              │   n/a
+        └──────────────────────────────────────────────────┘
 
-        L1 ecosystem   L2 core tech   L3 apps
+                    L1 ecosystem   L2 core tech   L3 apps
 ```
 
-**How to read it.** Width is reach, not importance.
+**How to read it.**
 
-- **Community is the widest layer that isn't the person.** It spans every app,
-  which is what converts N user bases into one cohort — and it is the only layer
-  that reaches *sideways* rather than just up and down. That is why it is the
-  coupling constant rather than a feature of any one app (§Community is the
-  coupling).
-- **The apps get thinner as you move right.** That is the cost curve drawn: app N+1
-  inherits more from the shared platform and adds less of its own.
-- **The Factory is the only layer with no end-user surface.** It exists solely to
-  change the cost of everything above it — and it is the only layer that also sells
-  sideways, out of the stack, as line 2.
-- **The Person layer and the Factory's counterfactual engine are the only two
-  things that appreciate** when the next model ships. Everything between them is
-  either commoditising or bought.
-- **Lines don't map to strata.** The ecosystem play (L1) is *both* the top and a
-  large part of the middle; core tech (L2) sits underneath everything; apps (L3)
-  are a thin band. An org chart drawn from the revenue lines would cut this
-  diagram in the wrong places — see 03 §Reporting structure, where engineering is
-  split build-versus-apply precisely to avoid that.
+- **Community is the widest layer that isn't the person**, and the only one that
+  reaches *sideways* rather than only up and down — which is what turns N user
+  bases into one cohort. It is also, deliberately, **not sellable**: it is the
+  cohort, so licensing it would be selling the moat.
+- **The apps get thinner left to right.** That is the cost curve, drawn.
+- **The Factory is the only layer with no end-user surface** — and the first one
+  sold out of the stack.
+- **Only the Person layer and the counterfactual engine appreciate** when the next
+  model ships. Everything between is commoditising or bought.
+- **Revenue lines don't map onto strata.** The ecosystem play is both the top and
+  much of the middle; core tech underlies everything; apps are a thin band. An org
+  chart drawn from the revenue lines would cut this diagram in the wrong places —
+  which is the visual case for the build-versus-apply engineering split in 03.
+
+### The commercial arm — where consulting and licensing sit
+
+**The services arm is not a layer. It is an entity** — Youbiquity Platform (§Entity
+shape) — sitting beside the stack and selling slices of it outward. That is why it
+was invisible in the cake: the cake is the product, and this is the surface that
+sells it.
+
+```mermaid
+flowchart LR
+    subgraph STACK["Product stack"]
+        FACTORY["Factory<br/>counterfactual engine"]
+        PLATFORM["Shared platform<br/>library + kay"]
+        APPS["Apps"]
+    end
+
+    SERVICES["SERVICES ARM<br/>Youbiquity Platform entity"]
+    LIC["Licensees"]
+    CLIENTS["Consultancy clients"]
+    ENDU["App end customers"]
+    REV2["Line 2 revenue<br/>licence + bounded services"]
+    REV3["Line 3 revenue"]
+    ECO["Ecosystem bet<br/>the option with no deadline"]
+
+    FACTORY -->|"licence — now"| LIC
+    FACTORY -->|"licence + implementation"| SERVICES
+    PLATFORM -.->|"later: embedded interface layer"| LIC
+    SERVICES -->|"implements licensed product<br/>NEVER bespoke"| CLIENTS
+    APPS -->|"subscription"| ENDU
+
+    LIC --> REV2
+    CLIENTS --> REV2
+    ENDU --> REV3
+    REV2 -->|"funds"| ECO
+    REV3 -->|"funds"| ECO
+
+    CLIENTS -.->|"hardening · integration adapters · references"| PLATFORM
+```
+
+**Four things this makes explicit that the cake could not:**
+
+1. **Licensing and services are the same motion, not two.** The services arm sells
+   a licence *plus* bounded implementation. That is the scope rule from 03 drawn as
+   an arrow: implementation of licensed product, never bespoke work — because
+   bespoke generates novel problems that escalate past a director to whoever holds
+   the architecture.
+2. **The dotted arrow back into the platform is why services exist at all.** Client
+   deployments produce hardening, integration adapters and reference logos that
+   internal use never would. That is the honest argument for *some* services rather
+   than none — and the argument stops exactly where bespoke begins.
+3. **What is sold changes over time, and moves up the stack.** The Factory is
+   licensable now; the library+kay interface layer is the higher-ceiling candidate
+   later, and is also the B2B2C distribution channel for the ecosystem play. Same
+   arrow, two purposes.
+4. **Both revenue lines terminate in the same place.** Line 2 and line 3 exist to
+   fund the bet that has no customer demanding it. That is the structure's entire
+   logic, and it is the one arrow worth defending when attention gets contested.
+
+**The two caps belong on this diagram, not in the stack** (03 §Attention
+allocation): a **time cap** on bespoke consulting, because it is linear in humans
+and generates no compounding data — and a **commitment cap** on licensing, because
+what you promise licensees constrains what the architecture is still free to change.
+
+### How the layers feed each other
 
 ### How the layers feed each other
 
