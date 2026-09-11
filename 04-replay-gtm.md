@@ -604,6 +604,114 @@ runs into the transaction-cost ceiling. It is simply not the headline.
 
 ---
 
+## Product evolution: the live canary
+
+`PROPOSED (Nathan, 2026-09-11)` — run against near-live queries the way a canary
+does: shadow a fraction of real turns to alternative configurations, compare, and
+update the policy continuously, with **zero human intervention if desired.**
+
+This is a different product class from offline replay, and it changes four things
+that matter more than the feature itself.
+
+### 1. It dissolves the validity risk
+
+The largest existential objection in §Counter-arguments is drift — whether a
+turn-K counterfactual predicts the end-of-session outcome. **A live canary does not
+need to predict it. It observes it.** Shadow arms run forward in the real workflow,
+and the outcome arrives on its own: did the PR merge, did CI pass, did the human
+accept the edit, was it reverted.
+
+That is a stronger epistemic position than any offline design, and it turns the
+product's biggest scientific risk into an architectural choice.
+
+### 2. Much of the hard engineering becomes unnecessary
+
+The expensive part of offline replay is **reconstructing state faithfully** — the
+depcache, the lockfile path, the mutation guard, the classifier that fails loudly.
+A canary forks state that exists *right now*, so most of that disappears.
+
+What replaces it is a different hard problem, and it is the real one:
+
+> **Side effects.** Two arms cannot both write to the world. The shadow arm needs a
+> copy-on-write workspace fork plus tool-call interception — writes sandboxed,
+> egress blocked or mocked. Unlike canarying a stateless request, an agent turn
+> mutates a filesystem and calls external services.
+
+The group already has the pieces: the replay sandbox's write-guard and egress
+denial, and the side-effect-turn classifier. Latency is the second constraint —
+shadowing must be **out of path**, so the comparison informs the *next* decision
+rather than gating the current one.
+
+### 3. The compounding asset changes, and improves
+
+Offline grading relies on benchmark tests or a blinded judge. Live operation
+produces **outcome labels from the customer's own workflow** — merges, reverts, CI
+results, human acceptance. Those are richer than a judge's opinion, they accumulate
+per workload, and **no competitor gets them.**
+
+Note what that is structurally: the same accumulation argument the ecosystem bet
+rests on, applied to a different domain. And the autonomy ladder from `project-k` —
+trust accrues, autonomy widens, with a legible record — is **directly reusable** as
+the control surface here, which is the first genuine technical overlap between the
+two large bets.
+
+### 4. It changes the valuation regime
+
+Offline analysis is an episodic service priced as small SaaS at 3–8× ARR. A
+continuous, in-workflow, usage-scaled control plane is priced as **AI
+infrastructure at 15–30×** (§What a valuation could this support). The mechanisms:
+revenue scales with their traffic rather than with analysis runs, NRR goes from good
+to near-maximal, and switching cost rises from *nothing* — an offline report has no
+lock-in — to *deep*, since removing an embedded policy engine with accumulated
+per-workload calibration means regressing.
+
+It also moves the business **from measurement to action**, which is historically
+where value capture sits.
+
+### The two costs, and they are serious
+
+**1. It converts channels into competitors.** This is the cost most easily missed.
+Offline measurement is *complementary* to routers — §The security plays and
+§Distribution both lean on routers and harnesses as channels precisely because they
+cannot observe counterfactuals. **An autonomous routing control plane *is* a
+router.** Going online walks directly into the funded fight the wrapper decision in
+02 was designed to avoid — against parties with reported valuations near $1.3B.
+
+**2. In-path infrastructure breaks the minimal-core constraint harder than anything
+else in these documents.** Uptime commitments, latency SLOs, on-call rotation,
+deeper security review, and the blast radius of an autonomous policy that degrades
+quality across all traffic — an incident *you caused*. Three or four people cannot
+run mission-critical infrastructure, and the liability profile is categorically
+different from being wrong in a report.
+
+### Sequencing — and a likely stopping point
+
+The destination is right; the starting point is not. Three stages, and the middle
+one deserves attention:
+
+| Stage | What it is | Regime | Competes with routers? | Minimal-core compatible? |
+|---|---|---|---|---|
+| **1. Offline analysis** *(the 90-day plan)* | Historical replay, episodic | Small SaaS, 3–8× | No — complementary | Yes |
+| **2. Shadow canary, read-only** | Continuous measurement on live traffic, **no action taken** | Infrastructure-adjacent, ~10–15× | **No** — still measurement | **Yes** |
+| **3. Autonomous policy** | Closed loop, acts without intervention | AI infra, 15–30× | **Yes** — becomes a router | **No** |
+
+> **Stage 2 may be the optimal stopping point for this group.** It captures most of
+> the regime change — recurring revenue, usage-scaled pricing, high NRR, embedded
+> workflow position, and the proprietary outcome labels — **without** taking on
+> in-path liability and without converting partners into competitors. It also
+> collects exactly the dataset that would prove stage 3 works, so it is the right
+> precondition either way.
+
+Stage 3 is then a decision to be made with evidence, and plausibly with a partner
+or an acquirer who already has the operational muscle — which is also the cleanest
+version of the exit story in §What a valuation could this support.
+
+`OPEN` — accept stage 2 as the target architecture? It changes what gets built after
+the drift experiment, though **not** the 90-day plan itself: stage 1 still has to
+produce a credible finding first, and the canary does not remove the need for that.
+
+---
+
 ## What a valuation could this support
 
 `ESTIMATE` — asked as "if relatively successful, what could replay alone be worth?"
