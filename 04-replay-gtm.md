@@ -585,10 +585,55 @@ publishing a study built on it would be worse than publishing nothing.
 ### Deliverable
 
 Not a summary in a transcript. **A results file, plus a written finding** with the
-grid, the confidence intervals, the methodology, and the negative results stated
-as plainly as the positive ones. That document is simultaneously the scientific
-artifact, the marketing artifact and the sales artifact — which is why it is worth
-writing properly the first time.
+grid, the confidence intervals, and the methodology. That document is
+simultaneously the scientific artifact, the marketing artifact and the sales
+artifact — which is why it is worth writing properly the first time.
+
+### Negative results are the deliverable too
+
+**Stated explicitly because an execution-focused session will otherwise optimise
+toward a publishable positive.** That drift is the falsification test means a
+negative or weak result is a *successful* outcome of the work, not a failure of it.
+
+This is not only a matter of integrity. **The product being sold is trustworthy
+measurement.** A study that overstates will be dismantled by exactly the technical
+buyers being targeted, and the cost lands on methodology authority — the single
+asset the whole strategy rests on (§Runner/grader split, §Distribution). There is
+no version of this business that survives being caught flattering its own results.
+
+**Mechanisms, because an instruction is not a control:**
+
+1. **Pre-register before running.** Write the hypothesis, the metric, the
+   threshold and the decision rule to the results file *first*. A pre-registered
+   threshold cannot be reinterpreted after the numbers arrive.
+2. **Write both abstracts in advance** — the positive finding and the negative one.
+   If the negative version is unwritable, the experiment isn't designed to fail,
+   which means it isn't a test.
+3. **Report the whole grid, never the favourable slice.** Confidence intervals,
+   not point estimates.
+4. **Log every exclusion with a reason and a count.** Cells dropped for
+   uninteresting causes — non-replayable turns, harness errors, timeouts — are part
+   of the result. Silent exclusion is the most common way an honest study becomes a
+   dishonest one.
+5. **State n, excluded n, and power.** A result that cannot distinguish its
+   hypothesis from noise is an ambiguous result, not a positive one.
+6. **If ambiguous, scale the experiment — do not reframe it.** The conclusive
+   design is $1–2k (§Budget). That is cheaper than publishing something
+   unfalsifiable.
+
+### What each drift outcome means — so a negative result is actionable
+
+| Outcome | Interpretation | Product consequence |
+|---|---|---|
+| **Turn-K signal predicts end-state, effect decays with distance** | The premise holds | Proceed as planned. Distance-to-end becomes a confidence weight in the routing policy |
+| **Predicts end-state, effect compounds** | Premise holds, and drift is the more valuable measurement | Lead with drift safety rather than with savings — it is the thing nobody else can offer |
+| **Bounded but weak** | Turn-K measures *local* quality only | Narrower product: "which turns are safe to cheapen", with a conservatism margin. Still sellable, priced lower |
+| **Large and unpredictable** | Per-turn counterfactuals do not support policy | **Pivot, don't persist.** The surviving question is turns-to-completion — the speed framing in §Solvency conditions, measured end-to-end rather than per turn. Same engine, different unit of analysis |
+| **No measurable relationship at all** | The premise is false | Stop. Report it internally. The engine retains internal value for tuning our own factory (02 §The counterfactual engine) |
+
+Note that **only one of five outcomes kills the commercial thesis**, and three of
+them change the product rather than ending it. Worth knowing before the numbers
+arrive, because it removes most of the incentive to lean on them.
 
 ### What this session should *not* do
 
