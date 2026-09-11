@@ -528,57 +528,79 @@ What growth **does** change:
   late entry is. That asymmetry argues for the security framing even at equal
   present value.
 
-#### The intersection that resolves the choice
+#### Consultancies are the buyer under both lenses
 
-Last section framed this as cost-to-consultancies versus security-to-CISOs. That
-framing was wrong, because **consultancies are a buyer in both — and for them the
-security angle is not an optimisation, it is an obligation.**
+Worth recording regardless of positioning: **for a consultancy, the security angle
+is not an optimisation, it is an obligation.** Running coding agents on *client*
+code carries a contractual and reputational duty — prove the agents introduced no
+vulnerability, leaked no client credentials, exfiltrated nothing. That is a client
+requirement, so the demand is **mandatory rather than discretionary**, with a larger
+budget behind it than cost optimisation commands.
 
-A consultancy running coding agents on *client* code carries a contractual and
-reputational duty: prove the agents did not introduce a vulnerability, leak client
-credentials, or exfiltrate anything. That is a client requirement, so demand is
-**mandatory rather than discretionary** — the best kind there is, and the same
-structural property as vendor-forced model retirements, but with a larger budget
-behind it.
+That makes consultancies the segment where the two lenses overlap, and the warm
+network the way to reach them either way.
 
-> **Lead with security, sold to consultancies, through the existing warm network.**
-> It combines the higher ACV and uncapped budget of the security lens with the only
-> distribution advantage the group actually has — and a warm introduction from a
-> former partner substantially mitigates the credibility gate that makes a cold
-> CISO approach hard.
+### Positioning decision
 
-`OPEN` — that recommendation supersedes the "pick one" framing below. What remains
-open is whether it is sold to the consultancy's **delivery** leadership (margin and
-obligation) or its **security** function (assurance), which determines the
-entry point and the first artifact.
+`DECIDED (Nathan, 2026-09-11)` — **marketed as an optimization product, with
+security as an add-on facet.** Not security-led.
 
-**Sources.** [Application security market 2026](https://finance.yahoo.com/technology/ai/articles/global-application-security-market-reach-145400948.html) ·
-[Agentic AI security market](https://www.marketsandmarkets.com/PressReleases/agentic-ai-security.asp) ·
-[Information security spending 2026](https://softwarestrategiesblog.com/2026/03/24/information-security-spending-2026/) ·
-[Agent security coverage statistics](https://www.gravitee.io/state-of-ai-agent-security)
+This overrides the security-led recommendation in the previous revision of this
+section. The reasoning is sound and worth recording, because it turns on the
+constraint that actually binds:
 
-### The conclusion this points to
+1. **Credibility gating is the real obstacle and it is not technical.** Selling
+   optimisation to a platform lead is a sale this group can make today. Selling
+   security to a CISO requires a brand, references and probably certifications it
+   does not have. Security-led means clearing the credibility gate *before* the
+   first dollar; optimisation-led means earning it after.
+2. **The optimisation buyer is also the person who installs it.** A CISO can sign
+   but cannot deploy a self-hosted runner. A platform or AI-infra lead does both —
+   and stage 2 (§The staged trust model) fails without a technical champion inside
+   the account.
+3. **Liability stays bounded.** "We measure how your configuration performs" carries
+   nothing like the exposure of "we test your agents for injection." Security as a
+   facet keeps every claim on the measurement side of that line.
+4. **It is what the product actually is.** An optimisation engine whose security
+   uses are perturbations with different payloads. Leading with what it is avoids
+   over-claiming and avoids building security-specific surface prematurely.
+5. **Land-and-expand works in this direction and not the other.** Land small on a
+   measurable optimisation result, expand into security once inside and trusted.
 
-`OPEN` — **this may not be an additional play. It may be the better primary
-framing.** On the evidence: a larger budget that is not capped by savings, demand
-documented as acute rather than inferred, immunity to price collapse, and the
-InfoSec inversion. The cost/speed story then becomes a *secondary benefit* in the
-same sale rather than the headline.
+#### Three sharpenings this positioning needs
 
-Against that: credibility gating is real and the group has none in security, while
-it has genuine reach into consultancies for the cost framing.
+**1. Define "optimization" as the quality / cost / speed frontier — not cost
+reduction.** The headline must not be savings, or it inherits the price-collapse
+exposure in §Counter-arguments. "Find the configuration on your own workload that
+is fast enough, good enough and as cheap as possible" survives cheap tokens;
+"cut your bill" does not.
 
-**Do not run both.** Pick one to lead, and let the other be a bullet in the same
-deck. The market-sizing section sizes the cost framing only — **if the security
-framing is chosen, the ACV assumption needs redoing**, since security ACVs are
-typically multiples of cost-tooling ACVs and would move the SAM estimate
-materially. That is the next piece of work if this direction is taken, and it
-should happen before the 90-day plan is committed.
+**2. Make the security facet exactly one thing: guardrail-change validation.**
+It is the strongest of the six plays and — the reason it fits this positioning
+perfectly — **it is a security capability with an optimisation buyer.** Framed as
+*"will tightening this permission break my developers?"* it is a productivity
+question asked by a platform lead, needs no CISO in the room, and carries no
+assurance liability. The other five plays require a security buyer and should stay
+in the drawer until there is a reference customer.
 
-**Sources.** [OWASP / prompt injection in production](https://www.helpnetsecurity.com/2026/06/11/owasp-prompt-injection-ai-security-failures/) ·
-[Agentic AI security resources and incidents](https://adversa.ai/blog/top-agentic-ai-security-resources-june-2026/) ·
-[State of AI Agent Security 2026 — coverage statistics](https://www.gravitee.io/state-of-ai-agent-security) ·
-[Red-teaming coding agents](https://arxiv.org/pdf/2509.05755)
+**3. Plan the expansion explicitly, or the facet becomes a slide.** Add-ons that are
+never resourced stay demos. Target **one reference customer using the security
+facet within the first five accounts** — that reference is what makes a later
+security-led motion possible, if it is ever wanted.
+
+#### What this decides elsewhere in the document
+
+| | Consequence |
+|---|---|
+| **Planning SAM** | Use the **cost-lens** figures — ~$145M in 2026, ~$496M by 2030. Security is upside, not baseline; do not model ACV uplift from it |
+| **Consultancy entry point** | **Delivery and platform leadership**, not the security function — which closes the question left open above |
+| **First artifact** | An optimisation finding with a security section, not a security assessment |
+| **ACV expectation** | The lower band, $40–60k, so the same ARR needs more logos — capacity remains the binding constraint (§Growth) |
+| **Downside exposure** | Price collapse is retained as a live risk, mitigated by the speed axis rather than by the security pivot |
+
+The security material above is not wasted: it is the expansion path, the
+differentiation during evaluation, and the fallback if the optimisation framing
+runs into the transaction-cost ceiling. It is simply not the headline.
 
 ---
 
