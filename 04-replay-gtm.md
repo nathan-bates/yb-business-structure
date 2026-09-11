@@ -668,6 +668,83 @@ per-workload calibration means regressing.
 It also moves the business **from measurement to action**, which is historically
 where value capture sits.
 
+### How it works in practice
+
+The mechanics, because the architecture only holds up if these are answerable.
+
+**Sampling — which turns get shadowed.** Not uniform random. Allocate by where the
+answer is worth buying:
+
+- **Stratify by turn class** (edit, search, plan, test-run, review) so each class
+  accumulates its own evidence — routing policy is per-class, not global.
+- **Weight by cost and by uncertainty.** Expensive turns and classes where the
+  current policy is least confident earn more samples; settled classes drop to a
+  trickle. Rules first, contextual bandit later.
+- **Cap by budget**, not by rate: shadow spend ≤ N% of primary spend (5% is a
+  reasonable default), enforced, and reported to the customer as a line item so ROI
+  is always quoted net of it.
+
+**Forking — how a shadow arm starts.** At a turn boundary: copy-on-write snapshot
+of the workspace (overlay filesystem, subvolume snapshot, or a worktree against an
+object store), plus the identical transcript prefix. **Both arms must receive the
+identically regenerated system prompt** — the replay-to-replay lesson applies here
+unchanged, or prompt drift confounds the comparison. Then apply the perturbation:
+model, effort, context or tool set.
+
+**Side-effect isolation — the core engineering problem.** Classify every tool:
+
+| Tool class | Shadow arm behaviour |
+|---|---|
+| Read-only, local | Execute normally in the fork |
+| Write, local | Execute in the fork — that is what the fork is for |
+| Read-only, external | Execute, or serve the primary's observation |
+| **Write or egress, external** | **Never execute** |
+
+The key mechanism: **the shadow arm consumes the primary arm's external
+observations.** Replaying what the primary actually saw keeps both arms in the same
+world without double-executing anything.
+
+The interesting case is divergence — the shadow arm elects a *different* external
+call, for which no recorded observation exists. Recommended handling: **terminate
+the shadow arm and record "diverged at step X" as its own outcome class.** It is
+cheap, it is honest, and the divergence rate is itself a useful signal about how
+differently a configuration behaves.
+
+**Outcome labels — where the compounding asset comes from.** Signals: PR merged or
+closed, CI pass/fail, human accepted / edited / rejected the diff, reverted within
+N days, follow-up turns to completion, time to merge.
+
+These arrive minutes to days later, so the record is keyed by turn id and joined
+asynchronously by a label collector. **The subtlety worth stating:** the shadow
+arm's output is usually *not* what got merged — the primary's was — so the shadow
+arm has no naturally-occurring label. The bridge is to run the shadow arm's
+resulting diff through the **same CI and test suite**, which yields an objective
+label at the customer's own quality bar. Where no tests exist, fall back to
+action-match against the primary plus human acceptance as a proxy, and say so.
+
+**Policy update — the loop, with brakes.** Aggregate per (turn class, model,
+effort) into a quality / cost / speed frontier, then:
+
+- **Minimum sample before any class switches.** No policy change on thin evidence.
+- **Bounded step size** — at most X% of routing moves per update.
+- **Automatic rollback** when a monitored metric regresses past a threshold.
+- **Versioned, fail-static publication.** The policy is an artifact the customer's
+  gateway fetches and caches; if the service is unreachable the last good policy
+  persists.
+- **Every change carries its evidence** — n, effect size, confidence interval — in
+  an audit trail. That record is simultaneously the safety mechanism, the
+  compliance artifact, and the earned-autonomy ledger (`project-k`'s mechanic,
+  reused).
+
+**Placement.** Sidecar inside the customer's environment by default, so data never
+leaves — consistent with §The staged trust model. Their CI runners or their cloud
+account are the alternatives. The shadow is asynchronous throughout; it fires after
+or alongside the primary turn and never blocks it.
+
+**Product SLOs, which are quality rather than availability** — the point of
+fail-static: policy freshness, sample sufficiency per class, rollback count, and
+realised-versus-predicted savings. None of them is an uptime commitment.
+
 ### Three independent axes, not one
 
 An earlier revision of this section conflated **"live"** with **"in the critical
