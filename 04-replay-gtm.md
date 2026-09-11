@@ -287,6 +287,122 @@ matters.
 
 ---
 
+## The security plays
+
+The same engine, pointed at a different buyer. Worth taking seriously because
+**the security framing removes the two worst problems in the cost framing.**
+
+### Why it is structurally better, not just adjacent
+
+| Problem with the cost framing | Under the security framing |
+|---|---|
+| **Savings below the cost of buying** — the highest-probability killer (§Counter-arguments) | Gone. Security budgets are benchmarked against **incident cost**, not against savings. One credential-exfiltration event dwarfs any tooling line item |
+| **Price collapse makes savings immaterial** | Irrelevant. Security demand is unaffected by token prices — so security joins **speed** as an axis that survives both lethal scenarios |
+| **InfoSec is the obstacle to data access** | **InfoSec is the buyer.** The person who blocks the deal becomes the person who signs it — the single most useful inversion in this document |
+
+### The demand is documented and acute
+
+- **Prompt injection drives most agentic AI security failures in production** (OWASP's
+  2026 State of Agentic AI Security), and **coding agents drive most of the new
+  attack data**.
+- Real, published incidents in this exact category: a crafted **PR title** tricking
+  Claude Code Security Review into executing arbitrary commands and extracting
+  credentials; injection via **issue titles and comments** against Gemini CLI Action
+  yielding full API keys. Indirect injection against coding agents has escalated to
+  **supply-chain compromise of developer environments**.
+- **Only 9.5% of organisations secure more than 81% of their deployed agents**; mean
+  monitoring coverage is 52%, so roughly **half of production agents run
+  unsecured**.
+
+### The plays, ranked
+
+**1. Guardrail change validation — lead with this.**
+A security team wants to tighten a permission, restrict egress, narrow an
+allowlist — and cannot, because nobody can predict the blast radius on real
+developer work. Replay the last N sessions under the new policy and measure the
+**false-positive rate on work that actually happened**.
+
+Nothing found addresses this. It unblocks a decision the buyer already wants to
+make, quantified on their own history, using the existing perturbation primitive
+with a policy payload instead of a model swap. Security is the buyer;
+platform/engineering co-sponsors.
+
+**2. Prompt-injection regression on the customer's own sessions.**
+Inject adversarial payloads at turn K into *real historical contexts* — poisoned
+file content, a malicious issue comment, a compromised tool result — and measure
+bait-taking across models, prompts and guardrail configurations. This is
+`do_context` with a security payload; the engine already supports it.
+
+`COMPETITION` — **Microsoft open-sourced RAMPART**, a framework for testing agents
+against cross-prompt injection, behavioural regressions and data exfiltration,
+aimed at the **development phase before agents ship**. Differentiation must be
+stated precisely and narrowly: *your sessions, your repository state,
+post-deployment, cross-model* — the same "evidence from our own workload"
+argument as the cost play, which is the one claim a synthetic framework cannot make.
+
+**3. Forensics and incident reconstruction.**
+Highest willingness to pay per event, but episodic. Note the prior art is on our
+side: **Causal Agent Replay exists precisely for failure root-cause attribution** —
+the concept is validated, and the differentiator remains filesystem state.
+
+**4. Model security review evidence.**
+A natural attach to the migration play: before adopting a new model, show it is no
+worse on destructive commands, secret handling and injection resistance *on your
+workload*. Same procurement artifact, same buyer, security rather than cost as the
+axis.
+
+**5. Retroactive secret-exposure scoping.**
+A secret appeared in a context window. Which turns touched it, was it emitted, was
+it persisted? Enables scoped rotation instead of rotating everything — a concrete,
+expensive, recurring problem.
+
+**6. Red-team-as-a-service delivered by the engine.**
+Fits the ex-consultant bench and the scope rule in 03 (sell implementation of a
+licensed product, never bespoke). But it is services, therefore human-linear, and
+belongs under the consulting cap.
+
+### The counterweights, which are serious
+
+1. **Credibility gating.** Selling security to a CISO without a security brand is
+   materially harder than selling cost tooling to a platform team. It wants
+   references, likely certifications, and possibly a credentialed partner or hire —
+   none of which the group has. **This is the binding constraint, and it is not
+   technical.**
+2. **Liability asymmetry.** Being wrong about routing costs money. Being wrong
+   about *"we tested for injection"* is a different risk posture entirely. Claims
+   must be scoped to measurement — "we measure how your agents behave under these
+   payloads" — never to assurance.
+3. **Crowded and funded.** Agent security is attracting real capital, and RAMPART
+   is free.
+4. **It doubles the go-to-market surface.** Second buyer, second motion, second
+   credibility requirement, for three or four people. **The security play may be
+   individually better and collectively worse.**
+
+### The conclusion this points to
+
+`OPEN` — **this may not be an additional play. It may be the better primary
+framing.** On the evidence: a larger budget that is not capped by savings, demand
+documented as acute rather than inferred, immunity to price collapse, and the
+InfoSec inversion. The cost/speed story then becomes a *secondary benefit* in the
+same sale rather than the headline.
+
+Against that: credibility gating is real and the group has none in security, while
+it has genuine reach into consultancies for the cost framing.
+
+**Do not run both.** Pick one to lead, and let the other be a bullet in the same
+deck. The market-sizing section sizes the cost framing only — **if the security
+framing is chosen, the ACV assumption needs redoing**, since security ACVs are
+typically multiples of cost-tooling ACVs and would move the SAM estimate
+materially. That is the next piece of work if this direction is taken, and it
+should happen before the 90-day plan is committed.
+
+**Sources.** [OWASP / prompt injection in production](https://www.helpnetsecurity.com/2026/06/11/owasp-prompt-injection-ai-security-failures/) ·
+[Agentic AI security resources and incidents](https://adversa.ai/blog/top-agentic-ai-security-resources-june-2026/) ·
+[State of AI Agent Security 2026 — coverage statistics](https://www.gravitee.io/state-of-ai-agent-security) ·
+[Red-teaming coding agents](https://arxiv.org/pdf/2509.05755)
+
+---
+
 ## The staged trust model
 
 The security risk and the reverse-engineering risk are not a trade-off — they
