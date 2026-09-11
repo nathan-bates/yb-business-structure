@@ -48,6 +48,123 @@ sampling — and therefore a defensible answer — affordable at all.
 
 ---
 
+## Market opportunity
+
+`ESTIMATE` — built bottom-up from spend under management, cross-checked against the
+adjacent category and against incumbent revenue. Every figure is marked; the
+sensitivity analysis at the end matters more than the point estimates.
+
+### The denominator
+
+| Input | Figure | Source / basis |
+|---|---|---|
+| Enterprise frontier LLM **API** spend, 2026 | **>$35B** (~$15B in H1) | Reported; the most load-bearing number here |
+| Coding as a use case | Highest penetration — ~70% of large-enterprise engineering orgs | Reported |
+| Coding share of API **spend** | `ASSUMPTION` **~35%** | Coding agents are token-heavy — long contexts, many turns, thinking-heavy output — so spend share should exceed usage share |
+| **Coding-agent API spend, 2026** | **~$12B** | 35B × 35% |
+
+**Note the denominator is API spend, so per-seat tools are already excluded** —
+which is correct, because a buyer paying per seat has no model-choice decision to
+measure. That exclusion is load-bearing and easy to get wrong.
+
+### From TAM to SAM
+
+The buyer must pay per token **and** control model choice. Splitting the ~$12B:
+
+| Holder of the spend | Share `ASSUMPTION` | Addressable? |
+|---|---|---|
+| Agent-product vendors' own inference (Cursor, Copilot, Devin, Factory…) | ~40% — $4.8B | **Poorly** — high in-house-build risk; these are design partners, not customers |
+| Enterprises on BYO-key harnesses (Claude Code on API, OpenCode, custom) | ~40% — $4.8B | **Yes** — the best buyer |
+| Consultancies and SIs | ~20% — $2.4B | **Yes** — best reachability for this group specifically |
+
+**SAM ≈ $7.2B of spend under potential management** in 2026.
+
+### Capture rate
+
+The closest priced analogue is FinOps: cloud-cost platforms such as Cloudability
+price at roughly **2–3% of cloud spend under management.** Two adjustments, pulling
+opposite ways:
+
+- **Downward** — FinOps manages an entire bill continuously, including allocation
+  and commitment management. This is a narrower function.
+- **Upward** — the savings are larger in percentage terms (routing claims 30–85%
+  versus 10–20% typical for cloud), so a higher fee is defensible.
+
+Net: **1.5–3%.**
+
+### The numbers
+
+| | 2026 | ~2030 at ~36% CAGR |
+|---|---|---|
+| Category TAM (all coding-agent spend × 2%) | **~$240M** | ~$800M |
+| **SAM** (addressable holders × 2%) | **~$145M** | ~$480M |
+| Realistic share for a well-executed small entrant (2–5% of SAM) | **$3–7M ARR** | $10–24M ARR |
+
+### Two cross-checks
+
+**Against the adjacent category.** LLM observability platforms are a **$2.69B market
+in 2026** (from $1.97B in 2025, ~36% CAGR, heading for ~$9.3B by 2030). A
+counterfactual-measurement sub-segment at $145–240M is 5–9% of that — plausible for
+a specific function inside a broad category, and a useful reality check that this
+is a segment, not a market.
+
+**Against incumbent revenue, which is the sobering one.** LangChain — one of the
+best-known names in the category, LangSmith included — reported **~$16M ARR in 2025
+at a $1.3B valuation.** The *leaders* in LLM observability are at low tens of
+millions. Any model that outputs $50M+ ARR for a niche entrant is wrong.
+
+**Bottom-up, independently.** A consultancy spending $2M/yr on agent inference
+yields $40–60k/yr at 2–3% capture. Fifty customers at $50k average = **$2.5M ARR**;
+a hundred at $75k = $7.5M. Thirty to eighty customers via warm network over 2–4
+years is plausible. That lands in the same band as the top-down figure, which is
+the main reason to believe either.
+
+### Sensitivity — where this breaks
+
+| If… | Then |
+|---|---|
+| Coding is 20% of API spend, not 35% | Halve everything. SAM ~$80M, realistic $1.5–4M ARR |
+| Capture is 1%, not 2% | Halve again |
+| Agent-product vendors turn out to be buyers rather than builders | SAM rises ~65% to ~$240M |
+| Per-seat pricing dominates coding agents | Denominator collapses; the model-choice decision sits with vendors, not buyers |
+
+The $35B API-spend figure and the 35% coding share are the two assumptions doing
+the most work. Both are secondary-source estimates and both should be revisited
+before this number is used externally.
+
+### What this means for the portfolio
+
+**A $3–7M ARR business in 3–4 years, with $15–25M as a strong-execution ceiling.**
+
+Two conclusions, and they point in opposite directions on purpose:
+
+1. **Against this group's cost structure, that is excellent.** Three to four
+   founders plus agents, against apps costing ~$250k to build: $3–5M ARR funds the
+   ecosystem bet indefinitely and needs no further capital. The metered model
+   compounds it — revenue grows with customers' token volume, which is itself
+   growing ~40%/yr, so a *fixed* customer base grows revenue without new logos.
+2. **It is not a venture-scale outcome on its own**, which is exactly what 01 says
+   it is for. **The market sizing confirms the portfolio structure rather than
+   challenging it:** replay is the funding mechanism that buys time for the
+   ecosystem bet, not the large outcome. If it were a $1B category it would deserve
+   to *be* the company, and this analysis says it isn't.
+
+**Proportionality of effort**, since that was the question behind the question:
+
+- The analysis so far has cost conversation and one document. Proportionate.
+- The next step — drift pilot at ~$300 plus engineering time — is proportionate to
+  a $3–8M opportunity.
+- **Not proportionate**: building a full product, hiring sales, or letting it
+  displace the ecosystem bet. Anything beyond the 90-day plan should be gated on
+  actual revenue, not on this estimate.
+
+**Sources.** [Enterprise LLM API spend](https://presenc.ai/research/enterprise-llm-adoption-statistics-june-2026) ·
+[LLM observability market size](https://www.giiresearch.com/report/tbrc1981334-large-language-model-llm-observability-platform.html) ·
+[LangChain revenue](https://getlatka.com/companies/langchain) ·
+[FinOps percentage-of-spend pricing](https://holori.com/20-best-finops-and-cloud-cost-management-tools-in-2025/)
+
+---
+
 ## Buyer segments
 
 Ranked by acuteness of pain, not by market size.
