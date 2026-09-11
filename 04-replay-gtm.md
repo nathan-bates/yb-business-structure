@@ -604,6 +604,113 @@ runs into the transaction-cost ceiling. It is simply not the headline.
 
 ---
 
+## What a valuation could this support
+
+`ESTIMATE` — asked as "if relatively successful, what could replay alone be worth?"
+The answer depends almost entirely on **which multiple regime it is priced in**, and
+those differ by roughly 5×.
+
+### The two regimes
+
+| Regime | Multiple | Applies when |
+|---|---|---|
+| **Bootstrapped small SaaS** | **3–5× ARR** at $3–10M, rising to 5–8× for stronger performers | Priced on financials. Scale discount applies — buyers question whether growth is repeatable and whether the business runs **independently of the founder** |
+| **AI-native infrastructure** | **15–30× ARR**, outliers above 45× | Priced on narrative, category position and growth. Requires venture positioning, institutional rounds, and the growth rate to match |
+
+Market context: median SaaS exit is ~4.5× revenue with top quartile above 8.1×;
+private SaaS has stabilised at 3–7× since mid-2024. **Cybersecurity and AI
+infrastructure are the strongest-priced cohorts**, holding double-digit multiples
+while broader application software repriced.
+
+### Premium and discount drivers, applied
+
+The documented drivers, scored against what replay would actually look like:
+
+| Driver | Benchmark | Replay's likely profile |
+|---|---|---|
+| **Net revenue retention** | 120%+ unlocks a **50–80% premium** | **Strong.** Metered pricing on token volumes growing ~40%/yr should produce 120–140% NRR without new logos |
+| **Growth rate** | 60%+ YoY is top quartile | **Moderate.** 40–60% plausible; capacity-bound, not market-bound |
+| **Gross margin** | **75%+ is the premium threshold** | **Borderline — and controllable.** Inference is COGS; at 4–5× markup GM is 75–80%, improving as inference cheapens |
+| **Burn multiple** | <1.5× earns a 30–40% premium | **Excellent.** Three or four founders, agent-delivered, effectively no burn |
+| **Founder dependency** | Explicit discount at this scale | **The worst item.** Deep single-founder expertise |
+| **Customer concentration** | Discount | **Moderate risk.** 30–60 customers, some large consultancies |
+| **Category** | AI infra / security priced strongest | **Favourable** |
+
+### The numbers
+
+| Scenario | ARR | Multiple | **Valuation** |
+|---|---|---|---|
+| Base — strategic sale, no added capacity | $5M | 6–10× | **$30–50M** |
+| Competitive process among several acquirer types | $5M | 12–15× | **$60–75M** |
+| Capacity added, category position established | $15–25M | 8–12× | **$120–300M** |
+| Venture-priced as AI-native infra | $5M | 15–30× | $75–150M — *available only by becoming a venture-backed company* |
+
+### Why the obvious comparable does not transfer
+
+LangChain reported **~$16M ARR at a $1.3B valuation — about 81×**. Martian was
+reported near $1.3B in April 2026 on unknown revenue. It is tempting to anchor on
+these, and it would be the most common error available here: both are venture
+prices on open-source ecosystem position, developer mindshare and category-defining
+brand. A metered measurement tool with forty enterprise customers is a different
+asset, priced differently, however good it is.
+
+### Plausible acquirers — five categories, which matters
+
+Exit optionality is a real input to the multiple, and this asset has unusually
+broad strategic appeal:
+
+1. **Router vendors** — they need the measurement layer to prove their own value and
+   structurally cannot build the counterfactual.
+2. **Observability and eval platforms** — natural bolt-on; they lack workspace
+   reconstruction.
+3. **Harness vendors** — buy rather than build, and acquire the neutral-measurement
+   story they cannot credibly tell themselves.
+4. **Large consultancies** — buy to embed in delivery; would pay for capability plus
+   team.
+5. **Model vendors** — buy to reduce migration friction across their customer base.
+
+Five categories supports a competitive process and materially reduces
+no-exit-path risk.
+
+### The three levers that move this most
+
+1. **Reduce founder dependency — it is the largest controllable discount.**
+   Documented methodology, a second person able to run it, and productised
+   packaging are worth more to the valuation than another million of ARR at this
+   scale. Note the convergence: **publishing the methodology (§Recommendation)
+   simultaneously builds category authority and de-risks the asset.**
+2. **Clear 75% gross margin deliberately.** It is a pricing threshold, not just a
+   margin — so the markup over inference COGS is a multiple driver. Price at ≥4×
+   COGS and the margin improves on its own as inference cheapens.
+3. **Protect NRR, because it is the single biggest premium (50–80%).** Metering
+   already delivers it; anything that caps a customer's usage growth works against
+   the exit price.
+
+### What this means for the portfolio
+
+**A $30–60M asset in the base case, with a $120–300M ceiling that requires adding
+sales capacity.**
+
+Set against the incremental cost — the engine is built, the study is ~$800, the
+90-day plan is founder time — the return on further effort is extraordinary even at
+the low end. Set against apps at ~$250k each, replay is a better use of the factory
+than several additional app bets.
+
+But the conclusion is the same one §Market opportunity reached: **meaningful, not
+venture-scale.** If the group's investor needs a venture return on the whole
+enterprise, replay does not deliver it alone at $30–60M — which is precisely why 01
+treats it as the funding mechanism that buys time for the ecosystem bet, rather than
+as the outcome. A valuation analysis that came back at $500M+ would have been an
+argument to restructure the portfolio around it. This one is not.
+
+**Sources.** [SaaS multiples by ARR band](https://livmo.com/blog/saas-valuation-multiples-2026/) ·
+[Private SaaS range and premium drivers](https://www.l40.com/insights/saas-multiples) ·
+[Long-run exit multiples](https://aventis-advisors.com/saas-valuation-multiples/) ·
+[AI-native multiples](https://saasvaluationmultiple.com/verticals/ai-saas-multiples) ·
+[LangChain revenue](https://getlatka.com/companies/langchain)
+
+---
+
 ## The staged trust model
 
 The security risk and the reverse-engineering risk are not a trade-off — they
