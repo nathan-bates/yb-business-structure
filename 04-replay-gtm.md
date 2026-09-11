@@ -451,6 +451,83 @@ variable that actually binds this group:
 The offset is that each sale is harder: credibility gating, longer cycles, and a
 CISO rather than a platform lead.
 
+#### Growth, compounded properly
+
+The comparison above anchored on 2026 SAM while projecting revenue three to four
+years out — inconsistent. Compounded:
+
+| | Cost lens | Security lens |
+|---|---|---|
+| SAM 2026 | $145M | $150M |
+| CAGR (market reports) | ~36% | **~42%** |
+| **SAM 2030** | **~$496M** | **~$610M** (+23%) |
+| SAM 2032 | ~$918M | ~$1.23B (+34%) |
+
+#### But the growth rates are diverging for structural reasons
+
+The reported CAGRs understate the gap, and the mechanism is the one behind the
+question: **security is an afterthought today, cost is not.**
+
+> **Security spend growth = agent adoption growth × security *penetration* growth.**
+> Both are rising, so the effect is **multiplicative.**
+>
+> **Cost spend growth = agent adoption growth × cost *salience*.** Salience **falls**
+> as unit prices fall, so the effect is **partially self-cancelling.**
+
+Three pieces of evidence for the security side:
+
+1. **The penetration gap is enormous and measured.** Only **9.5%** of organisations
+   secure more than 81% of their deployed agents; mean coverage is 52%. That is not
+   a market-size constraint, it is an adoption constraint — and closing it means
+   spend grows faster than the agent population it protects. Cost optimisation has
+   no comparable headroom: routing products are mature, funded and already adopted.
+2. **Security spend is incident-reactive, so it inflects rather than compounds
+   smoothly.** Agentic incidents are accelerating and coding agents generate most
+   of the new attack data. One landmark breach at a recognisable company
+   historically doubles a security category's growth for a couple of years. The 42%
+   figure has no such event priced in.
+3. **Regulation follows incidents and creates mandatory spend.** Unverified for
+   coding agents specifically, but the pattern is reliable enough to note as
+   asymmetric upside.
+
+Against the cost side: the 36% figure is the *observability and eval* market, not
+the cost-optimisation slice. If token prices fall materially, that slice grows
+more slowly than its parent category.
+
+**Scenario spread by 2030:**
+
+| | Downside | Base | Upside |
+|---|---|---|---|
+| Cost lens | ~$322M (22% CAGR, prices fall) | ~$496M | ~$600M (Jevons holds) |
+| **Security lens** | ~$430M (30%, adoption stalls) | ~$610M | **~$866M** (55%, penetration catches up) |
+
+At the extremes that is **$866M versus $322M — nearly 3×**, which is a far more
+decision-relevant difference than the 2026 snapshot suggested.
+
+#### What growth does and does not change
+
+It does **not** move the base case, and this is the important correction:
+
+> **Realistic ARR is capacity-bound, not market-bound.** Three or four people plus
+> agents can close perhaps 10–15 customers by year 2 and 30–60 by year 4 on warm
+> network with one commercial hire. At $75–120k security ACVs that is
+> **$2.5–7M ARR by year 4 under either lens** — because the constraint is deals
+> closed, not market available.
+
+What growth **does** change:
+
+- **The ceiling, if capacity is ever added.** 1% of a $610M market is $6.1M; 3% is
+  $18M. Those become reachable only with a real sales function, which is a
+  deliberate trade against the minimal-core thesis rather than a free option — but
+  the security lens is where that trade would pay best.
+- **The downside.** The security lens is materially more robust: its worst case
+  (~$430M) is above the cost lens's base case, because it does not depend on token
+  prices staying high.
+- **The option value of waiting.** A category growing at 42–55% is one where
+  entering in 2027 is not fatal. A category whose salience is eroding is one where
+  late entry is. That asymmetry argues for the security framing even at equal
+  present value.
+
 #### The intersection that resolves the choice
 
 Last section framed this as cost-to-consultancies versus security-to-CISOs. That
