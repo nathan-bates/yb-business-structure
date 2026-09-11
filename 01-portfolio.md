@@ -109,7 +109,7 @@ flowchart LR
     ENDU["App end customers"]
     REV2["Line 2 revenue<br/>licence + bounded services"]
     REV3["Line 3 revenue"]
-    ECO["Ecosystem bet<br/>the option with no deadline"]
+    ECO["Ecosystem bet<br/>the option with an unknown deadline"]
 
     FACTORY -->|"licence — now"| LIC
     FACTORY -->|"licence + implementation"| SERVICES
@@ -146,7 +146,8 @@ flowchart LR
    later, and is also the B2B2C distribution channel for the ecosystem play. Same
    arrow, two purposes.
 4. **Both revenue lines terminate in the same place.** Line 2 and line 3 exist to
-   fund the bet that has no customer demanding it. That is the structure's entire
+   fund the bet that has no customer creating urgency for it — but an **unknown
+deadline** all the same. That is the structure's entire
    logic, and it is the one arrow worth defending when attention gets contested.
 
 ### The third role: consulting as ecosystem distribution
@@ -230,7 +231,7 @@ flowchart LR
 
     CFE -->|"licensed externally"| REV["Line 2 revenue"]
     APPS -->|"subscription revenue"| REV
-    REV -->|"funds the bet with no deadline"| ECO
+    REV -->|"funds the bet with the<br/>unknown deadline"| ECO
 ```
 
 **The three loops worth naming**, because they are what makes this a system rather
@@ -260,6 +261,10 @@ constrained tail**:
 | **Ecosystem** | `project-k` + `aux` + `arbiter` + `library` + `market` | **~18–36 months** — see below; not self-paced | High: the product shape is undecided | Unbounded |
 | **Core tech** | The counterfactual engine (replay) | **12–18 months, externally set** | Low: it works; the question is commercial | Bounded and known |
 | **Apps** | As many as the resource budget allows | Per app | Medium each, low in aggregate | Each one small |
+
+**Both large bets have windows, and neither is open-ended.** No bet in this
+document has "no deadline" — some deadlines are dated and some are unknown, which
+is a different thing and should never be written as the first.
 
 **Both large bets have windows.** An earlier version of this section treated the
 ecosystem bet as self-paced. It isn't. Every component is already shipping
@@ -328,7 +333,8 @@ is needed to start accumulating, and leave the rest open.
 an option whose premium the other lines pay. That is now concrete: **replay is the
 funding mechanism** — near-term, horizontal, priced against a bill the customer
 already receives. It upgrades line 2 from "runway" to "the thing that buys time
-for the bet with no deadline", which is a stronger reason to prioritise it than
+for the bet whose deadline is unknown", which is a stronger reason to prioritise
+it than
 revenue alone.
 
 **The app tail is a portfolio of options, not a set of products.** Each app is

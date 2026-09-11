@@ -202,7 +202,7 @@ than as something that happens when there is time. There will not be time.
 |---|---|---|
 | **Nathan** | Technical envelope, replay execution, ecosystem architecture | Delivery escalation — the single highest-risk leak in the structure |
 | **Agi** | Sales, commercial terms, operations | Letting the easier sale set the mix; letting ops slip behind revenue |
-| **Chris** | New products — app tail and ecosystem product | Being pulled into delivery; it is the line with no customer demanding attention, so it loses contention silently |
+| **Chris** | New products — app tail and ecosystem product | Being pulled into delivery; no customer creates urgency for this line, so it loses contention silently — despite having a real deadline nobody can date |
 
 ---
 
@@ -510,8 +510,10 @@ It decides whether the app #2 time target is an engineering problem or this one.
 
 - **Apps and Core Tech are agent-delivered by default.** A founder hour spent
   there is a bug to be automated.
-- **Ecosystem gets a protected block** — the only line with no customer demanding
-  attention, and therefore the only one that loses by default.
+- **Ecosystem gets a protected block** — no customer creates urgency for it, so it
+  is the only line that loses contention by default. **That is not the same as
+  having no deadline:** its deadline is real and simply undated (01 §Both large
+  bets have windows), which is precisely why it needs the block.
 - **Two caps, for two different models.** Embedded consulting: a time cap.
   Licensing: a **commitment** cap, because what you promise licensees constrains
   what the architecture can still change.
@@ -555,8 +557,8 @@ It decides whether the app #2 time target is an engineering problem or this one.
 4. **Aspirational roles stay aspirational.** Nathan and Chris keep absorbing
    functions that were never assigned anywhere, and the Ecosystem block — the
    only unprotected line — is what gets spent.
-5. **A line without an accountable owner.** It will be Ecosystem, because it's the
-   one with no customers asking.
+5. **A line without an accountable owner.** It will be Ecosystem, because it is the
+   one no customer is asking for — not because it is the one that can wait.
 6. **Commercial model unchanged**, so the cost curve never bends and Apps grows
    linearly in people regardless of how good the factory is.
 7. **Bespoke consulting sold at all.** Novel technical problems escalate past a

@@ -22,6 +22,12 @@ plainly so they can be argued with.
 - `DECIDED` — settled; changing it means revisiting the docs that depend on it.
 - `CONTINGENT` — depends on an open question; don't build against it yet.
 
+**One wording rule.** Never describe any bet as having *no deadline*. Every bet here
+has a first-mover deadline; some are dated and some are **unknown**. "No deadline"
+invites postponement and is factually wrong — say **unknown deadline**, or name what
+creates the urgency. Where a line has no *customer* demanding attention, say that
+precisely, because it is a statement about contention, not about time.
+
 Every substantive change lands as its own commit, so the argument can be read as a
 diff. The docs were rewritten clean on 2026-09-10; the incremental argument that
 produced them is in the git history, and the positions that were tried and
