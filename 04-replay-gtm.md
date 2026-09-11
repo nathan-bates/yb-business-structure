@@ -668,47 +668,79 @@ per-workload calibration means regressing.
 It also moves the business **from measurement to action**, which is historically
 where value capture sits.
 
-### The two costs, and they are serious
+### Three independent axes, not one
 
-**1. It converts channels into competitors.** This is the cost most easily missed.
-Offline measurement is *complementary* to routers — §The security plays and
-§Distribution both lean on routers and harnesses as channels precisely because they
-cannot observe counterfactuals. **An autonomous routing control plane *is* a
-router.** Going online walks directly into the funded fight the wrapper decision in
-02 was designed to avoid — against parties with reported valuations near $1.3B.
+An earlier revision of this section conflated **"live"** with **"in the critical
+path."** They are unrelated, and separating them changes the conclusion:
 
-**2. In-path infrastructure breaks the minimal-core constraint harder than anything
-else in these documents.** Uptime commitments, latency SLOs, on-call rotation,
-deeper security review, and the blast radius of an autonomous policy that degrades
-quality across all traffic — an incident *you caused*. Three or four people cannot
-run mission-critical infrastructure, and the liability profile is categorically
-different from being wrong in a report.
+| Axis | Options | Consequence |
+|---|---|---|
+| **Cadence** | Offline / episodic ↔ **live and continuous** | Live earns the outcome labels and the recurring, usage-scaled revenue |
+| **Plane** | **Control plane** ↔ data plane | Only the data plane carries uptime, latency and on-call liability |
+| **Autonomy** | Advisory ↔ autonomous | A gated setting on the control plane, not a change of position |
 
-### Sequencing — and a likely stopping point
+A shadow canary is **out of band by construction.** And autonomy does not require
+being in the path either:
 
-The destination is right; the starting point is not. Three stages, and the middle
-one deserves attention:
+> **Write policy, never serve requests.** The optimiser emits a routing policy that
+> the customer's own harness or gateway reads. The policy is persisted client-side,
+> so if the service is down the last policy simply persists — **fail-static.** There
+> is no availability dependency in the request path, and the worst case is a *bad
+> policy*, not an *outage*.
 
-| Stage | What it is | Regime | Competes with routers? | Minimal-core compatible? |
-|---|---|---|---|---|
-| **1. Offline analysis** *(the 90-day plan)* | Historical replay, episodic | Small SaaS, 3–8× | No — complementary | Yes |
-| **2. Shadow canary, read-only** | Continuous measurement on live traffic, **no action taken** | Infrastructure-adjacent, ~10–15× | **No** — still measurement | **Yes** |
-| **3. Autonomous policy** | Closed loop, acts without intervention | AI infra, 15–30× | **Yes** — becomes a router | **No** |
+Bad-policy risk is then managed by the mechanisms that already exist in the design
+vocabulary: bounded step size per change, automatic rollback on regression, an
+audit trail of policy changes, and the earned-autonomy ladder from `project-k`
+deciding how much latitude the system has at any point.
 
-> **Stage 2 may be the optimal stopping point for this group.** It captures most of
-> the regime change — recurring revenue, usage-scaled pricing, high NRR, embedded
-> workflow position, and the proprietary outcome labels — **without** taking on
-> in-path liability and without converting partners into competitors. It also
-> collects exactly the dataset that would prove stage 3 works, so it is the right
-> precondition either way.
+### Which retires both objections I raised
 
-Stage 3 is then a decision to be made with evidence, and plausibly with a partner
-or an acquirer who already has the operational muscle — which is also the cleanest
-version of the exit story in §What a valuation could this support.
+**"In-path infrastructure breaks minimal-core."** True, and irrelevant — nothing
+here needs to be in-path. No uptime commitment, no latency SLO, no on-call
+rotation, because a shadow canary that writes policy has no data-path
+responsibility. Security review is deeper than for an offline tool, since you are
+influencing production behaviour, but that is a review rather than an operating
+burden.
 
-`OPEN` — accept stage 2 as the target architecture? It changes what gets built after
-the drift experiment, though **not** the 90-day plan itself: stage 1 still has to
-produce a credible finding first, and the canary does not remove the need for that.
+**"It converts channels into competitors."** Only if you build the data-path router
+yourself. Writing policy *into their router* is the opposite — it makes the router
+better, which is a reason for a router vendor to integrate rather than compete.
+
+> **Be the brain, let them be the plumbing.** Routers own the data path; the policy
+> that drives it is the part they structurally cannot produce, because a router
+> never observes the road not taken. That preserves the channel relationship and
+> strengthens it.
+
+### Revised staging
+
+| Stage | What it is | Plane | Regime | Competes with routers? | Minimal-core? |
+|---|---|---|---|---|---|
+| **1. Offline analysis** *(the 90-day plan)* | Historical replay, episodic | — | Small SaaS, 3–8× | No | Yes |
+| **2. Shadow canary, advisory** | Continuous measurement on live traffic; recommends | Control | ~10–15× | No | Yes |
+| **3. Shadow canary, autonomous, fail-static** | Closed loop; writes bounded policy updates the customer's router reads | **Control** | **AI infra, 15–30×** | **No** | **Yes** |
+| 4. Own the data path | Serve requests; be the router | Data | 15–30× | **Yes** | **No** |
+
+**The stopping point is stage 3, not stage 2.** That is the correction: autonomy is
+available without the liability, because the liability came from the plane and not
+from the autonomy. Most of the valuation regime change survives — continuous,
+usage-scaled, high NRR, embedded — and the stickiness comes from accumulated
+per-workload calibration rather than from occupying the path.
+
+**What genuinely remains as cost, at stage 3:**
+
+- **Side-effect isolation** — unchanged and still the core engineering problem:
+  copy-on-write workspace fork plus tool-call interception, writes sandboxed, egress
+  blocked or mocked.
+- **Shadow traffic inference** — N% of turns × M arms. Quantifiable, small, and
+  self-funding if it finds anything.
+- **Deeper security review**, because you influence production configuration.
+- **Bad-policy liability**, bounded by step size, rollback and the audit trail —
+  and reducible to zero by leaving the apply step gated, which is what "zero human
+  intervention **if desired**" already implies.
+
+`OPEN` — accept stage 3 as the target architecture, with stage 4 explicitly out of
+scope? It does not change the 90-day plan: stage 1 still has to produce a credible
+finding, and the canary makes that finding more valuable rather than unnecessary.
 
 ---
 
